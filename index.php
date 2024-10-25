@@ -25,8 +25,11 @@
     <div id="login_panel" class="form-container login-container">
       <form method="post" action="login.php">
         <h1>Login </h1>
-        <input type="text" id="username" name="username" placeholder="Username"required>
-        <input type="password" id="password" name="password" placeholder="Password"required>
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <label for="show_password">
+          <input id="show_password"  name="show_password" type="checkbox">Show Password
+        </label>
         <button type="submit" name="login-button" id="login-button">Login</button>
       </form>
     </div>
