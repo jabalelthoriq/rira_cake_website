@@ -103,7 +103,7 @@
       </div>
       <ol>
       <li>
-		<a class="button button--pan"  href="order.php"><span>Se All Menu</span></a>
+		<a class="button button--pan"  href="order.php"><span>See All Menu</span></a>
 	    </li>
         </ol>
     </section>
