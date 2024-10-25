@@ -1,7 +1,7 @@
 <html>
  <head>
   <title>Rira Cake Cafe & Bakery</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fo nt-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="nav.css">
   
   <style>
@@ -203,15 +203,21 @@
             width: 250px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            
         }
 
         .menu-card:hover {
-           transform: translateY(-30px); 
-        
+          background-color: #6c3b16;
+          transform: translateY(-20px) translateX(10px); 
+          box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+          color: #F8EDE3;
+          
         }
+
+      
 
         .menu-image {
             width: 100%;
@@ -400,6 +406,8 @@
             }
         }
 
+        
+
   </style>
  </head>
  <body> 
@@ -415,7 +423,8 @@
     <a href="contact.php">Contact</a>
    </div>
    <div class="icons">
-    <i class="fas fa-user"></i>
+    <a href="index.php" class="fas fa-user">
+      </a>
     <i class="fas fa-shopping-basket"></i>
    </div>
   </div>
@@ -672,7 +681,7 @@
     </div><br><br><br>
       <ol>
       <li>
-		<a class="button button--pan"  href="order.php"><span>Se All Menu</span></a>
+		<a class="button button--pan"  href="order.php"><span>  </span></a>
 	    </li>
         </ol><br><br><br>
     </section>

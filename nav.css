@@ -11,7 +11,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
 }
-.logo{
+.navbar img {
     height: auto;
     width: 50%;
 
@@ -29,16 +29,8 @@ body, html {
     display: flex;
     gap: 15px;
 }
-.navbar .icons i {
-    color: white;
-    font-size: 20px;
-}
 
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #F8EDE3;
-}
+
 .navbar {
     background-color: #6D4C41;
     padding: 10px 20px;
@@ -264,9 +256,7 @@ body {
     margin: 10px 0 0;
   }
 
-  body {
-    font-family: Arial, sans-serif;
-}
+ 
 
 .quen {
     position: relative;
@@ -364,7 +354,6 @@ section h2.sec-title {
 
   
 
-  
 
   ol {
     list-style: none;

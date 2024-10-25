@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="style.css">
 </head> 
 <body class="body1">
+
+
   <div class="container" id="container">
 
     <div id="register_panel" class="form-container register-container">
