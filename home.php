@@ -197,6 +197,7 @@
             flex-wrap: wrap;
             gap: 70px;
             box-shadow: 0 0 0 rgba(0,0,0,0.0);
+            background-color: #f5e6d3;
         }
         
         .menu-card {
@@ -418,7 +419,7 @@
     </a>
    </div>
    <div class="nav-links">
-    <a href="aboutus.php">About Us</a>
+    <a href="aboutus.php" >About Us</a>
     <a href="order.php">Order</a>
     <a href="contact.php">Contact</a>
    </div>
@@ -681,7 +682,7 @@
     </div><br><br><br>
       <ol>
       <li>
-		<a class="button button--pan"  href="order.php"><span>  </span></a>
+		<a class="button button--pan"  href="order.php"><span> Explore menu </span></a>
 	    </li>
         </ol><br><br><br>
     </section>
