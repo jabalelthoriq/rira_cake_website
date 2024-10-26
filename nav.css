@@ -3,48 +3,19 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-}
-.navbar {
-    background-color: #5c4b4b;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.logo{
-    height: auto;
-    width: 50%;
-
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-.navbar .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-}
-.navbar .icons i {
-    color: white;
-    font-size: 20px;
+    background-color: #f5e6d3;
 }
 
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #F8EDE3;
-}
 .navbar {
     background-color: #6D4C41;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.navbar img {
+  height: auto;
+  width: 50%;
 }
 .navbar .logo {
     display: flex;
@@ -71,6 +42,7 @@ body {
 .navbar .icons {
     display: flex;
     gap: 15px;
+    color: #FFFFFF;
 }
 .navbar .icons i {
     color: #FFFFFF;
@@ -227,14 +199,20 @@ body {
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 52px;
+    color: #f5e6d3;
+    
   }
   .text h1{
     font-size: 48px;
     margin: 0;
   }
+  
+
   .text p{
     font-size: 18px;
     margin: 10px 0 0;
+    color: #f5e6d3;
   }
   .king {
     text-align: center;
@@ -264,9 +242,7 @@ body {
     margin: 10px 0 0;
   }
 
-  body {
-    font-family: Arial, sans-serif;
-}
+ 
 
 .quen {
     position: relative;
@@ -364,7 +340,6 @@ section h2.sec-title {
 
   
 
-  
 
   ol {
     list-style: none;
@@ -393,7 +368,7 @@ section h2.sec-title {
     width: 170px;
     pointer-events: auto;
     cursor: pointer;
-    background: #ffffff;
+    background: #F8EDE3;
     border: none;
     padding: 25px;
     margin: 0;
@@ -409,7 +384,7 @@ section h2.sec-title {
     border: 2px solid #6c3b16;
     border-radius: 3rem;
     overflow: hidden;
-    color: #000;
+    color: #6c3b16;
     transition: color 0.5s ease;
   }
 
@@ -569,4 +544,11 @@ section h2.sec-title {
   }
   
   
+<<<<<<< HEAD
 >>>>>>> cf489916a90e2b8a6114bdb5d961bace8ece41c8
+=======
+  
+
+
+  
+>>>>>>> a295a6f92f170a308c2b2ab673fc6640ba49d307
