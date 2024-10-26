@@ -34,41 +34,6 @@ body, html {
     font-size: 20px;
 }
 
-.hero {
-    text-align: center;
-    color: white;
-    position: relative;
-}       
-.hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    object-position: center; 
-}
-.hero .content {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.hero .content h1 {
-    font-size: 48px;
-    margin: 0;
-}
-.hero .content p {
-    font-size: 24px;
-    margin: 10px 0;
-}
-.hero .content .order-btn {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid white;
-    padding: 10px 20px;
-    color: white;
-    font-size: 18px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -397,54 +362,9 @@ section h2.sec-title {
     color: var(--text-color);
   }
 
-  #cup .wrap {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    gap: 40px;
-    grid-template-columns: 2.5fr 1.25fr 2.5fr;
-  }
   
-  #cup .left {
-    gap: 30px;
-    text-align: right;
-    display: grid;
-  }
-  
-  #cup .right {
-    gap: 30px;
-    display: grid;
-  }
-  
-  #cup .item-text {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  #cup h3 {
-    font-size: 1.3rem;
-  }
-  
-  #cup .item-text img {
-    width: 50px;
-    opacity: 0.8;
-    margin-bottom: 5px;
-  }
-  
-  #cup .item-text p {
-    opacity: 0.8;
-    font-size: 90%;
-  }
 
-  #best .wrap {
-    max-width: 1100px;
-    margin: 60px auto 0;
-  }
   
-  #best .tab {
-    display: none;
-  }
 
   ol {
     list-style: none;
@@ -475,7 +395,7 @@ section h2.sec-title {
     cursor: pointer;
     background: #ffffff;
     border: none;
-    padding: 1.5rem 3rem;
+    padding: 25px;
     margin: 0;
     font-family: inherit;
     font-size: inherit;
@@ -516,4 +436,137 @@ section h2.sec-title {
 
   .button--pan:hover span {
     color: #f5e6d3;
+<<<<<<< HEAD
   }
+=======
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+  }
+
+  #slide1 {
+    background-image: url('aset/gambar/kukis4.jpg');
+  }
+
+  #slide2 {
+    background-image: url('aset/gambar/kukis2.jpg');
+  }
+
+  #slide3 {
+    background-image: url('aset/gambar/kukis3.jpg');
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+
+  .dot.active {
+    background-color: white;
+  }
+
+  
+  .slide-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+  }
+
+  .slide-description {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 0.2s;
+  }
+
+  
+  .slide-button {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 0.4s;
+  }
+
+  .slide-button:hover {
+    background: #6c3b16;
+    color: #F8EDE3;
+    transform: translateY(20px) scale(1.1);
+  }
+
+  
+  .carousel-slide.active .slide-title,
+  .carousel-slide.active .slide-description,
+  .carousel-slide.active .slide-button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-title, .slide-description {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .carousel-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+  }
+
+  
+  .slide-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  
+>>>>>>> cf489916a90e2b8a6114bdb5d961bace8ece41c8
