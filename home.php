@@ -180,12 +180,6 @@
  
 
   /* menu */
-  * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
 
         .container {
           margin: 0 auto;
@@ -682,11 +676,7 @@
     </div><br><br><br>
       <ol>
       <li>
-<<<<<<< HEAD
-		<a class="button button--pan"  href="order.php"><span>See All Menu</span></a>
-=======
 		<a class="button button--pan"  href="order.php"><span> Explore menu </span></a>
->>>>>>> a295a6f92f170a308c2b2ab673fc6640ba49d307
 	    </li>
         </ol><br><br><br>
     </section>

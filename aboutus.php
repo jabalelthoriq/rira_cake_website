@@ -4,9 +4,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="nav.css">
   <style>
-        body {
-      background-color: #F5EDEB;
-    }
+    
     .contact-us {
       margin-top: 30px;
       display: flex;
@@ -55,49 +53,40 @@
       object-fit: cover;
     }
 
-    .text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      background-color: rgba(0,0,0,0.6);
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 600px;
-    }
+    .text .contact-title {
+    text-align: center;
+    color: #f5e6d3;
+    font-size: 54px;
+    margin-top: 0 auto; 
+    font-weight: bold;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+    margin-bottom: 40px;
+  }   
 
-    .text h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-      color: white;
-    }
 
     .about-us {
       padding: 50px 20px;
       text-align: center;
-      background-color: #FDF6F3;
       margin-top: 30px;
     }
 
     .about-us h2 {
-      color: #D2691E;
-      font-size: 2.5em;
-      margin-bottom: 30px;
+      color: black;
+      font-size: 50px;
+      margin-bottom: 0;
+      margin-top: 0;
       position: relative;
       display: inline-block;
     }
 
     .about-us h2::after {
-      content: '🧁';
       position: absolute;
       right: -70px;
       top: -5px;
     }
 
     .about-us h2::before {
-      content: '🍰';
       position: absolute;
       left: -70px;
       top: -5px;
@@ -242,6 +231,99 @@
       50% { transform: translateY(-20px); }
       100% { transform: translateY(0px); }
     }
+    .k {
+        text-align: center;
+        color: white;
+        position: relative;
+        }
+        .k img {
+        width: 100%;    
+        height: 400px;
+        object-fit: cover; 
+        object-position: center; 
+        filter: brightness(0.7);
+        }
+
+    .h {
+      display: flex;
+      text-align: start;
+      color: black;
+      position: relative;
+      margin: 200px;
+      margin-bottom: 100px;
+      margin-top: 100px;
+      max-width: 100%;
+      justify-content: space-between;
+      
+      
+    }
+    .f {
+      margin-left: 10px;
+      min-height: 400px;
+    
+    }
+    .con {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      background-color: #f5e6d3;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      margin: 10px;
+      background-color: white;
+    }
+    .con img {
+      display: inline-block;
+      width: 380px;
+      height: 380px;
+      margin: auto;
+    }
+
+    .h .t {
+      font-size: 30px;
+      font-weight:bold ;
+    }
+    .h p {
+      font-size: 20px;
+      max-width: 600px;
+    }
+
+    .-h {
+      display: flex;
+      text-align: start;
+      color: black;
+      position: relative;
+      margin-left: 200px;
+      justify-content: space-between;
+      margin-right: 200px;
+  
+    }
+    .-h .-t {
+      font-size: 30px;
+      font-weight:bold ;
+      margin-left: 300px;
+    }
+    .-h p {
+      font-size: 20px;
+      margin-left: 300px;
+    }
+    .con2{
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      background-color: #f5e6d3;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      margin: 10px;
+      background-color: white;
+    }
+    .con2 img {
+      display: inline-block;
+      width: 380px;
+      height: 380px;
+      margin: auto;
+    }
+    
   </style>
 </head>
 
@@ -263,20 +345,52 @@
     </div>
   </div>
 
-  <div class="king">
+  <div class="k">
     <img alt="Bakery Image" src="aset/gambar/fresh-baked-gourmet-desserts-sweet-indulgence-generated-by-ai 1 (1).png" />
     <div class="text">
-      <h1>Rira Cake.</h1>
+      <div class="contact-title" >Rira Cake.</div>
       <p>Where the sweetness of homemade delicacies meets artisanal craftsmanship, offering a delectable and heartwarming cake experience for every occasion.</p>
     </div>
   </div>
   <div id="about" class="about-us">
     <h2>Our Sweet Story</h2>
-    <p style="max-width: 800px; margin: 0 auto; color: #666;">
-      Welcome to Rira Cake, where every creation is baked with love and passion. Since 2020, we've been crafting 
-      delightful moments through our carefully curated selection of cakes and pastries.
-    </p>
+  
     
+    <div class="h" >
+        <div class="f" >
+        <div class="t" >The Birth of a Dream</div>
+        <p>In 2003, Rira Cake was born out of a small but passionate dream in the heart of Kaliwates. Rira, the visionary behind the bakery, had spent years mastering her recipes. Her goal was simple: to create cakes that not only delighted taste buds but also told a story. She started with a modest space and the finest ingredients she could find. 
+          Word quickly spread about the unique flavors and impeccable quality of Rira's creations. Local residents flocked to the bakery, eager to taste the magic for themselves. Rira Cake soon became a beloved community staple.</p>
+        </div>
+          <div class="con" >
+          <img alt="history" src="aset/gambar/menu1.jpg" />
+        </div>
+    </div>
+
+    
+    <div class="-h" >
+    <div class="con2" >
+          <img alt="history" src="aset/gambar/menu1.jpg" />
+        </div>
+        <div class="f" >
+        <div class="-t" >Rising to Fame</div>
+        <p>As Rira Cake gained popularity, it wasn’t long before its reputation extended beyond Kaliwates. People from neighboring towns began making special trips just to experience the famed cakes. Rira constantly innovated, adding new and exciting flavors inspired by global tastes. The bakery expanded its menu, yet each item retained the signature touch of love and dedication. Festivals and special occasions saw a surge in orders, with Rira Cake becoming a preferred choice. The team grew, bringing in more talented bakers who shared Rira's passion. Despite the growth, the essence of Rira Cake remained unchanged: a commitment to quality and community.</p>
+        </div>
+      </div>
+          
+      </div>
+
+      <div class="h" >
+        <div class="f" >
+        <div class="t" >A Legacy of Sweetness</div>
+        <p>Today, Rira Cake stands as a testament to what passion and hard work can achieve. The small bakery has blossomed into a local legend, with its cakes now part of many cherished moments. Rira's story has inspired many, proving that dreams can indeed come true. The bakery continues to evolve, embracing new trends while honoring its traditions. Every cake, from design to flavor, reflects the journey and dedication of Rira and her team. Customers, old and new, find joy in every bite, knowing they're part of a legacy. Rira Cake is more than a bakery—it's a sweet journey through time.</p>
+        </div>
+          <div class="con" >
+          <img alt="history" src="aset/gambar/menu1.jpg" />
+        </div>
+    </div>
+    
+
     <div class="features">
       <div class="feature-card">
         <div class="feature-icon">🎂</div>
