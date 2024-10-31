@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="nav.css">
     <style>
-
-
-        
-
-        
-
         .container {
             margin: 0 auto;
             width: 90%;
@@ -22,13 +17,13 @@
             padding: 20px;
             flex-wrap: wrap;
             gap: 30px;
-            box-shadow: 0 0 0 rgba(0,0,0,0.0);
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
             background-color: #f5e6d3;
-             
+
         }
 
         .map {
-            position: absolute ;
+            position: absolute;
             bottom: -419px;
             left: 115px;
             background-color: #f5e6d3;
@@ -40,32 +35,33 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .map h3{
+        .map h3 {
             color: #333;
             font-size: 20px;
             margin-bottom: 10px;
         }
 
-        .map iframe{
+        .map iframe {
             border-radius: 10px;
-            width:100%; 
-            height:230px; 
-            style:border:0; 
+            width: 100%;
+            height: 230px;
+            style: border:0;
         }
 
-        .form-logo{
+        .form-logo {
             display: flex;
             gap: 16px;
             padding: 16px;
-            justify-content: flex-end; 
+            justify-content: flex-end;
             max-width: 1200px;
             margin: 0 auto;
             padding-top: 0;
         }
-        .whatsup{
+
+        .whatsup {
             background-color: #25D366;
             color: #fff;
-            font-weight: bold; 
+            font-weight: bold;
             border-radius: 25px;
             width: fit-content;
             height: auto;
@@ -74,28 +70,28 @@
             border: 4px solid #fff;
         }
 
-        .whatsup:hover{
+        .whatsup:hover {
             background-color: #128C7E;
             transform: translateY(-2px) translateX(4px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
         }
 
-        .ig{
-            background: linear-gradient(45deg, 
-            #405DE6,
-            #5851DB,
-            #833AB4,
-            #C13584,
-            #E1306C,
-            #FD1D1D,
-            #F56040,
-            #F77737,
-            #FCAF45,
-            #FFDC80);
+        .ig {
+            background: linear-gradient(45deg,
+                    #405DE6,
+                    #5851DB,
+                    #833AB4,
+                    #C13584,
+                    #E1306C,
+                    #FD1D1D,
+                    #F56040,
+                    #F77737,
+                    #FCAF45,
+                    #FFDC80);
             animation: gradientShift 10s ease infinite;
             color: #fff;
-            font-weight: bold; 
+            font-weight: bold;
             border-radius: 25px;
             transition: all 0.3s ease;
             width: fit-content;
@@ -103,11 +99,11 @@
             padding: 15px;
             border: 4px solid #fff;
         }
-    
+
         .ig:hover {
-        background-size: 150% 150%;
-        transform: translateY(-2px) translateX(4px) ;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            background-size: 150% 150%;
+            transform: translateY(-2px) translateX(4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .contact-sidebar {
@@ -166,7 +162,7 @@
             display: flex;
             align-items: center;
             gap: 30px;
-            
+
         }
 
         .form-group label {
@@ -207,15 +203,15 @@
         }
 
         .send-button {
-            background-color: #f5e6d3 ;
-            color: #6c3b16 ;
+            background-color: #f5e6d3;
+            color: #6c3b16;
             border: 2px solid #6c3b16;
             padding: 15px 40px;
             border-radius: 15px;
             cursor: pointer;
             font-size: 18px;
             transition: background-color 0.3s, transform 0.2s;
-            box-shadow:  0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             font-size: 1.5rem;
         }
 
@@ -223,7 +219,7 @@
             background-color: #6c3b16;
             transform: translateY(-2px) translateX(5px);
             color: #f5e6d3;
-            box-shadow:  0 4px 8px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
         }
 
         .social-links h3 {
@@ -252,64 +248,158 @@
         textarea::placeholder {
             color: #999;
         }
+
         .k {
-        text-align: center;
-        color: white;
-        position: relative;
+            text-align: center;
+            color: white;
+            position: relative;
         }
+
         .k img {
-        width: 100%;    
-        height: 400px;
-        object-fit: cover; 
-        object-position: center; 
-        filter: brightness(0.7);
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.7);
         }
+
         .text .contact-title {
-    text-align: center;
-    color: #f5e6d3;
-    font-size: 54px;
-    margin-top: 0 auto;
-    font-weight: bold;
-    transform: translateY(20px);
-    transition: all 0.8s ease;
-    margin-bottom: 40px;
-  }   
+            text-align: center;
+            color: #f5e6d3;
+            font-size: 54px;
+            margin-top: 0 auto;
+            font-weight: bold;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            margin-bottom: 40px;
+        }
+
+        .footer {
+            background-color: #4b2e2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-us {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-link {
+            background-color: #25D366;
+        }
+
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+        }
+
+        .instagram-link {
+            background-color: palevioletred;
+        }
+
+        .instagram-link:hover {
+            background-color: #c82a5b;
+        }
+
+        .email-link {
+            background-color: #007BFF;
+        }
+
+        .email-link:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            border-top: 1px solid #fff;
+            padding-top: 10px;
+        }
     </style>
 </head>
+
 <body>
-<div class="navbar">
-  <div>
-   <a href="home.php">
-    <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40"/>
-    </a>
-   </div>
-   <div class="nav-links">
-    <a href="aboutus.php">About Us</a>
-    <a href="order.php">Order</a>
-    <a href="contact.php">Contact</a>
-   </div>
-   <div class="icons">
-    <a href="index.php" class="fas fa-user">
-      </a>
-    <i class="fas fa-shopping-basket"></i>
-   </div>
-  </div>
-
-
-  <div class="k" >
-      <img
-        alt="Bakery Image"
-        src="aset/gambar/contact us.jpg"
-      />
-      <div class="text">
-      <div class="contact-title">Contact Us</div>
-        <p>
-        If you have any questions, feedback, or need assistance, please don't hesitate to reach out to our team. We're here to help you anytime and will respond as quickly as possible. Additionally, we love hearing your suggestions and feedback to continuously improve our services.
-        </p>
-      </div>
+    <div class="navbar">
+        <div>
+            <a href="home.php">
+                <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40" />
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="aboutus.php">About Us</a>
+            <a href="order.php">Order</a>
+            <a href="contact.php">Contact</a>
+        </div>
+        <div class="icons">
+            <a href="index.php" class="fas fa-user">
+            </a>
+            <i class="fas fa-shopping-basket"></i>
+        </div>
     </div>
 
-    
+
+    <div class="k">
+        <img alt="Bakery Image" src="aset/gambar/contact us.jpg" />
+        <div class="text">
+            <div class="contact-title">Contact Us</div>
+            <p>
+                If you have any questions, feedback, or need assistance, please don't hesitate to reach out to our team.
+                We're here to help you anytime and will respond as quickly as possible. Additionally, we love hearing
+                your suggestions and feedback to continuously improve our services.
+            </p>
+        </div>
+    </div>
+
+
 
     <div class="container">
         <div class="contact-sidebar">
@@ -317,14 +407,14 @@
                 <h3>Hotline</h3>
                 <div class="number">1500581</div>
             </div>
-            
+
             <div class="contact-method">
                 <span>
                     <img src="aset/gambar/phone.svg" alt="phone">
                 </span>
                 <div>+62812 1314 1500</div>
             </div>
-            
+
             <div class="contact-method">
                 <span>
                     <img src="aset/gambar/message.svg" alt="message">
@@ -334,37 +424,39 @@
                     <small>(For Inquiries)</small>
                 </div>
             </div>
-            
-            <div >
+
+            <div>
                 <h3>Find Us On</h3>
                 <div class="form-logo">
-                <div class="whatsup" >
-                <a href = "https://wa.me/6281358128401" >
-                    <img src="aset/gambar/whatsapp.svg" alt="">
-                </a>
-                </div>
+                    <div class="whatsup">
+                        <a href="https://wa.me/6281358128401">
+                            <img src="aset/gambar/whatsapp.svg" alt="">
+                        </a>
+                    </div>
 
-                <div class="ig" >
-                <a href = "https://www.instagram.com/jabalelthoriq?igsh=d2hwMmR1ODQyZ3l4" >
-                    <img src="aset/gambar/instagram.svg" alt="">
-                </a>
-                </div>
+                    <div class="ig">
+                        <a href="https://www.instagram.com/jabalelthoriq?igsh=d2hwMmR1ODQyZ3l4">
+                            <img src="aset/gambar/instagram.svg" alt="">
+                        </a>
+                    </div>
 
-                <a href="#" class="social-link">
-                    <span>📸</span>
-                    <span>@RiraCakeOfficial</span>
-                </a>
+                    <a href="#" class="social-link">
+                        <span>📸</span>
+                        <span>@RiraCakeOfficial</span>
+                    </a>
                 </div>
             </div>
         </div>
 
 
-        <div class="map" >
-        <h3>Find us on map</h3>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8203.180626654344!2d113.7224550261931!3d-8.160107184783222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d8f623%3A0xf6c4437632474338!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1729883989113!5m2!1sid!2sid" allowfullscreen="" ; loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map">
+            <h3>Find us on map</h3>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8203.180626654344!2d113.7224550261931!3d-8.160107184783222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d8f623%3A0xf6c4437632474338!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1729883989113!5m2!1sid!2sid"
+                allowfullscreen="" ; loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
         </div>
-        
+
 
         <div class="form-container">
             <form action="process.php" method="post">
@@ -372,31 +464,67 @@
                     <label>Your Name</label>
                     <input type="text" name="name" placeholder="Masukkan Nama Anda" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Mobile Number</label>
                     <input type="tel" name="mobile" placeholder="+62" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" name="email" placeholder="Masukkan Email Anda" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Subject</label>
                     <input type="text" name="subject" placeholder="Masukkan Subjek" required>
                 </div>
-                
+
                 <div class="form-group message-group">
                     <label>Message</label>
                     <textarea name="message" placeholder="Masukkan Pesan" required></textarea>
                 </div>
-                
+
                 <button type="submit" class="send-button">Submit</button>
             </form>
         </div>
     </div>
-   
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday: 8AM - 8PM</p>
+                <p>Saturday - Sunday: 9AM - 6PM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#">About Us</a></p>
+                <p><a href="#">Order Now</a></p>
+                <p><a href="#">Home</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-us">
+                    <a class="contact-icon whatsapp-link" href="https://wa.me/+6282145483984" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="contact-icon instagram-link"
+                        href="https://www.instagram.com/annisaakrs_/profilecard/?igsh=MWhla3h0YTB0ZTNkYw=="
+                        target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="contact-icon email-link" href="mailto:annisaikrimatus@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Rira Cake. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
+
 </html>

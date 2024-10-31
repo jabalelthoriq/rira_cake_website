@@ -193,16 +193,92 @@
         .footer {
             background-color: #4b2e2e;
             color: white;
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
-            /* Remove position: fixed and bottom: 0 */
         }
 
-        .main-content {
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 60px;
-            /* Adjust as needed */
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-us {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-link {
+            background-color: #25D366;
+        }
+
+        .whatsapp-link:hover {
+            background-color: #128C7E;
+        }
+
+        .instagram-link {
+            background-color: palevioletred;
+        }
+
+        .instagram-link:hover {
+            background-color: #c82a5b;
+        }
+
+        .email-link {
+            background-color: #007BFF;
+        }
+
+        .email-link:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            border-top: 1px solid #fff;
+            padding-top: 10px;
         }
     </style>
 </head>
@@ -318,17 +394,40 @@
             <button class="order-button" onclick="placeOrder()">Place Order</button>
         </div>
     </div>
-    <div class="footer">
-        <p>
-            © 2024 Rira Cake. All rights reserved.
-        </p>
-        <p>
-            Contact us: info@riracake.com | +62 852 3005 9007
-        </p>
-        <p>
-            Address: Jl. Example No. 123, Jember, Indonesia
-        </p>
-    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday: 8AM - 8PM</p>
+                <p>Saturday - Sunday: 9AM - 6PM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#">About Us</a></p>
+                <p><a href="#">Order Now</a></p>
+                <p><a href="#">Home</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-us">
+                    <a class="contact-icon whatsapp-link" href="https://wa.me/+6282145483984" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a class="contact-icon instagram-link"
+                        href="https://www.instagram.com/annisaakrs_/profilecard/?igsh=MWhla3h0YTB0ZTNkYw=="
+                        target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="contact-icon email-link" href="mailto:annisaikrimatus@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Rira Cake. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         let cart = [];
