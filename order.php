@@ -89,14 +89,14 @@
         }
 
         .cart-modal-content img {
-    max-width: 100px;
-    /* Adjust as necessary */
-    max-height: 100px;
-    /* Adjust as necessary */
-    object-fit: cover;
-    border-radius: 8px;
-    margin-right: 10px;
-}
+            max-width: 100px;
+            /* Adjust as necessary */
+            max-height: 100px;
+            /* Adjust as necessary */
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
 
 
         .modal-content .amount {
@@ -188,6 +188,21 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
+        }
+
+        .footer {
+            background-color: #4b2e2e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            /* Remove position: fixed and bottom: 0 */
+        }
+
+        .main-content {
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+            /* Adjust as needed */
         }
     </style>
 </head>
@@ -302,6 +317,17 @@
             <div class="divider"></div>
             <button class="order-button" onclick="placeOrder()">Place Order</button>
         </div>
+    </div>
+    <div class="footer">
+        <p>
+            © 2024 Rira Cake. All rights reserved.
+        </p>
+        <p>
+            Contact us: info@riracake.com | +62 852 3005 9007
+        </p>
+        <p>
+            Address: Jl. Example No. 123, Jember, Indonesia
+        </p>
     </div>
 
     <script>
