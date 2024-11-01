@@ -5,7 +5,12 @@
   <link rel="stylesheet" href="nav.css">
   
   <style>
-
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f5e6d3;
+  }
   
    .carousel-container {
     width: 100%;
@@ -400,7 +405,17 @@
                 transform: translateY(0);
             }
         }
-
+        .navbar .icons {
+        display: flex;
+        gap: 15px;
+        color: white;
+        
+    
+        }
+        .navbar .icons i {
+        color: white;
+        font-size: 20px;
+        }
         
 
   </style>
@@ -408,17 +423,17 @@
  <body> 
   <div class="navbar">
   <div>
-   <a href="home.php">
+   <a href="/index.php?c=Auth&a=homepage">
     <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40"/>
     </a>
    </div>
    <div class="nav-links">
-    <a href="aboutus.php" >About Us</a>
-    <a href="order.php">Order</a>
-    <a href="contact.php">Contact</a>
+    <a href="/index.php?c=Auth&a=aboutuspage" >About Us</a>
+    <a href="/index.php?c=Auth&a=orderpage">Order</a>
+    <a href="/index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">
-    <a href="index.php" class="fas fa-user">
+    <a href="view/login.php" class="fas fa-user">
       </a>
     <i class="fas fa-shopping-basket"></i>
    </div>

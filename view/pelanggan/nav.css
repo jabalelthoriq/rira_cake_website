@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins");
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', Arial, sans-serif;
-    font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5e6d3;
 }
 .navbar {
     background-color: #5c4b4b;
@@ -29,10 +29,13 @@ body, html {
 .navbar .icons {
     display: flex;
     gap: 15px;
+    color: white;
+    
 }
 .navbar .icons i {
     color: white;
     font-size: 20px;
+
 }
 
 .hero {
@@ -70,11 +73,6 @@ body, html {
     border-radius: 5px;
 }
 
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #F8EDE3;
-}
 .navbar {
     background-color: #6D4C41;
     padding: 10px 20px;
@@ -300,9 +298,6 @@ body {
     margin: 10px 0 0;
   }
 
-  body {
-    font-family: Arial, sans-serif;
-}
 
 .quen {
     position: relative;

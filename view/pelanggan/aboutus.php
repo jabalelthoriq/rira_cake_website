@@ -5,6 +5,23 @@
   <link rel="stylesheet" href="nav.css">
   <style>
     
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f5e6d3;
+  }
+  .navbar .icons {
+        display: flex;
+        gap: 15px;
+        color: white;
+        
+    
+        }
+        .navbar .icons i {
+        color: white;
+        font-size: 20px;
+        }
     .contact-us {
       margin-top: 30px;
       display: flex;
@@ -263,8 +280,7 @@
     
     }
     .con {
-      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-      background-color: #f5e6d3;
+      box-shadow: 0 16px 18px rgba(0,0,0,0.4);
       width: 400px;
       height: 400px;
       display: flex;
@@ -308,7 +324,7 @@
       margin-left: 300px;
     }
     .con2{
-      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      box-shadow: 0 16px 18px rgba(0,0,0,0.4);
       background-color: #f5e6d3;
       width: 400px;
       height: 400px;
@@ -330,17 +346,18 @@
 <body>
   <div class="navbar">
     <div>
-      <a href="home.php">
+      <a href="/index.php?c=Auth&a=homepage">
         <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40" />
       </a>
     </div>
     <div class="nav-links">
-      <a href="aboutus.php">About Us</a>
-      <a href="order.php">Order</a>
-      <a href="contact.php">Contact</a>
+      <a href="/index.php?c=Auth&a=aboutuspage">About Us</a>
+      <a href="/index.php?c=Auth&a=orderpage">Order</a>
+      <a href="/index.php?c=Auth&a=contactpage">Contact</a>
     </div>
     <div class="icons">
-      <i class="fas fa-user"></i>
+    <a href="view/login.php" class="fas fa-user">
+    </a>
       <i class="fas fa-shopping-basket"></i>
     </div>
   </div>

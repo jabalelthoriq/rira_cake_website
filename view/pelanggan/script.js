@@ -10,13 +10,9 @@ registerButton.addEventListener("click", () => {
 
 loginButton.addEventListener("click", () => {
     container.classList.remove("right-panel-active");
+
 });
 
-showPassword.addEventListener("input", (e) => {
-    if(e.target.checked) {
-        inputPassword.setAttribute("type","text");
-    }else{
-        inputPassword.setAttribute("type","password");
-    };
 
-})
+
+
