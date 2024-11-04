@@ -5,11 +5,13 @@ require_once 'models/pengguna.php';
 class AuthController {
     private $model;
     private $baseUrl;
+    
 
     public function __construct() {
         session_start();
         $this->model = new pengguna();
         $this->baseUrl = BASE_URL;
+        //  
     }
 
     // pelanggan
@@ -28,6 +30,9 @@ class AuthController {
     public function orderpage() {
         require_once 'view/pelanggan/order.php';
     }
+    public function productpage() {
+        require_once 'view/pelanggan/ProductView.php';
+    }
 
 
 
@@ -41,6 +46,7 @@ class AuthController {
     public function tambahmenupage    () {
         require_once 'view/admin/tambah-menu.php';
     }
+    
     
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -111,34 +117,50 @@ class AuthController {
         exit();
     }
 
-    
-    public function dashboard() {
-        if(!isset($_SESSION['user'])) {
-            header('Location: index.php?c=Auth&a=dashboardpage');
-            return;
+
+
+    public function customerpage() {
+        if(!isset($_SESSION['logged_in'])) {
+            header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
+            exit();
         }
         
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $perPage = 5; // jumlah data per halaman
+        $perPage = 5;
         $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $role = 'pelanggan'; 
         
-        $data = $this->model->getAllUsers($page, $perPage, $search);
-        $totalData = $this->model->getTotalUsers($search);
+        // Modifikasi pemanggilan method untuk menyertakan filter role
+        $data = $this->model->getAllUsersbyRole($page, $perPage, $search, $role);
+        $totalData = $this->model->getTotalUsersbyRole($search, $role);
         $totalPages = ceil($totalData / $perPage);
         
-        require_once 'admin/dashboard.php';
+        // Siapkan data untuk view
+        $viewData = [
+            'data' => $data,
+            'totalData' => $totalData,
+            'totalPages' => $totalPages,
+            'page' => $page,
+            'perPage' => $perPage,
+            'search' => $search
+        ];
+        
+        // Extract variabel untuk digunakan di view
+        extract($viewData);
+        
+        require_once 'view/admin/customer.php';
     }
 
    
 
     public function downloadPDF() {
         if(!isset($_SESSION['user'])) {
-            header('Location: index.php?c=Auth&a=loginPage');
+            header('Location: index.php?c=Auth&a=index');
             return;
         }
 
         if(!isset($_GET['id'])) {
-            header('Location: index.php?c=Auth&a=dashboard');
+            header('Location: index.php?c=Auth&a=customerpage');
             return;
         }
 
@@ -146,7 +168,7 @@ class AuthController {
         $userData = $this->model->getUserDetail($id);
 
         if(!$userData) {
-            header('Location: index.php?c=Auth&a=dashboard');
+            header('Location: index.php?c=Auth&a=customerpage');
             return;
         }
 
@@ -155,81 +177,23 @@ class AuthController {
         $pdf->AddPage();
         $pdf->UserInfo($userData);
         
-        $filename = "user_detail_" . $userData['nim'] . ".pdf";
+        $filename = "user_detail_" . $userData['nama'] . ".pdf";
         $pdf->Output('D', $filename);
     }
     
-    public function logout() {
-        session_destroy();
-        header('Location: index.php?c=Auth&a=loginPage');
-    }
 
     // Tambahkan method-method berikut di dalam class AuthController
 
-public function edit() {
-    if(!isset($_SESSION['user'])) {
-        header('Location: index.php?c=Auth&a=loginPage');
-        return;
-    }
-    
-    $id = $_GET['id'];
-    $user = $this->model->getUserById($id);
-    require_once 'views/edit.php';
-}
-
-public function update() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Ambil foto yang sudah ada sebagai default
-        $foto = $_POST['foto_lama'] ?? '';
-        
-        // Proses jika ada upload foto baru
-        if(isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-            $fileExtension = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-            $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
-            $targetDir = 'uploads/profile/';
-            $targetFile = $targetDir . $newFileName;
-            
-            if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0777, true);
-            }
-            
-            if (move_uploaded_file($_FILES['foto']['tmp_name'], $targetFile)) {
-                // Hapus foto lama jika ada dan bukan foto default
-                if(!empty($_POST['foto_lama']) && file_exists($_POST['foto_lama'])) {
-                    unlink($_POST['foto_lama']);
-                }
-                $foto = $targetFile;
-            }
-        }
-
-        $data = [
-            'id_user' => $_POST['id_user'],
-            'nim' => $_POST['nim'],
-            'nama' => $_POST['nama'],
-            'email' => $_POST['email'],
-            'foto' => $foto,
-            'password' => $_POST['password']
-        ];
-        
-        if ($this->model->update($data)) {
-            header('Location: index.php?c=Auth&a=dashboard');
-            exit;
-        } else {
-            header('Location: index.php?c=Auth&a=edit&id=' . $_POST['id_user']);
-            exit;
-        }
-    }
-}
 
 public function delete() {
     if(!isset($_SESSION['user'])) {
-        header('Location: index.php?c=Auth&a=loginPage');
+        header('Location: index.php?c=Auth&a=index');
         return;
     }
     
     $id = $_GET['id'];
     if($this->model->delete($id)) {
-        header('Location: index.php?c=Auth&a=dashboard');
+        header('Location: index.php?c=Auth&a=customerpage');
     } else {
         echo "Hapus data gagal!";
     }

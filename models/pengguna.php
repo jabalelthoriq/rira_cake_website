@@ -44,26 +44,26 @@ class pengguna extends Database {
         }
     
     
-    public function getAllUsers($page = 1, $perPage = 5, $search = '') {
-        $offset = ($page - 1) * $perPage;
-        
-        $query = "SELECT id_user, nama, email, telepon, alamat, role FROM pengguna";
-        if(!empty($search)) {
-            $query .= " WHERE nama LIKE :search";
+        public function getAllUsersbyRole($page, $perPage, $search, $role) {
+            $offset = ($page - 1) * $perPage;
+            
+            $query = "SELECT * FROM pengguna 
+                      WHERE role = :role 
+                      AND (nama LIKE :search 
+                      OR email LIKE :search )
+                      LIMIT :offset, :perPage";
+            
+            $stmt = $this->db->prepare($query);
+            $searchTerm = "%$search%";
+            
+            $stmt->bindValue(':role', $role, PDO::PARAM_STR);
+            $stmt->bindValue(':search', $searchTerm, PDO::PARAM_STR);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+            
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        $query .= " LIMIT :offset, :perPage";
-        
-        $stmt = $this->db->prepare($query);
-        
-        if(!empty($search)) {
-            $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-        }
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
-        
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     public function getUserDetail($id) {
         $query = "SELECT * FROM pengguna WHERE id_user = :id";
@@ -73,16 +73,18 @@ class pengguna extends Database {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalUsers($search = '') {
-        $query = "SELECT COUNT(*) as total FROM pengguna";
-        if(!empty($search)) {
-            $query .= " WHERE nama LIKE :search";
-        }
+    public function getTotalUsersbyRole($search, $role) {
+        $query = "SELECT COUNT(*) as total 
+                  FROM pengguna 
+                  WHERE role = :role 
+                  AND (nama LIKE :search 
+                  OR email LIKE :search)";
         
         $stmt = $this->db->prepare($query);
-        if(!empty($search)) {
-            $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-        }
+        $searchTerm = "%$search%";
+        
+        $stmt->bindValue(':role', $role, PDO::PARAM_STR);
+        $stmt->bindValue(':search', $searchTerm, PDO::PARAM_STR);
         
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -96,43 +98,6 @@ class pengguna extends Database {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function update($data) {
-        if(empty($data['password'])) {
-            $query = "UPDATE pengguna SET 
-                      nama = :nama,
-                      email = :email,
-                      telepon = :telepon,
-                      alamat = :alamat
-                      WHERE id_user = :id_user";
-            
-            $stmt = $this->db->prepare($query);
-            return $stmt->execute([
-                ':nama' => $data['nama'],
-                ':email' => $data['email'],
-                ':telepon' => $data['telepon'],
-                ':alamat' => $data['alamat'],
-                ':id_user' => $data['id_user']
-            ]);
-        } else {
-            $query = "UPDATE pengguna SET 
-                      nama = :nama,
-                      email = :email,
-                      telepon = :telepon,
-                      alamat = :alamat,
-                      password = :password
-                      WHERE id_user = :id_user";
-            
-            $stmt = $this->db->prepare($query);
-            return $stmt->execute([
-                ':nama' => $data['nama'],
-                ':email' => $data['email'],
-                ':telepon' => $data['telepon'],
-                ':alamat' => $data['alamat'],
-                ':password' => password_hash($data['password'], PASSWORD_DEFAULT),
-                ':id_user' => $data['id_user']
-            ]);
-        }
-    }
     
     public function delete($id) {
         $query = "DELETE FROM pengguna WHERE id_user = :id";

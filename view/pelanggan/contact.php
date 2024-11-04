@@ -21,8 +21,9 @@ body, html {
   font-family: 'Arial', sans-serif;
   background-color: #f5e6d3;
 }
+
 .navbar {
-    background-color: #5c4b4b;
+    background-color: #4b2e2e;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -33,25 +34,29 @@ body, html {
     width: 50%;
 
 }
+
+.navbar .logo span {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Brush Script MT', cursive;
+}
 .navbar .nav-links {
     display: flex;
     gap: 20px;
 }
 .navbar .nav-links a {
-    color: white;
+    color: #FFFFFF;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 .navbar .icons {
     display: flex;
     gap: 15px;
     color: white;
-    
 }
 .navbar .icons i {
-    color: white;
+    color: #FFFFFF;
     font-size: 20px;
-
 }
 
 .hero {
@@ -89,43 +94,6 @@ body, html {
     border-radius: 5px;
 }
 
-.navbar {
-    background-color: #6D4C41;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navbar .logo {
-    display: flex;
-    align-items: center;
-}
-.navbar .logo img {
-    height: 40px;
-    margin-right: 10px;
-}
-.navbar .logo span {
-    color: #FFFFFF;
-    font-size: 20px;
-    font-family: 'Brush Script MT', cursive;
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-.navbar .nav-links a {
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 16px;
-}
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-}
-.navbar .icons i {
-    color: #FFFFFF;
-    font-size: 20px;
-}
 .content {
     text-align: center;
     padding: 50px 20px;
@@ -174,33 +142,7 @@ body, html {
     font-size: 16px;
 }
 
-.header {
-    background-color: #5c4b4b;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 50px;
-}
-.header img {
-    height: 50px;
-}
-.header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
-}
-.header .icons {
-    display: flex;
-    align-items: center;
-}
-.header .icons i {
-    margin-left: 15px;
-    font-size: 20px;
-}
+
 .main-content {
     text-align: center;
     padding: 50px 0;
@@ -662,23 +604,6 @@ section h2.sec-title {
 /* nav css */
 
 
-body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f5e6d3;
-  }
-  .navbar .icons {
-        display: flex;
-        gap: 15px;
-        color: white;
-        
-    
-        }
-        .navbar .icons i {
-        color: white;
-        font-size: 20px;
-        } 
 
 
         .container {
@@ -1043,17 +968,17 @@ body, html {
 <body>
 <div class="navbar">
   <div>
-   <a href="/index.php?c=Auth&a=homepage">
-    <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40"/>
+   <a href="index.php?c=Auth&a=homepage">
+    <img class="logo" alt="Rica Cake Logo" height="40" src="view/aset/gambar/logoweb.png" width="40"/>
     </a>
    </div>
    <div class="nav-links">
-    <a href="/index.php?c=Auth&a=aboutuspage">About Us</a>
-    <a href="/index.php?c=Auth&a=orderpage">Order</a>
-    <a href="/index.php?c=Auth&a=contactpage">Contact</a>
+    <a href="index.php?c=Auth&a=aboutuspage">About Us</a>
+    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">
-    <a href="view/login.php" class="fas fa-user">
+    <a href="index.php?c=Auth&a=index" class="fas fa-user">
       </a>
     <i class="fas fa-shopping-basket"></i>
    </div>
@@ -1081,14 +1006,14 @@ body, html {
 
             <div class="contact-method">
                 <span>
-                    <img src="aset/gambar/phone.svg" alt="phone">
+                    <img src="view/aset/gambar/phone.svg" alt="phone">
                 </span>
                 <div>+62812 1314 1500</div>
             </div>
 
             <div class="contact-method">
                 <span>
-                    <img src="aset/gambar/message.svg" alt="message">
+                    <img src="view/aset/gambar/message.svg" alt="message">
                 </span>
                 <div>
                     info@riracake.com
@@ -1101,13 +1026,13 @@ body, html {
                 <div class="form-logo">
                     <div class="whatsup">
                         <a href="https://wa.me/6281358128401">
-                            <img src="aset/gambar/whatsapp.svg" alt="">
+                            <img src="view/aset/gambar/whatsapp.svg" alt="">
                         </a>
                     </div>
 
                     <div class="ig">
                         <a href="https://www.instagram.com/jabalelthoriq?igsh=d2hwMmR1ODQyZ3l4">
-                            <img src="aset/gambar/instagram.svg" alt="">
+                            <img src="view/aset/gambar/instagram.svg" alt="">
                         </a>
                     </div>
 
@@ -1170,9 +1095,10 @@ body, html {
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
-                <p><a href="#">About Us</a></p>
-                <p><a href="#">Order Now</a></p>
-                <p><a href="#">Home</a></p>
+                <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
+                <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+                <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
+                <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
             </div>
             <div class="footer-section">
                 <h3>Contact Us</h3>

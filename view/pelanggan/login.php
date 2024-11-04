@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Rira Cake</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -249,7 +250,7 @@ input {
 }
 
 .overlay {
-  background-image: url('aset/gambar/roti.jpg');
+  background-image: url('view/aset/gambar/roti.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -347,12 +348,71 @@ input {
   background-size: cover;
   background-repeat: no-repeat;
 }
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5e6d3;
+}
 
+.navbar {
+    background-color: #4b2e2e;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    height: auto;
+    width: 50%;
+
+}
+
+.navbar .logo span {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Brush Script MT', cursive;
+}
+.navbar .nav-links {
+    display: flex;
+    gap: 20px;
+}
+.navbar .nav-links a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 16px;
+}
+.navbar .icons {
+    display: flex;
+    gap: 15px;
+    color: white;
+}
+.navbar .icons i {
+    color: #FFFFFF;
+    font-size: 20px;
+}
 
 </style>
 </head> 
-<body class="body1">
-
+<body>
+<div class="navbar">
+  <div>
+   <a href="index.php?c=Auth&a=homepage">
+    <img class="logo" alt="Rica Cake Logo" height="40" src="view/aset/gambar/logoweb.png" width="40"/>
+    </a>
+   </div>
+   <div class="nav-links">
+    <a href="index.php?c=Auth&a=aboutuspage" >About Us</a>
+    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=contactpage">Contact</a>
+   </div>
+   <div class="icons">
+    <a href="index.php?c=Auth&a=index" class="fas fa-user">
+      </a>
+    <i class="fas fa-shopping-basket"></i>
+   </div>
+  </div>
+<div class="body1">
   <div class="container" id="container">
 
     <div id="register_panel" class="form-container register-container">
@@ -396,7 +456,7 @@ input {
     </div>
 
   </div>
-
+  </div>
   <script>
     const registerButton = document.getElementById("register");
 const loginButton = document.getElementById("login");

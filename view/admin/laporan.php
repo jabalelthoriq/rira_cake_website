@@ -25,14 +25,15 @@ $expenses = [
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div style="background-color: #5c4b4b;" class="fixed left-0 top-0 h-full w-64 text-white">
+        <div style="background-color: #4b2e2e;" class="fixed left-0 top-0 h-full w-64 text-white">
             <div class="p-6 border-b border-white border-opacity-20">
                 <h1 class="text-2xl font-bold">Admin Panel</h1>
             </div>
             <nav class="mt-6">
                 <a href="index.php?c=Auth&a=dashboardpage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Dashboard</a>
-                <a href="index.php?c=Auth&a=laporanpage" class="block w-full p-6 bg-white bg-opacity-50">Tambah Menu</a>
-                <a href="index.php?c=Auth&a=tambahmenupage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Laporan Keuangan</a>
+                <a href="index.php?c=Auth&a=laporanpage" class="block w-full p-6 bg-white bg-opacity-50">Laporan Keuangan</a>
+                <a href="index.php?c=Auth&a=tambahmenupage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Tambah Menu</a>
+                <a href="index.php?c=Auth&a=customerpage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Customer</a>
             </nav>
         </div>
 

@@ -18,8 +18,9 @@ body, html {
   font-family: 'Arial', sans-serif;
   background-color: #f5e6d3;
 }
+
 .navbar {
-    background-color: #5c4b4b;
+    background-color: #4b2e2e;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -30,25 +31,29 @@ body, html {
     width: 50%;
 
 }
+
+.navbar .logo span {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Brush Script MT', cursive;
+}
 .navbar .nav-links {
     display: flex;
     gap: 20px;
 }
 .navbar .nav-links a {
-    color: white;
+    color: #FFFFFF;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 .navbar .icons {
     display: flex;
     gap: 15px;
     color: white;
-    
 }
 .navbar .icons i {
-    color: white;
+    color: #FFFFFF;
     font-size: 20px;
-
 }
 
 .hero {
@@ -86,43 +91,6 @@ body, html {
     border-radius: 5px;
 }
 
-.navbar {
-    background-color: #6D4C41;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navbar .logo {
-    display: flex;
-    align-items: center;
-}
-.navbar .logo img {
-    height: 40px;
-    margin-right: 10px;
-}
-.navbar .logo span {
-    color: #FFFFFF;
-    font-size: 20px;
-    font-family: 'Brush Script MT', cursive;
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-.navbar .nav-links a {
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 16px;
-}
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-}
-.navbar .icons i {
-    color: #FFFFFF;
-    font-size: 20px;
-}
 .content {
     text-align: center;
     padding: 50px 20px;
@@ -169,34 +137,6 @@ body, html {
     border-radius: 20px;
     text-decoration: none;
     font-size: 16px;
-}
-
-.header {
-    background-color: #5c4b4b;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 50px;
-}
-.header img {
-    height: 50px;
-}
-.header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
-}
-.header .icons {
-    display: flex;
-    align-items: center;
-}
-.header .icons i {
-    margin-left: 15px;
-    font-size: 20px;
 }
 .main-content {
     text-align: center;
@@ -657,57 +597,8 @@ section h2.sec-title {
     z-index: 1;
   }
 /* nav css */
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f5e6d3;
-  }
-  .navbar .icons {
-        display: flex;
-        gap: 15px;
-        color: white;
-        
     
-        }
-        .navbar .icons i {
-        color: white;
-        font-size: 20px;
-        }
-    .contact-us {
-      margin-top: 30px;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-    }
-    .contact-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 24px;
-      color: #fff;
-      display: flex;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-    }
-    .contact-icon:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    .icons i {
-      margin-left: 20px;
-      color: #D2691E;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .icons i:hover {
-      transform: scale(1.2);
-    }
+    
 
     .king {
       margin-top: 0px;
@@ -732,8 +623,7 @@ section h2.sec-title {
     transition: all 0.8s ease;
     margin-bottom: 40px;
   }   
-
-
+  
     .about-us {
       padding: 50px 20px;
       text-align: center;
@@ -1090,17 +980,17 @@ section h2.sec-title {
 <body>
   <div class="navbar">
     <div>
-      <a href="/index.php?c=Auth&a=homepage">
-        <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40" />
+      <a href="index.php?c=Auth&a=homepage">
+        <img class="logo" alt="Rica Cake Logo" height="40" src="view/aset/gambar/logoweb.png" width="40" />
       </a>
     </div>
     <div class="nav-links">
-      <a href="/index.php?c=Auth&a=aboutuspage">About Us</a>
-      <a href="/index.php?c=Auth&a=orderpage">Order</a>
-      <a href="/index.php?c=Auth&a=contactpage">Contact</a>
+      <a href="index.php?c=Auth&a=aboutuspage">About Us</a>
+      <a href="index.php?c=Auth&a=orderpage">Order</a>
+      <a href="index.php?c=Auth&a=contactpage">Contact</a>
     </div>
     <div class="icons">
-    <a href="view/login.php" class="fas fa-user">
+    <a href="index.php?c=Auth&a=index" class="fas fa-user">
     </a>
       <i class="fas fa-shopping-basket"></i>
     </div>
@@ -1124,14 +1014,14 @@ section h2.sec-title {
           Word quickly spread about the unique flavors and impeccable quality of Rira's creations. Local residents flocked to the bakery, eager to taste the magic for themselves. Rira Cake soon became a beloved community staple.</p>
         </div>
           <div class="con" >
-          <img alt="history" src="aset/gambar/menu1.jpg" />
+          <img alt="history" src="view/aset/gambar/menu1.jpg" />
         </div>
     </div>
 
     
     <div class="-h" >
     <div class="con2" >
-          <img alt="history" src="aset/gambar/menu1.jpg" />
+          <img alt="history" src="view/aset/gambar/menu1.jpg" />
         </div>
         <div class="f" >
         <div class="-t" >Rising to Fame</div>
@@ -1147,7 +1037,7 @@ section h2.sec-title {
         <p>Today, Rira Cake stands as a testament to what passion and hard work can achieve. The small bakery has blossomed into a local legend, with its cakes now part of many cherished moments. Rira's story has inspired many, proving that dreams can indeed come true. The bakery continues to evolve, embracing new trends while honoring its traditions. Every cake, from design to flavor, reflects the journey and dedication of Rira and her team. Customers, old and new, find joy in every bite, knowing they're part of a legacy. Rira Cake is more than a bakery—it's a sweet journey through time.</p>
         </div>
           <div class="con" >
-          <img alt="history" src="aset/gambar/menu1.jpg" />
+          <img alt="history" src="view/aset/gambar/menu1.jpg" />
         </div>
     </div>
     
@@ -1201,9 +1091,10 @@ section h2.sec-title {
       </div>
       <div class="footer-section">
         <h3>Quick Links</h3>
-        <p><a href="#">About Us</a></p>
-        <p><a href="#">Order Now</a></p>
-        <p><a href="#">Home</a></p>
+        <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
+        <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+        <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
+        <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
       </div>
       <div class="footer-section">
         <h3>Contact Us</h3>

@@ -4,13 +4,13 @@ class PDF_Generator extends FPDF {
     function Header() {
         $this->SetFont('Arial','B',15);
         $this->Cell(60);
-        $this->Cell(70,10,'Detail Informasi Pemakai',0,0,'C');
+        $this->Cell(70,10,'Detail Informasi Customer',0,0,'C');
         $this->Ln(20);
     }
 
     function UserInfo($data) {
         $this->SetFont('Arial','B',14);
-        $this->Cell(0,10,'INFORMASI DETAIL PEMAKAI',0,1,'C');
+        $this->Cell(0,10,'INFORMASI DETAIL CUSTOMER',0,1,'C');
         $this->Ln(10);
 
         $this->SetFont('Arial','B',12);
@@ -37,6 +37,8 @@ class PDF_Generator extends FPDF {
         $this->Cell(40,8,'Alamat',0,0);
         $this->Cell(5,8,':',0,0);
         $this->Cell(100,8,$data['alamat'],0,1);
+
+        
 
         $this->Ln(10);
         

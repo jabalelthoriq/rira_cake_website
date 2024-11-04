@@ -22,8 +22,9 @@ body, html {
   font-family: 'Arial', sans-serif;
   background-color: #f5e6d3;
 }
+
 .navbar {
-    background-color: #5c4b4b;
+    background-color: #4b2e2e;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -34,25 +35,29 @@ body, html {
     width: 50%;
 
 }
+
+.navbar .logo span {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Brush Script MT', cursive;
+}
 .navbar .nav-links {
     display: flex;
     gap: 20px;
 }
 .navbar .nav-links a {
-    color: white;
+    color: #FFFFFF;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 .navbar .icons {
     display: flex;
     gap: 15px;
     color: white;
-    
 }
 .navbar .icons i {
-    color: white;
+    color: #FFFFFF;
     font-size: 20px;
-
 }
 
 .hero {
@@ -90,43 +95,6 @@ body, html {
     border-radius: 5px;
 }
 
-.navbar {
-    background-color: #6D4C41;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navbar .logo {
-    display: flex;
-    align-items: center;
-}
-.navbar .logo img {
-    height: 40px;
-    margin-right: 10px;
-}
-.navbar .logo span {
-    color: #FFFFFF;
-    font-size: 20px;
-    font-family: 'Brush Script MT', cursive;
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-.navbar .nav-links a {
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 16px;
-}
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-}
-.navbar .icons i {
-    color: #FFFFFF;
-    font-size: 20px;
-}
 .content {
     text-align: center;
     padding: 50px 20px;
@@ -174,34 +142,7 @@ body, html {
     text-decoration: none;
     font-size: 16px;
 }
-
-.header {
-    background-color: #5c4b4b;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 50px;
-}
-.header img {
-    height: 50px;
-}
-.header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
-}
-.header .icons {
-    display: flex;
-    align-items: center;
-}
-.header .icons i {
-    margin-left: 15px;
-    font-size: 20px;
-}
+        
 .main-content {
     text-align: center;
     padding: 50px 0;
@@ -661,30 +602,6 @@ section h2.sec-title {
     z-index: 1;
   }
 /* nav css */
-        body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f5e6d3;
-  }
-  .navbar .icons {
-        display: flex;
-        gap: 15px;
-        color: white;
-        
-    
-        }
-        .navbar .icons i {
-        color: white;
-        font-size: 20px;
-        }
-
-        .icons i {
-            color: white;
-            font-size: 20px;
-            margin-left: 15px;
-            cursor: pointer;
-        }
 
         .main-content {
             padding: 40px;
@@ -956,17 +873,17 @@ section h2.sec-title {
 <body>
     <div class="navbar">
         <div>
-            <a href="/index.php?c=Auth&a=homepage">
-                <img class="logo" alt="Rica Cake Logo" src="aset/gambar/logoweb.png" />
+            <a href="index.php?c=Auth&a=homepage">
+                <img class="logo" alt="Rica Cake Logo" src="view/aset/gambar/logoweb.png" />
             </a>
         </div>
         <div class="nav-links">
-            <a href="/index.php?c=Auth&a=aboutuspage">About Us</a>
-            <a href="/index.php?c=Auth&a=orderpage">Order</a>
-            <a href="/index.php?c=Auth&a=contactpage">Contact</a>
+            <a href="index.php?c=Auth&a=aboutuspage">About Us</a>
+            <a href="index.php?c=Auth&a=orderpage">Order</a>
+            <a href="index.php?c=Auth&a=contactpage">Contact</a>
         </div>
         <div class="icons">
-           <a href="view/login.php" class="fas fa-user">
+           <a href="index.php?c=Auth&a=index" class="fas fa-user">
       </a>
             <i class="fas fa-shopping-basket" onclick="openCartModal()"></i>
             <span class="cart-count" id="cartCount">0</span>
@@ -978,56 +895,56 @@ section h2.sec-title {
         <div class="product-container">
             <!-- Existing Products -->
             <div class="product-card" onclick="openModal('menu1.jpg', 'Nama Produk 1', 25000)">
-                <img alt="Product Image 1" src="aset/gambar/menu1.jpg" />
+                <img alt="Product Image 1" src="view/aset/gambar/menu1.jpg" />
                 <h2>Nama Produk 1</h2>
                 <p>Deskripsi singkat produk 1</p>
                 <div class="price">Rp 25.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu2.jpg', 'Nama Produk 2', 27000)">
-                <img alt="Product Image 2" src="aset/gambar/menu2.jpg" />
+                <img alt="Product Image 2" src="view/aset/gambar/menu2.jpg" />
                 <h2>Nama Produk 2</h2>
                 <p>Deskripsi singkat produk 2</p>
                 <div class="price">Rp 27.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu3.jpg', 'Nama Produk 3', 30000)">
-                <img alt="Product Image 3" src="aset/gambar/menu3.jpg" />
+                <img alt="Product Image 3" src="view/aset/gambar/menu3.jpg" />
                 <h2>Nama Produk 3</h2>
                 <p>Deskripsi singkat produk 3</p>
                 <div class="price">Rp 30.000</div>
             </div>
             <!-- New Products -->
             <div class="product-card" onclick="openModal('menu4.jpg', 'Nama Produk 4', 32000)">
-                <img alt="Product Image 4" src="aset/gambar/menu4.jpg" />
+                <img alt="Product Image 4" src="view/aset/gambar/menu4.jpg" />
                 <h2>Nama Produk 4</h2>
                 <p>Deskripsi singkat produk 4</p>
                 <div class="price">Rp 32.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu5.jpg', 'Nama Produk 5', 35000)">
-                <img alt="Product Image 5" src="aset/gambar/menu5.jpg" />
+                <img alt="Product Image 5" src="view/aset/gambar/menu5.jpg" />
                 <h2>Nama Produk 5</h2>
                 <p>Deskripsi singkat produk 5</p>
                 <div class="price">Rp 35.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu6.jpg', 'Nama Produk 6', 28000)">
-                <img alt="Product Image 6" src="aset/gambar/menu6.jpg" />
+                <img alt="Product Image 6" src="view/aset/gambar/menu6.jpg" />
                 <h2>Nama Produk 6</h2>
                 <p>Deskripsi singkat produk 6</p>
                 <div class="price">Rp 28.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu7.jpg', 'Nama Produk 7', 29000)">
-                <img alt="Product Image 7" src="aset/gambar/menu7.jpg" />
+                <img alt="Product Image 7" src="view/aset/gambar/menu7.jpg" />
                 <h2>Nama Produk 7</h2>
                 <p>Deskripsi singkat produk 7</p>
                 <div class="price">Rp 29.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu8.jpg', 'Nama Produk 8', 33000)">
-                <img alt="Product Image 8" src="aset/gambar/menu8.jpg" />
+                <img alt="Product Image 8" src="view/aset/gambar/menu8.jpg" />
                 <h2>Nama Produk 8</h2>
                 <p>Deskripsi singkat produk 8</p>
                 <div class="price">Rp 33.000</div>
             </div>
             <div class="product-card" onclick="openModal('menu9.jpg', 'Nama Produk 9', 34000)">
-                <img alt="Product Image 9" src="aset/gambar/menu9.jpg" />
+                <img alt="Product Image 9" src="view/aset/gambar/menu9.jpg" />
                 <h2>Nama Produk 9</h2>
                 <p>Deskripsi singkat produk 9</p>
                 <div class="price">Rp 34.000</div>
@@ -1074,9 +991,10 @@ section h2.sec-title {
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
-                <p><a href="#">About Us</a></p>
-                <p><a href="#">Order Now</a></p>
-                <p><a href="#">Home</a></p>
+                <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
+                <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+                <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
+                <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
             </div>
             <div class="footer-section">
                 <h3>Contact Us</h3>

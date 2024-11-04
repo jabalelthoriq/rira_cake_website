@@ -14,45 +14,6 @@
 
 
 
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f5e6d3;
-}
-.navbar {
-    background-color: #5c4b4b;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.logo{
-    height: auto;
-    width: 50%;
-
-}
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-.navbar .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-.navbar .icons {
-    display: flex;
-    gap: 15px;
-    color: white;
-    
-}
-.navbar .icons i {
-    color: white;
-    font-size: 20px;
-
-}
-
 .hero {
     text-align: center;
     color: white;
@@ -87,22 +48,26 @@ body, html {
     text-decoration: none;
     border-radius: 5px;
 }
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5e6d3;
+}
 
 .navbar {
-    background-color: #6D4C41;
+    background-color: #4b2e2e;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.navbar .logo {
-    display: flex;
-    align-items: center;
+.logo{
+    height: auto;
+    width: 50%;
+
 }
-.navbar .logo img {
-    height: 40px;
-    margin-right: 10px;
-}
+
 .navbar .logo span {
     color: #FFFFFF;
     font-size: 20px;
@@ -660,12 +625,6 @@ section h2.sec-title {
   }
 /* nav css */
 
-body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f5e6d3;
-  }
   
    .carousel-container {
     width: 100%;
@@ -695,15 +654,15 @@ body, html {
   }
 
   #slide1 {
-    background-image: url('aset/gambar/kukis4.jpg');
+    background-image: url('view/aset/gambar/kukis4.jpg');
   }
 
   #slide2 {
-    background-image: url('aset/gambar/kukis2.jpg');
+    background-image: url('view/aset/gambar/kukis2.jpg');
   }
 
   #slide3 {
-    background-image: url('aset/gambar/kukis3.jpg');
+    background-image: url('view/aset/gambar/kukis3.jpg');
   }
 
   .carousel-dots {
@@ -1168,17 +1127,17 @@ body, html {
 <body>
 <div class="navbar">
   <div>
-   <a href="/index.php?c=Auth&a=homepage">
-    <img class="logo" alt="Rica Cake Logo" height="40" src="aset/gambar/logoweb.png" width="40"/>
+   <a href="index.php?c=Auth&a=homepage">
+    <img class="logo" alt="Rica Cake Logo" height="40" src="view/aset/gambar/logoweb.png" width="40"/>
     </a>
    </div>
    <div class="nav-links">
-    <a href="/index.php?c=Auth&a=aboutuspage" >About Us</a>
-    <a href="/index.php?c=Auth&a=orderpage">Order</a>
-    <a href="/index.php?c=Auth&a=contactpage">Contact</a>
+    <a href="index.php?c=Auth&a=aboutuspage" >About Us</a>
+    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">
-    <a href="view/login.php" class="fas fa-user">
+    <a href="index.php?c=Auth&a=index" class="fas fa-user">
       </a>
     <i class="fas fa-shopping-basket"></i>
    </div>
@@ -1254,7 +1213,7 @@ body, html {
         </div>
       </div>
       <div>
-        <img src="aset/gambar/cookies-removebg.png" />
+        <img src="view/aset/gambar/cookies-removebg.png" />
       </div>
       <div class="right">
         <div class="item-text">
@@ -1292,7 +1251,7 @@ body, html {
     <div class="container">
       <!-- Menu Card 1 -->
       <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="aset/gambar/menu1.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Chocolate Cake</h3>
           <p class="menu-price">Rp 25.000</p>
@@ -1301,7 +1260,7 @@ body, html {
 
       <!-- Menu Card 2 -->
       <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="aset/gambar/menu2.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Cherry Cake</h3>
           <p class="menu-price">Rp 30.000</p>
@@ -1310,7 +1269,7 @@ body, html {
 
       <!-- Menu Card 3 -->
       <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="aset/gambar/menu3.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Ayam Bakar</h3>
           <p class="menu-price">Rp 35.000</p>
@@ -1319,7 +1278,7 @@ body, html {
 
       <!-- menu card 4 -->
       <div class="menu-card" onclick="showPopup('menu3')">
-        <div class="menu-image">Menu Image 3</div>
+        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Ayam Bakar</h3>
           <p class="menu-price">Rp 35.000</p>
@@ -1328,7 +1287,7 @@ body, html {
 
       <!-- Menu Card 1 -->
       <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="aset/gambar/menu1.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Chocolate Cake</h3>
           <p class="menu-price">Rp 25.000</p>
@@ -1337,7 +1296,7 @@ body, html {
 
       <!-- Menu Card 2 -->
       <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="aset/gambar/menu2.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Cherry Cake</h3>
           <p class="menu-price">Rp 30.000</p>
@@ -1346,7 +1305,7 @@ body, html {
 
       <!-- Menu Card 3 -->
       <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="aset/gambar/menu3.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Ayam Bakar</h3>
           <p class="menu-price">Rp 35.000</p>
@@ -1355,7 +1314,7 @@ body, html {
 
       <!-- menu card 4 -->
       <div class="menu-card" onclick="showPopup('menu3')">
-        <div class="menu-image">Menu Image 3</div>
+        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Ayam Bakar</h3>
           <p class="menu-price">Rp 35.000</p>
@@ -1363,7 +1322,7 @@ body, html {
       </div>
       <!-- Menu Card 1 -->
       <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="aset/gambar/menu1.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Chocolate Cake</h3>
           <p class="menu-price">Rp 25.000</p>
@@ -1372,7 +1331,7 @@ body, html {
 
       <!-- Menu Card 2 -->
       <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="aset/gambar/menu2.jpg" class="menu-image"></>
+        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
         <div class="menu-info">
           <h3 class="menu-title">Cherry Cake</h3>
           <p class="menu-price">Rp 30.000</p>
@@ -1458,9 +1417,10 @@ body, html {
       </div>
       <div class="footer-section">
         <h3>Quick Links</h3>
-        <p><a href="#">About Us</a></p>
-        <p><a href="#">Order Now</a></p>
-        <p><a href="#">Home</a></p>
+        <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
+        <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+        <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
+        <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
       </div>
       <div class="footer-section">
         <h3>Contact Us</h3>
