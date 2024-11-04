@@ -46,6 +46,7 @@ class AuthController {
     public function tambahmenupage    () {
         require_once 'view/admin/tambah-menu.php';
     }
+   
     
     
     public function register() {

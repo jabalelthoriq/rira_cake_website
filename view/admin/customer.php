@@ -110,7 +110,7 @@
                     <!-- Tombol Previous -->
                     <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
                         <a class="page-link" 
-                           href="index.php?c=Auth&a=dashboard&page=<?php echo ($page-1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                           href="index.php?c=Auth&a=customerpage&page=<?php echo ($page-1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
                             Previous
                         </a>
                     </li>
@@ -118,7 +118,7 @@
                     <?php for($i = 1; $i <= $totalPages; $i++): ?>
                         <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
                             <a class="page-link" 
-                               href="index.php?c=Auth&a=dashboard&page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                               href="index.php?c=Auth&a=customerpage&page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
                                 <?php echo $i; ?>
                             </a>
                         </li>
@@ -127,7 +127,7 @@
                     <!-- Tombol Next -->
                     <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
                         <a class="page-link" 
-                           href="index.php?c=Auth&a=dashboard&page=<?php echo ($page+1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                           href="index.php?c=Auth&a=customerpage&page=<?php echo ($page+1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
                             Next
                         </a>
                     </li>
