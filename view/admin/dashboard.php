@@ -96,7 +96,7 @@
             const expenseData = <?php echo json_encode(array_column($expenseData, 'jumlah')); ?>;
 
             const incomeChart = new Chart(ctxIncome, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: incomeData.map((_, index) => `Pemasukan ${index + 1}`), // Label untuk setiap pemasukan
                     datasets: [{
@@ -117,7 +117,7 @@
             });
 
             const expenseChart = new Chart(ctxExpense, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: expenseData.map((_, index) => `Pengeluaran ${index + 1}`), // Label untuk setiap pengeluaran
                     datasets: [{
