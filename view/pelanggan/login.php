@@ -403,7 +403,7 @@ body, html {
    </div>
    <div class="nav-links">
     <a href="index.php?c=Auth&a=aboutuspage" >About Us</a>
-    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=productpage">Order</a>
     <a href="index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">

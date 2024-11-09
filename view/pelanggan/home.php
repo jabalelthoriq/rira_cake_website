@@ -1133,7 +1133,7 @@ section h2.sec-title {
    </div>
    <div class="nav-links">
     <a href="index.php?c=Auth&a=aboutuspage" >About Us</a>
-    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=productpage">Order</a>
     <a href="index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">
@@ -1151,7 +1151,7 @@ section h2.sec-title {
         <p class="slide-description">Rira Cake traces its roots to the charming town of Jember, where it was first baked
           by local artisans. Over the years, it has become a beloved delicacy, winning hearts with its unique flavor and
           texture.</p>
-        <a class="slide-button" href="aboutus.php">The Journey</a>
+        <a class="slide-button" href="index.php?c=Auth&a=aboutuspage">The Journey</a>
       </div>
     </div>
     <div class="carousel-slide" id="slide2">
@@ -1159,7 +1159,7 @@ section h2.sec-title {
         <h2 class="slide-title">The Unique Ingredients of Rira Cake </h2>
         <p class="slide-description">The secret to Rira Cake's distinct taste lies in its combination of premium local
           ingredients. Each bite promises a burst of flavors that leave you craving for more.</p>
-        <a class="slide-button" href="order.php">Order Now</a>
+        <a class="slide-button" href="index.php?c=Auth&a=productpage">Order Now</a>
       </div>
     </div>
     <div class="carousel-slide" id="slide3">
@@ -1167,7 +1167,7 @@ section h2.sec-title {
         <h2 class="slide-title">Enjoying Rira Cake </h2>
         <p class="slide-description">Whether enjoyed as a dessert or a snack, Rira Cake fits perfectly into any
           occasion. Its delightful taste makes it a favorite among both locals and visitors alike.</p>
-        <a class="slide-button" href="contact.php">Contact Me</a>
+        <a class="slide-button" href="index.php?c=Auth&a=contactpage">Contact Me</a>
       </div>
     </div>
 
@@ -1418,7 +1418,7 @@ section h2.sec-title {
       <div class="footer-section">
         <h3>Quick Links</h3>
         <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
-        <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+        <p><a href="index.php?c=Auth&a=productpage">Order Now</a></p>
         <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
         <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
       </div>

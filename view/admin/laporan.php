@@ -1,25 +1,10 @@
-<?php
-
-// Sample transaction data
-$transactions = [
-    ['date' => '2024-03-01', 'description' => 'Penjualan Menu A', 'amount' => 500000],
-    ['date' => '2024-03-02', 'description' => 'Penjualan Menu B', 'amount' => 750000],
-    ['date' => '2024-03-03', 'description' => 'Penjualan Menu C', 'amount' => 625000]
-];
-
-$expenses = [
-    ['date' => '2024-03-01', 'description' => 'Bahan Baku', 'amount' => 300000],
-    ['date' => '2024-03-02', 'description' => 'Utilitas', 'amount' => 200000],
-    ['date' => '2024-03-03', 'description' => 'Gaji Karyawan', 'amount' => 1500000]
-];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Keuangan - Admin</title>
+    <title>Laporan Pengeluaran - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
@@ -38,93 +23,144 @@ $expenses = [
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 ml-64 p-8">
+        <div class="flex-1 ml-64 p-8 space-y-8">
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-2xl font-bold mb-6">Laporan Keuangan</h2>
+            <h2 class="text-2xl font-bold mb-6">Input Pengeluaran</h2>
+            <form action="index.php?c=Auth&a=tambahpengeluaran" method="POST" class="space-y-4">
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Nama Pengeluaran</label>
+        <input type="text" id="nama" name="nama" required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Jumlah (Rp)</label>
+        <input type="number" id="jumlah" name="jumlah" required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+    </div>
+    
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+        <textarea id="deskripsi" name="deskripsi" rows="3" required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Tanggal Transaksi</label>
+        <input type="date" id="tanggal" name="tanggal" required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+    </div>
+    
+    <button type="submit" 
+        style="background-color: #5c4b4b;" 
+        class="text-white px-4 py-2 rounded hover:opacity-90">
+        Tambah Pengeluaran
+    </button>
+</form>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-2xl font-bold mb-6">Data Pengeluaran</h2>
                 
-                <!-- Pemasukan -->
-                <div class="mb-8">
-                    <h4 class="text-md font-semibold mb-2">Detail Pemasukan</h4>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left">Tanggal</th>
-                                    <th class="px-6 py-3 text-left">Deskripsi</th>
-                                    <th class="px-6 py-3 text-left">Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <?php foreach ($transactions as $transaction): ?>
-                                <tr>
-                                    <td class="px-6 py-4"><?php echo $transaction['date']; ?></td>
-                                    <td class="px-6 py-4"><?php echo $transaction['description']; ?></td>
-                                    <td class="px-6 py-4">Rp <?php echo number_format($transaction['amount'], 0, ',', '.'); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                                <tr class="bg-gray-50 font-semibold">
-                                    <td class="px-6 py-4" colspan="2">Total Pemasukan</td>
-                                    <td class="px-6 py-4">Rp <?php echo number_format(array_sum(array_column($transactions, 'amount')), 0, ',', '.'); ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Informasi Total Data -->
+                <?php if(isset($totalData)): ?>
+                <div class="mb-4 p-4 bg-gray-100 rounded">
+                    Total Data: <?php echo $totalData; ?> data
+                    <?php if(!empty($search)): ?>
+                        | Hasil pencarian "<?php echo htmlspecialchars($search); ?>": <?php echo count($data); ?> data
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+
+                <!-- Form Pencarian -->
+                <div class="mb-4">
+                    <form action="index.php" method="GET" class="d-flex">
+                        <input type="hidden" name="c" value="Auth">
+                        <input type="hidden" name="a" value="laporanpage">  
+                        <input type="text" name="search" class="form-control me-2" 
+                               placeholder="Cari berdasarkan nama..." 
+                               value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <?php if(isset($search) && !empty($search)): ?>
+                            <a href="index.php?c=Auth&a=laporanpage" class="btn btn-secondary ms-2">Reset</a>
+                        <?php endif; ?>
+                    </form>
                 </div>
 
-                <!-- Pengeluaran -->
-                <div>
-                    <h4 class="text-md font-semibold mb-2">Detail Pengeluaran</h4>
+                <?php if(isset($dataPengeluaran) && !empty($dataPengeluaran)): ?>
                     <div class="overflow-x-auto">
-                        <table class="min-w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left">Tanggal</th>
-                                    <th class="px-6 py-3 text-left">Deskripsi</th>
-                                    <th class="px-6 py-3 text-left">Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <?php foreach ($expenses as $expense): ?>
-                                <tr>
-                                    <td class="px-6 py-4"><?php echo $expense['date']; ?></td>
-                                    <td class="px-6 py-4"><?php echo $expense['description']; ?></td>
-                                    <td class="px-6 py-4">Rp <?php echo number_format($expense['amount'], 0, ',', '.'); ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                                <tr class="bg-gray-50 font-semibold">
-                                    <td class="px-6 py-4" colspan="2">Total Pengeluaran</td>
-                                    <td class="px-6 py-4">Rp <?php echo number_format(array_sum(array_column($expenses, 'amount')), 0, ',', '.'); ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>No</th>
+            <th>Nama Pengeluaran</th>
+            <th>Jumlah</th>
+            <th>Deskripsi</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        $no = ($page - 1) * $perPage + 1;
+        foreach($dataPengeluaran as $pengeluaran): 
+        ?>
+        <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo htmlspecialchars($pengeluaran['nama']); ?></td>
+            <td>Rp <?php echo number_format($pengeluaran['jumlah'], 0, ',', '.'); ?></td>
+            <td><?php echo htmlspecialchars($pengeluaran['deskripsi']); ?></td>
+            <td><?php echo date('d-m-Y', strtotime($pengeluaran['tanggal_pengeluaran'])); ?></td>
+            <td>
+                <a href="index.php?c=Auth&a=editPengeluaran&id=<?php echo $pengeluaran['id']; ?>" 
+                   class="btn btn-warning btn-sm">Edit</a>
+                <a href="index.php?c=Auth&a=deletePengeluaran&id=<?php echo $pengeluaran['id']; ?>" 
+                   class="btn btn-danger btn-sm" 
+                   onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
                     </div>
-                </div>
 
-                <!-- Summary -->
-                <div class="mt-8 p-4 bg-gray-50 rounded-lg">
-                    <h4 class="text-lg font-semibold mb-4">Ringkasan</h4>
-                    <?php
-                    $total_income = array_sum(array_column($transactions, 'amount'));
-                    $total_expense = array_sum(array_column($expenses, 'amount'));
-                    $profit = $total_income - $total_expense;
-                    ?>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 bg-blue-100 rounded">
-                            <p class="text-sm text-blue-800">Total Pemasukan</p>
-                            <p class="text-lg font-bold text-blue-800">Rp <?php echo number_format($total_income, 0, ',', '.'); ?></p>
-                        </div>
-                        <div class="p-4 bg-red-100 rounded">
-                            <p class="text-sm text-red-800">Total Pengeluaran</p>
-                            <p class="text-lg font-bold text-red-800">Rp <?php echo number_format($total_expense, 0, ',', '.'); ?></p>
-                        </div>
-                        <div class="p-4 <?php echo $profit >= 0 ? 'bg-green-100' : 'bg-red-100'; ?> rounded">
-                            <p class="text-sm <?php echo $profit >= 0 ? 'text-green-800' : 'text-red-800'; ?>">Profit/Loss</p>
-                            <p class="text-lg font-bold <?php echo $profit >= 0 ? 'text-green-800' : 'text-red-800'; ?>">
-                                Rp <?php echo number_format($profit, 0, ',', '.'); ?>
-                            </p>
-                        </div>
+                    <!-- Pagination -->
+                    <?php if($totalPages > 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <!-- Tombol Previous -->
+                            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=tambahmenupage&page=<?php echo ($page-1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Previous
+                                </a>
+                            </li>
+                            
+                            <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                                    <a class="page-link" 
+                                       href="index.php?c=Auth&a=tambahmenupage&page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Tombol Next -->
+                            <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=tambahmenupage&page=<?php echo ($page+1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <div class="alert alert-warning text-center">
+                        <?php echo !empty($search) ? 'Tidak ada hasil pencarian untuk "'.htmlspecialchars($search).'"' : 'Tidak ada data'; ?>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

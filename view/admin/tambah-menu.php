@@ -1,31 +1,10 @@
-<?php
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submission
-    $title = $_POST['title'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $price = $_POST['price'] ?? '';
-    
-    // Handle file upload
-    if (isset($_FILES['menu_image']) && $_FILES['menu_image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = 'uploads/';
-        $uploadFile = $uploadDir . uniqid() . '_' . basename($_FILES['menu_image']['name']);
-        
-        if (move_uploaded_file($_FILES['menu_image']['tmp_name'], $uploadFile)) {
-            // File uploaded successfully
-            // Here you would typically save the menu data to a database
-            $success = true;
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Menu - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
@@ -44,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 ml-64 p-8">
+        <div class="flex-1 ml-64 p-8 space-y-8">
             <div class="bg-white p-6 rounded-lg shadow">
                 <h2 class="text-2xl font-bold mb-6">Tambah Menu Baru</h2>
                 
@@ -54,29 +33,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <?php endif; ?>
 
-                <form action="tambah_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="index.php?c=Auth&a=tambahmenu" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Judul Menu</label>
-                        <input type="text" name="title" required
+                        <label class="block text-sm font-medium text-gray-700">Nama Menu</label>
+                        <input type="text" id="nama" name="nama" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Kategori</label>
+                        <input type="text" id="kategori" name="kategori" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Stok</label>
+                        <input type="text" id="stok" name="stok" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Harga Menu</label>
+                        <input type="text" id="harga" name="harga" required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Deskripsi Menu</label>
-                        <textarea name="description" rows="3" required
+                        <textarea id="deskripsi" name="deskripsi" rows="3" required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                     </div>
                     
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Harga Menu</label>
-                        <input type="number" name="price" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
+        
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Foto Menu</label>
                         <div class="mt-1 flex items-center">
-                            <input type="file" name="menu_image" accept="image/*" required
+                            <input type="file" id="image" name="image" accept="image/*" required
                                 class="block w-full text-sm text-gray-500
                                     file:mr-4 file:py-2 file:px-4
                                     file:rounded file:border-0
@@ -92,6 +82,118 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Simpan Menu
                     </button>
                 </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-6">Data Produk</h2>
+                
+                <!-- Informasi Total Data -->
+                <?php if(isset($totalData)): ?>
+                <div class="mb-4 p-4 bg-gray-100 rounded">
+                    Total Data: <?php echo $totalData; ?> data
+                    <?php if(!empty($search)): ?>
+                        | Hasil pencarian "<?php echo htmlspecialchars($search); ?>": <?php echo count($data); ?> data
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+
+                <!-- Form Pencarian -->
+                <div class="mb-4">
+                    <form action="index.php" method="GET" class="d-flex">
+                        <input type="hidden" name="c" value="Auth">
+                        <input type="hidden" name="a" value="tambahmenupage">  
+                        <input type="text" name="search" class="form-control me-2" 
+                               placeholder="Cari berdasarkan nama..." 
+                               value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <?php if(isset($search) && !empty($search)): ?>
+                            <a href="index.php?c=Auth&a=tambahmenupage" class="btn btn-secondary ms-2">Reset</a>
+                        <?php endif; ?>
+                    </form>
+                </div>
+
+                <?php if(isset($data) && !empty($data)): ?>
+                    <div class="overflow-x-auto">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Kategori</th>
+                                    <th>Stok</th>
+                                    <th>Harga</th>
+                                    <th>Deskripsi</th>
+                                    <th>Image</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $no = ($page - 1) * $perPage + 1;
+                                foreach($data as $user): 
+                                ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo $user['nama']; ?></td>
+                                    <td><?php echo $user['kategori']; ?></td>
+                                    <td><?php echo $user['stok']; ?></td>
+                                    <td><?php echo $user['harga']; ?></td>
+                                    <td><?php echo $user['deskripsi']; ?></td>
+                                    <td><?php echo $user['image']; ?></td>
+                                    <td>
+                                        <a href="index.php?c=Auth&a=edit&id=<?php echo $user['id']; ?>" 
+                                           class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="index.php?c=Auth&a=delete2&id=<?php echo $user['id']; ?>" 
+                                           class="btn btn-danger btn-sm" 
+                                           onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                                           <!-- <a href="index.php?c=Auth&a=downloadPDF&id=<?php echo $user['id']; ?>" 
+                                           class="btn btn-info btn-sm">
+                                           <i class="fas fa-file-pdf"></i>Cetak PDF
+                                        </a> -->
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <?php if($totalPages > 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <!-- Tombol Previous -->
+                            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=tambahmenupage&page=<?php echo ($page-1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Previous
+                                </a>
+                            </li>
+                            
+                            <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                                    <a class="page-link" 
+                                       href="index.php?c=Auth&a=tambahmenupage&page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Tombol Next -->
+                            <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=tambahmenupage&page=<?php echo ($page+1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <div class="alert alert-warning text-center">
+                        <?php echo !empty($search) ? 'Tidak ada hasil pencarian untuk "'.htmlspecialchars($search).'"' : 'Tidak ada data'; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

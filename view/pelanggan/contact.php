@@ -974,7 +974,7 @@ section h2.sec-title {
    </div>
    <div class="nav-links">
     <a href="index.php?c=Auth&a=aboutuspage">About Us</a>
-    <a href="index.php?c=Auth&a=orderpage">Order</a>
+    <a href="index.php?c=Auth&a=productpage">Order</a>
     <a href="index.php?c=Auth&a=contactpage">Contact</a>
    </div>
    <div class="icons">
@@ -1096,7 +1096,7 @@ section h2.sec-title {
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <p><a href="index.php?c=Auth&a=aboutuspage">About Us</a></p>
-                <p><a href="index.php?c=Auth&a=orderpage">Order Now</a></p>
+                <p><a href="index.php?c=Auth&a=productpage">Order Now</a></p>
                 <p><a href="index.php?c=Auth&a=contactpage">Contact</a></p>
                 <p><a href="index.php?c=Auth&a=homepage">Home</a></p>
             </div>

@@ -142,7 +142,8 @@ body, html {
     text-decoration: none;
     font-size: 16px;
 }
-        
+
+
 .main-content {
     text-align: center;
     padding: 50px 0;
