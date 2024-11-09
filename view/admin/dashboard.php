@@ -1,22 +1,24 @@
 <?php
-$financialData = [
-    ['name' => 'Jan', 'income' => 12000000, 'expense' => 8000000],
-    ['name' => 'Feb', 'income' => 19000000, 'expense' => 12000000],
-    ['name' => 'Mar', 'income' => 15000000, 'expense' => 9000000],
-    ['name' => 'Apr', 'income' => 17000000, 'expense' => 11000000],
-    ['name' => 'May', 'income' => 20000000, 'expense' => 13000000],
-    ['name' => 'Jun', 'income' => 23000000, 'expense' => 15000000]
-];
+// $financialData = [
+//     ['name' => 'Jan', 'income' => 12000000, 'expense' => 8000000],
+//     ['name' => 'Feb', 'income' => 19000000, 'expense' => 12000000],
+//     ['name' => 'Mar', 'income' => 15000000, 'expense' => 9000000],
+//     ['name' => 'Apr', 'income' => 17000000, 'expense' => 11000000],
+//     ['name' => 'May', 'income' => 20000000, 'expense' => 13000000],
+//     ['name' => 'Jun', 'income' => 23000000, 'expense' => 15000000]
+// ];
 
-$employees = [
-    ['id' => 1, 'name' => 'John Doe', 'position' => 'Manager', 'contact' => '081234567890'],
-    ['id' => 2, 'name' => 'Jane Smith', 'position' => 'Chef', 'contact' => '082345678901'],
-    ['id' => 3, 'name' => 'Mike Johnson', 'position' => 'Waiter', 'contact' => '083456789012']
-];
+// $employees = [
+//     ['id' => 1, 'name' => 'John Doe', 'position' => 'Manager', 'contact' => '081234567890'],
+//     ['id' => 2, 'name' => 'Jane Smith', 'position' => 'Chef', 'contact' => '082345678901'],
+//     ['id' => 3, 'name' => 'Mike Johnson', 'position' => 'Waiter', 'contact' => '083456789012']
+// ];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +26,7 @@ $employees = [
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
@@ -33,107 +36,107 @@ $employees = [
             </div>
             <nav class="mt-6">
                 <a href="index.php?c=Auth&a=dashboardpage" class="block w-full p-6 bg-white bg-opacity-50">Dashboard</a>
-                <a href="index.php?c=Auth&a=laporanpage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Laporan Keuangan</a>
-                <a href="index.php?c=Auth&a=tambahmenupage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Tambah Menu</a>
-                <a href="index.php?c=Auth&a=customerpage" class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Customer</a>
+                <a href="index.php?c=Auth&a=laporanpage"
+                    class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Laporan Keuangan</a>
+                <a href="index.php?c=Auth&a=tambahmenupage"
+                    class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Tambah Menu</a>
+                <a href="index.php?c=Auth&a=customerpage"
+                    class="block w-full p-6 hover:bg-white hover:bg-opacity-20">Customer</a>
             </nav>
         </div>
 
         <!-- Main Content -->
         <div class="flex-1 ml-64 p-8">
             <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-            
+
             <!-- Charts -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-lg font-semibold mb-4">Grafik Pemasukan</h3>
                     <canvas id="incomeChart"></canvas>
                 </div>
-                
+
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-lg font-semibold mb-4">Grafik Pengeluaran</h3>
-                    <canvas id="expenseChart"></canvas>
+                    <canvas id="expenseChart"></canvas </div>
                 </div>
-            </div>
 
-            <!-- Employee Table -->
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-lg font-semibold mb-4">Detail Karyawan</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full">
-                        <thead class="bg-gray-50">
+                <!-- Employee Table -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-lg font-semibold mb-4">Data Karyawan</h3>
+                    <table class="min-w-full border-collapse border border-gray-300">
+                        <thead>
                             <tr>
-                                <th class="px-6 py-3 text-left">ID</th>
-                                <th class="px-6 py-3 text-left">Nama</th>
-                                <th class="px-6 py-3 text-left">Posisi</th>
-                                <th class="px-6 py-3 text-left">Kontak</th>
+                                <th class="border border-gray-300 p-2">ID Karyawan</th>
+                                <th class="border border-gray-300 p-2">Nama</th>
+                                <th class="border border-gray-300 p-2">Kontak</th>
+                                <th class="border border-gray-300 p-2">Tanggal Masuk</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody>
                             <?php foreach ($employees as $employee): ?>
-                            <tr>
-                                <td class="px-6 py-4"><?php echo $employee['id']; ?></td>
-                                <td class="px-6 py-4"><?php echo $employee['name']; ?></td>
-                                <td class="px-6 py-4"><?php echo $employee['position']; ?></td>
-                                <td class="px-6 py-4"><?php echo $employee['contact']; ?></td>
-                            </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2"><?php echo $employee['id_karyawan']; ?></td>
+                                    <td class="border border-gray-300 p-2"><?php echo $employee['nama']; ?></td>
+                                    <td class="border border-gray-300 p-2"><?php echo $employee['kontak']; ?></td>
+                                    <td class="border border-gray-300 p-2"><?php echo $employee['tanggal_masuk']; ?></td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Initialize Charts
-        const months = <?php echo json_encode(array_column($financialData, 'name')); ?>;
-        const incomeData = <?php echo json_encode(array_column($financialData, 'income')); ?>;
-        const expenseData = <?php echo json_encode(array_column($financialData, 'expense')); ?>;
+        <script>
+            const ctxIncome = document.getElementById('incomeChart').getContext('2d');
+            const ctxExpense = document.getElementById('expenseChart').getContext('2d');
 
-        // Income Chart
-        new Chart(document.getElementById('incomeChart'), {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: 'Pemasukan',
-                    data: incomeData,
-                    borderColor: '#5c4b4b',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const incomeData = <?php echo json_encode(array_column($incomeData, 'jumlah')); ?>;
+            const expenseData = <?php echo json_encode(array_column($expenseData, 'jumlah')); ?>;
+
+            const incomeChart = new Chart(ctxIncome, {
+                type: 'bar',
+                data: {
+                    labels: incomeData.map((_, index) => `Pemasukan ${index + 1}`), // Label untuk setiap pemasukan
+                    datasets: [{
+                        label: 'Pemasukan',
+                        data: incomeData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        // Expense Chart
-        new Chart(document.getElementById('expenseChart'), {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: 'Pengeluaran',
-                    data: expenseData,
-                    borderColor: '#82ca9d',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const expenseChart = new Chart(ctxExpense, {
+                type: 'bar',
+                data: {
+                    labels: expenseData.map((_, index) => `Pengeluaran ${index + 1}`), // Label untuk setiap pengeluaran
+                    datasets: [{
+                        label: 'Pengeluaran',
+                        data: expenseData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
 </body>
+
 </html>
