@@ -48,44 +48,48 @@
         <!-- Main Content -->
         <div class="flex-1 ml-64 p-8">
             <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
-
+            
             <!-- Charts -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-lg font-semibold mb-4">Grafik Pemasukan</h3>
                     <canvas id="incomeChart"></canvas>
                 </div>
-
+                
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-lg font-semibold mb-4">Grafik Pengeluaran</h3>
-                    <canvas id="expenseChart"></canvas </div>
+                    <canvas id="expenseChart"></canvas>
                 </div>
+            </div>
 
-                <!-- Employee Table -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold mb-4">Data Karyawan</h3>
-                    <table class="min-w-full border-collapse border border-gray-300">
-                        <thead>
+            <!-- Employee Table -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-4">Detail Karyawan</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th class="border border-gray-300 p-2">ID Karyawan</th>
-                                <th class="border border-gray-300 p-2">Nama</th>
-                                <th class="border border-gray-300 p-2">Kontak</th>
-                                <th class="border border-gray-300 p-2">Tanggal Masuk</th>
+                                <th class="px-6 py-3 text-left">ID</th>
+                                <th class="px-6 py-3 text-left">Nama</th>
+                                <th class="px-6 py-3 text-left">Kontak</th>
+                                <th class="px-6 py-3 text-left">Tanggal Masuk</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="divide-y divide-gray-200">
                             <?php foreach ($employees as $employee): ?>
-                                <tr>
-                                    <td class="border border-gray-300 p-2"><?php echo $employee['id_karyawan']; ?></td>
-                                    <td class="border border-gray-300 p-2"><?php echo $employee['nama']; ?></td>
-                                    <td class="border border-gray-300 p-2"><?php echo $employee['kontak']; ?></td>
-                                    <td class="border border-gray-300 p-2"><?php echo $employee['tanggal_masuk']; ?></td>
-                                </tr>
+                            <tr>
+                                <td class="px-6 py-4"><?php echo $employee['id_karyawan']; ?></td>
+                                <td class="px-6 py-4"><?php echo $employee['nama']; ?></td>
+                                <td class="px-6 py-4"><?php echo $employee['kontak']; ?></td>
+                                <td class="px-6 py-4"><?php echo $employee['tanggal_masuk']; ?></td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
 
         <script>
