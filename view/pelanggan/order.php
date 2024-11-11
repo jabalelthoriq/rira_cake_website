@@ -1027,7 +1027,7 @@ section h2.sec-title {
 
             // Ensure the image path is correctly set to the modal image element
             const modalImage = document.getElementById("modalImage");
-            modalImage.src = `aset/gambar/${image}`;
+            modalImage.src = `view/aset/gambar/${image}`;
             modalImage.alt = title;
 
             document.getElementById("modalTitle").innerText = title;
@@ -1070,7 +1070,7 @@ section h2.sec-title {
                 const cartItem = document.createElement("div");
                 cartItem.className = "cart-item";
                 cartItem.innerHTML = `
-            <img src="aset/gambar/${item.image}" alt="${item.title}">
+            <img src="view/aset/gambar/${item.image}" alt="${item.title}">
             <div class="item-info">
                 <h3>${item.title}</h3>
                 <p>Amount: ${item.amount}</p>
