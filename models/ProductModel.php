@@ -42,12 +42,13 @@ class ProductModel extends Database {
 
     public function tambahmenu($data) {
         try {
-            $query = "INSERT INTO produk (nama, kategori, stok, harga, deskripsi, image) 
-                      VALUES (:nama, :kategori, :stok, :harga, :deskripsi, :image)";
+            $query = "INSERT INTO produk (id, nama, kategori, stok, harga, deskripsi, image) 
+                      VALUES (:id, :nama, :kategori, :stok, :harga, :deskripsi, :image)";
                       
             $stmt = $this->db->prepare($query);
             
             $params = [
+                ':id' => $data['id'],
                 ':nama' => $data['nama'],
                 ':kategori' => $data['kategori'],
                 ':stok' => $data['stok'],
@@ -67,6 +68,28 @@ class ProductModel extends Database {
         $stmt = $this->db->prepare($query);
         return $stmt->execute([':id' => $id]);
     }
+    public function update($data) {
+
+            $query = "UPDATE produk SET 
+                      nama = :nama,
+                      kategori = :kategori,
+                      stok = :stok,
+                      harga = :harga,
+                      deskripsi = :deskripsi,
+                      image = :image
+                      WHERE id = :id";
+            
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute([
+                ':nama' => $data['nama'],
+                ':kategori' => $data['kategori'],
+                ':stok' => $data['stok'],
+                ':harga' => $data['harga'],
+                ':deskripsi' => $data['deskripsi'],
+                ':image' => $data['image'],
+                ':id' => $data['id']
+            ]);
+        }
+    }
 
    
-}

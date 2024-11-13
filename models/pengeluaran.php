@@ -66,24 +66,29 @@ class pengeluaran extends Database {
     }
 
 
-    public function update($data) {
-        $query = "UPDATE " . $this->table_name . " SET barang_id=:barang_id, jumlah=:jumlah, total_harga=:total_harga, tanggal_transaksi=:tanggal_transaksi WHERE id=:id";
-        $stmt = $this->db->prepare($query);
-
-        $stmt->bindParam(":barang_id", $data['barang_id']);
-        $stmt->bindParam(":jumlah", $data['jumlah']);
-        $stmt->bindParam(":total_harga", $data['total_harga']);
-        $stmt->bindParam(":tanggal_transaksi", $data['tanggal_transaksi']);
-        $stmt->bindParam(":id", $data['id']);
-
-        return $stmt->execute();
-    }
+   
 
     public function delete($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id=:id";
+        $query = "DELETE FROM pengeluaran WHERE id = :id";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
+        return $stmt->execute([':id' => $id]);
+    }
+
+    public function updatepengeluaran($data) {
+
+        $query = "UPDATE pengeluaran SET 
+                  nama = :nama,
+                  jumlah = :jumlah,
+                  deskripsi = :deskripsi
+                  WHERE id = :id";
+        
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            ':nama' => $data['nama'],
+            ':jumlah' => $data['jumlah'],
+            ':deskripsi' => $data['deskripsi'],
+            ':id' => $data['id']
+        ]);
     }
 }
 ?>

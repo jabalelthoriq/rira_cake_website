@@ -6,6 +6,12 @@
     <title>Tambah Menu - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; } 
+        .popup-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; } 
+        .close-btn { float: right; cursor: pointer; font-size: 20px; } 
+        /* .btn-edit { background-color: yellow; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; } */
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -77,7 +83,7 @@
                     </div>
                     
                     <button type="submit" 
-                        style="background-color: #5c4b4b;" 
+                        style="background-color: #2E8B57;" 
                         class="text-white px-4 py-2 rounded hover:opacity-90">
                         Simpan Menu
                     </button>
@@ -126,25 +132,31 @@
                                     <th>Deskripsi</th>
                                     <th>Image</th>
                                     <th>Aksi</th>
-                                </tr>
+                                </tr>   
                             </thead>
                             <tbody>
                                 <?php 
                                 $no = ($page - 1) * $perPage + 1;
-                                foreach($data as $user): 
+                                foreach($data as $product): 
                                 ?>
                                 <tr>
-                                    <td><?php echo $no++; ?></td>
-                                    <td><?php echo $user['nama']; ?></td>
-                                    <td><?php echo $user['kategori']; ?></td>
-                                    <td><?php echo $user['stok']; ?></td>
-                                    <td><?php echo $user['harga']; ?></td>
-                                    <td><?php echo $user['deskripsi']; ?></td>
-                                    <td><?php echo $user['image']; ?></td>
+                                
+                                <td><?php echo $no++; ?></td>   
+                                    <td><?php echo $product['nama']; ?></td>
+                                    <td><?php echo $product['kategori']; ?></td>
+                                    <td><?php echo $product['stok']; ?></td>
+                                    <td><?php echo $product['harga']; ?></td>
+                                    <td><?php echo $product['deskripsi']; ?></td>
+                                    <td><?php echo $product['image']; ?></td>
                                     <td>
-                                        <a href="index.php?c=Auth&a=edit&id=<?php echo $user['id']; ?>" 
-                                           class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="index.php?c=Auth&a=delete2&id=<?php echo $user['id']; ?>" 
+                                <button class="btn btn-warning btn-sm" onclick="openPopup('<?php echo $product['id']; ?>',
+                                    '<?php echo htmlspecialchars($product['nama'], ENT_QUOTES); ?>', 
+                                    '<?php echo htmlspecialchars($product['kategori'], ENT_QUOTES); ?>', 
+                                    '<?php echo htmlspecialchars($product['stok'], ENT_QUOTES); ?>', 
+                                    '<?php echo htmlspecialchars($product['harga'], ENT_QUOTES); ?>', 
+                                    '<?php echo htmlspecialchars($product['deskripsi'], ENT_QUOTES); ?>')">Edit Menu</button> 
+                                    
+                                        <a href="index.php?c=Auth&a=delete2&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-danger btn-sm" 
                                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                                            <!-- <a href="index.php?c=Auth&a=downloadPDF&id=<?php echo $user['id']; ?>" 
@@ -153,10 +165,13 @@
                                         </a> -->
                                     </td>
                                 </tr>
+                                
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
+                    
+                    
 
                     <!-- Pagination -->
                     <?php if($totalPages > 1): ?>
@@ -195,7 +210,70 @@
                     </div>
                 <?php endif; ?>
             </div>
+            
         </div>
+        
     </div>
+    <div class="popup-overlay" id="popupOverlay"> 
+        <div class="popup-content"> 
+            <span class="close-btn" onclick="closePopup()">&times;</span> 
+            <h2 class="text-2xl font-bold mb-6">Edit Menu</h2> 
+            <form action="index.php?c=Auth&a=update" method="POST" enctype="multipart/form-data"> 
+                <input type="hidden" name="id" id="edit-id"> 
+                <div> 
+                    <label class="block text-sm font-medium text-gray-700">Nama Menu</label> 
+                    <input type="text" name="nama" id="edit-nama" required 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div class="mt-4"> 
+                    <label class="block text-sm font-medium text-gray-700">Kategori</label> 
+                    <input type="text" name="kategori" id="edit-kategori" required 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div class="mt-4"> 
+                    <label class="block text-sm font-medium text-gray-700">Stok</label> 
+                    <input type="text" name="stok" id="edit-stok" required 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div class="mt-4"> 
+                    <label class="block text-sm font-medium text-gray-700">Harga</label> 
+                    <input type="text" name="harga" id="edit-harga" required 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div class="mt-4"> 
+                    <label class="block text-sm font-medium text-gray-700">Deskripsi</label> 
+                    <textarea name="deskripsi" id="edit-deskripsi" rows="3" required 
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                </div>
+                <div class="mt-4"> 
+                    <label class="block text-sm font-medium text-gray-700">Foto Menu</label> 
+                    <input type="file" name="image" accept="image/*"
+                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#5c4b4b] file:text-white hover:file:bg-opacity-80">
+                </div>
+                <div class="mt-6">
+                    <button type="submit" style="background-color: #2E8B57;" 
+                            class="text-white px-4 py-2 rounded hover:opacity-90">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form> 
+        </div> 
+    </div>
+    <script> 
+    
+    function openPopup(id, nama, kategori, stok, harga, deskripsi) {
+        
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-nama').value = nama;
+        document.getElementById('edit-kategori').value = kategori;
+        document.getElementById('edit-stok').value = stok;
+        document.getElementById('edit-harga').value = harga;
+        document.getElementById('edit-deskripsi').value = deskripsi;
+        
+      
+        document.getElementById('popupOverlay').style.display = 'flex';
+    } 
+    function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } 
+    </script>
 </body>
 </html>

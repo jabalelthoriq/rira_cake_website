@@ -145,8 +145,6 @@ class AuthController
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $perPage = 10;
 
-        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-        $perPage = 5;
         $search = isset($_GET['search']) ? $_GET['search'] : '';
         $role = 'pelanggan';
 
@@ -194,8 +192,8 @@ class AuthController
 
     public function downloadPDF()
     {
-        if (!isset($_SESSION['user'])) {
-            header('Location: index.php?c=Auth&a=index');
+        if (!isset($_SESSION['logged_in'])) {
+            header('Location: index.php?c=Auth&a=customerpage');
             return;
         }
 
@@ -241,9 +239,19 @@ class AuthController
     }
 
 public function delete2() {
+    
     $id = $_GET['id'];
     if($this->productModel->delete($id)) {
         header('Location: index.php?c=Auth&a=tambahmenupage');
+    } else {
+        echo "Hapus data gagal!";
+    }
+}
+public function delete3() {
+    
+    $id = $_GET['id'];
+    if($this->pengeluaranModel->delete($id)) {
+        header('Location: index.php?c=Auth&a=laporanpage');
     } else {
         echo "Hapus data gagal!";
     }
@@ -329,6 +337,48 @@ public function tambahmenu() {
     }
 }
 
+public function update() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        // Proses jika ada upload foto baru
+        if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileExtension = pathinfo($_FILES['image']['nama'], PATHINFO_EXTENSION);
+            $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
+            $targetDir = 'uploads/';
+            $targetFile = $targetDir . $newFileName;
+            
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+            
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                if(!empty($_POST['image_lama']) && file_exists($_POST['image_lama'])) {
+                    unlink($_POST['image_lama']);
+                }
+                $image = $targetFile;
+            }
+        }
+
+        $data = [
+            'id' => $_POST['id'],
+            'nama' => $_POST['nama'],
+            'kategori' => $_POST['kategori'],
+            'stok' => $_POST['stok'],
+            'harga' => $_POST['harga'],
+            'deskripsi' => $_POST['deskripsi'],
+            'image' => $image
+          
+        ];
+        
+        if ($this->productModel->update($data)) {
+            header('Location: index.php?c=Auth&a=tambahmenupage');
+            exit;
+        } else {
+            header('Location: index.php?c=Auth&a=edit&id=' . $_POST['id']);
+            exit;
+        }
+    }
+}
 public function tambahpengeluaran() {
     if(!isset($_SESSION['logged_in'])) {
         header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
@@ -363,6 +413,7 @@ public function tambahpengeluaran() {
         }
     }
 }
+
 public function laporanpage    () {
     if(!isset($_SESSION['logged_in'])) {
         header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
@@ -379,7 +430,27 @@ public function laporanpage    () {
     $totalPages = ceil($totalDataPengeluaran / $perPage);
     require_once 'view/admin/laporan.php';
 }
-
+public function updatepengeluaran() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+ 
+        $data = [
+            'id' => $_POST['id'],
+            'nama' => $_POST['nama'],
+            'jumlah' => $_POST['jumlah'],
+            'deskripsi' => $_POST['deskripsi'],
+   
+          
+        ];
+        
+        if ($this->pengeluaranModel->updatepengeluaran($data)) {
+            header('Location: index.php?c=Auth&a=laporanpage');
+            exit;
+        } else {
+            header('Location: index.php?c=Auth&a=edit&id=' . $_POST['id']);
+            exit;
+        }
+    }
+}
 
 }
 
