@@ -342,7 +342,7 @@ public function update() {
         
         // Proses jika ada upload foto baru
         if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $fileExtension = pathinfo($_FILES['image']['nama'], PATHINFO_EXTENSION);
+            $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
             $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
             $targetDir = 'uploads/';
             $targetFile = $targetDir . $newFileName;
@@ -365,8 +365,8 @@ public function update() {
             'kategori' => $_POST['kategori'],
             'stok' => $_POST['stok'],
             'harga' => $_POST['harga'],
-            'deskripsi' => $_POST['deskripsi'],
-            'image' => $image
+            'deskripsi' => $_POST['deskripsi']
+            
           
         ];
         

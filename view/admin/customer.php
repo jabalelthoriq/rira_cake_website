@@ -8,7 +8,40 @@
     <title>Customer - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .header-container {
+    display: flex;
+    justify-content:space-between;
     
+      
+        
+}
+    .logout-btn {
+        background-color: #fff;
+        color: #dc2626;
+        border: 1px solid #dc2626;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 20px;
+      
+
+    }
+.logout-btn:hover {
+            background-color: #dc2626;
+            color: #fff;
+        }
+
+        .logout-icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -27,8 +60,19 @@
 
         <!-- Main Content -->
         <div class="flex-1 ml-64 p-8">
+        <div class="header-container" >
+          <h2 class="text-2xl font-bold mb-6">Customer</h2>
+            <button class="logout-btn" onclick="handleLogout()">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </button>
+            </div>
             <div class="bg-white p-6 rounded-lg shadow">    
-                <h2 class="text-2xl font-bold mb-6">Customer</h2>
+                <h2 class="text-lg font-bold mb-4">Data Customer</h2>
                 
                 <!-- Informasi Total Data -->
                 <?php if(isset($totalData)): ?>
@@ -141,5 +185,14 @@
             </div>
         <?php endif; ?>
     </div>
+    <script>
+        function handleLogout() {
+            
+            localStorage.removeItem('token');
+            sessionStorage.clear();
+
+            window.location.href = 'index.php?c=Auth&a=homepage';
+        }
+    </script>
 </body>
 </html>

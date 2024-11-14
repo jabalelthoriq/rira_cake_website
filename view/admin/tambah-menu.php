@@ -10,7 +10,110 @@
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; } 
         .popup-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; } 
         .close-btn { float: right; cursor: pointer; font-size: 20px; } 
-        /* .btn-edit { background-color: yellow; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; } */
+
+        .header-container {
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: -30px;
+  
+      
+        
+}
+    .logout-btn {
+        background-color: #fff;
+        color: #dc2626;
+        border: 1px solid #dc2626;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 20px;
+      
+
+    }
+.logout-btn:hover {
+            background-color: #dc2626;
+            color: #fff;
+        }
+
+        .logout-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            padding: 15px;
+            border-radius: 5px;
+            width: 300px;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .notification.hide {
+            animation: slideOut 0.3s ease-in-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .notification-success {
+            background-color: #E8F5E9;
+            border-left: 4px solid #4CAF50;
+        }
+        .notification-icon {
+            font-size: 20px;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: #666;
+        }
+        .product-image { max-width: 200px; max-height: 200px; }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -30,8 +133,19 @@
 
         <!-- Main Content -->
         <div class="flex-1 ml-64 p-8 space-y-8">
+        <div class="header-container" >
+          <h2 class="text-2xl font-bold mb-6">Tambah Menu</h2>
+            <button class="logout-btn" onclick="handleLogout()">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </button>
+            </div>
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-2xl font-bold mb-6">Tambah Menu Baru</h2>
+                <h2 class="text-lg font-bold mb-4">Tambah Menu Baru</h2>
                 
                 <?php if (isset($success)): ?>
                 <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
@@ -84,14 +198,16 @@
                     
                     <button type="submit" 
                         style="background-color: #2E8B57;" 
-                        class="text-white px-4 py-2 rounded hover:opacity-90">
+                        class="text-white px-4 py-2 rounded hover:opacity-90"
+                        onclick="showNotification('success')">
                         Simpan Menu
                     </button>
+                    <div class="notification-container" id="notificationContainer"></div>
                 </form>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-2xl font-bold mb-6">Data Produk</h2>
+                <h2 class="text-lg font-bold mb-4">Data Produk</h2>
                 
                 <!-- Informasi Total Data -->
                 <?php if(isset($totalData)): ?>
@@ -147,7 +263,8 @@
                                     <td><?php echo $product['stok']; ?></td>
                                     <td><?php echo $product['harga']; ?></td>
                                     <td><?php echo $product['deskripsi']; ?></td>
-                                    <td><?php echo $product['image']; ?></td>
+                                    <td><img src="uploads/<?php echo $product['image']; ?>" alt="Product Image" class="product-image"/></td>
+
                                     <td>
                                 <button class="btn btn-warning btn-sm" onclick="openPopup('<?php echo $product['id']; ?>',
                                     '<?php echo htmlspecialchars($product['nama'], ENT_QUOTES); ?>', 
@@ -250,6 +367,10 @@
                     <input type="file" name="image" accept="image/*"
                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#5c4b4b] file:text-white hover:file:bg-opacity-80">
                 </div>
+                <div class="mt-4">
+    <img src="uploads/<?php echo $product['image']; ?>" alt="Product Image" >
+    <input type="hidden" name="image_lama" value="<?= $product['image'] ?>">
+</div>
                 <div class="mt-6">
                     <button type="submit" style="background-color: #2E8B57;" 
                             class="text-white px-4 py-2 rounded hover:opacity-90">
@@ -274,6 +395,57 @@
         document.getElementById('popupOverlay').style.display = 'flex';
     } 
     function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } 
+
+    function showNotification(type) {
+            const container = document.getElementById('notificationContainer');
+            
+            const icons = {
+                success: '✓',
+                error: '✕',
+                warning: '⚠',
+                info: 'ℹ'
+            };
+
+            const titles = {
+                success: 'Success!',
+                error: 'Error!',
+                warning: 'Warning!',
+                info: 'Information'
+            };
+
+            const messages = {
+                success: 'Your action was completed successfully.',
+                error: 'An error occurred. Please try again.',
+                warning: 'Please proceed with caution.',
+                info: 'Here is some useful information.'
+            };
+
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon ${type}-icon">${icons[type]}</div>
+                <div class="notification-content">
+                    <div class="notification-title">${titles[type]}</div>
+                    <div class="notification-message">${messages[type]}</div>
+                </div>
+                <button class="close-btn" onclick="closeNotification(this.parentElement)">×</button>
+            `;
+
+            container.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                closeNotification(notification);
+            }, 3000);
+        }
+
+        function handleLogout() {
+            
+            localStorage.removeItem('token');
+            sessionStorage.clear();
+
+            window.location.href = 'index.php?c=Auth&a=homepage';
+        } 
     </script>
 </body>
 </html>

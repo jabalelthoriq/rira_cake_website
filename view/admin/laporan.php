@@ -9,7 +9,41 @@
     <style>
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; } 
         .popup-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; } 
-        .close-btn { float: right; cursor: pointer; font-size: 20px; } 
+        .close-btn { float: right; cursor: pointer; font-size: 20px; }
+        
+        .header-container {
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: -30px;
+    
+      
+        
+}
+    .logout-btn {
+        background-color: #fff;
+        color: #dc2626;
+        border: 1px solid #dc2626;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 20px;
+      
+
+    }
+.logout-btn:hover {
+            background-color: #dc2626;
+            color: #fff;
+        }
+
+        .logout-icon {
+            width: 16px;
+            height: 16px;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -29,8 +63,19 @@
 
         <!-- Main Content -->
         <div class="flex-1 ml-64 p-8 space-y-8">
+        <div class="header-container" >
+          <h2 class="text-2xl font-bold mb-6">Laporan Keuangan</h2>
+            <button class="logout-btn" onclick="handleLogout()">
+                <svg class="logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </button>
+            </div>
             <div class="bg-white p-6 rounded-lg shadow">
-            <h2 class="text-2xl font-bold mb-6">Input Pengeluaran</h2>
+            <h2 class="text-lg font-bold mb-4">Input Pengeluaran</h2>
             <form action="index.php?c=Auth&a=tambahpengeluaran" method="POST" class="space-y-4">
     <div>
         <label class="block text-sm font-medium text-gray-700">Nama Pengeluaran</label>
@@ -65,7 +110,7 @@
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow">
-            <h2 class="text-2xl font-bold mb-6">Data Pengeluaran</h2>
+            <h2 class="text-lg font-bold mb-4">Data Pengeluaran</h2>
                 
                 <!-- Informasi Total Data -->
                 <?php if(isset($totalData)): ?>
@@ -214,6 +259,14 @@
         document.getElementById('popupOverlay').style.display = 'flex';
     } 
     function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } 
+
+    function handleLogout() {
+            
+            localStorage.removeItem('token');
+            sessionStorage.clear();
+
+            window.location.href = 'index.php?c=Auth&a=homepage';
+        }
     </script>
 </body>
 </html>
