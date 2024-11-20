@@ -130,6 +130,7 @@ body, html {
             transform: scale(0.7);
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
         }
 
         .popup-overlay.show {
@@ -159,10 +160,10 @@ body, html {
             background: #ddd;
             margin-bottom: 15px;
             display: flex;
-            align-items: center;
-            justify-content: center;
             border-radius: 4px;
             overflow: hidden;
+    
+
         }
 
         .popup-title {
@@ -567,6 +568,278 @@ body, html {
             text-align: center;
         }
 
+        .payment-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+}
+
+.payment-popup-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.payment-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.payment-body {
+    padding: 20px 0;
+}
+
+.order-summary {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.order-summary h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    border-color: #4b2e2e;
+    background-color: #f9f9f9;
+}
+
+.payment-method input {
+    margin-right: 10px;
+}
+
+.btn-process-payment {
+    width: 100%;
+    padding: 12px;
+    background-color: #4b2e2e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-process-payment:hover {
+    background-color: #6c3b16;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.payment-item:last-child {
+    border-bottom: none;
+}
+
+.payment-item-details {
+    flex: 1;
+}
+
+.payment-item-name {
+    font-weight: 500;
+}
+
+.payment-item-quantity {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.payment-item-price {
+    font-weight: 500;
+    color: #4b2e2e;
+}
+
+@media (max-width: 480px) {
+    .payment-popup-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+}
+
+.payment-method {
+    position: relative;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    border-color: #4b2e2e;
+    background-color: #f9f9f9;
+}
+
+.bank-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.bank-dropdown-header {
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 4px;
+}
+
+.bank-dropdown-header i {
+    transition: transform 0.3s ease;
+}
+
+.bank-dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+}
+
+.bank-option {
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.bank-option:hover {
+    background-color: #f5f5f5;
+}
+
+.bank-logo {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.bank-info {
+    flex: 1;
+}
+
+.bank-name {
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.bank-number {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.selected-bank {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selected-bank-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Show dropdown content when parent is clicked */
+.bank-dropdown.active .bank-dropdown-content {
+    display: block;
+}
+
+.bank-dropdown.active .bank-dropdown-header i {
+    transform: rotate(180deg);
+}
         
     </style>
 </head>
@@ -611,6 +884,104 @@ body, html {
         </div>
     </div>
 </div>
+
+
+<div class="payment-popup-overlay" id="payment-popup">
+    <div class="payment-popup-content">
+        <div class="payment-header">
+            <h2>Payment Details</h2>
+            <button class="close" onclick="hidePaymentPopup()">&times;</button>
+        </div>
+        <div class="payment-body">
+            <div class="order-summary">
+                <h3>Order Details</h3>
+                <div id="payment-items-list">
+                    
+                </div>
+                <div class="total-amount">
+                    <span>Total Amount:</span>
+                    <span id="harga" name="harga">Rp 0</span>
+                </div>
+            </div>
+            
+            <form id="payment-form" method="POST" action="index.php?c=Auth&a=tambahpesanan" enctype="multipart/form-data">
+                <!-- Hidden inputs -->
+                <input type="hidden" id="cart_data" name="cart_data">
+                <input type="hidden" id="total_harga_input" name="total_harga">
+                <input type="hidden" id="kode_bank_input" name="kode_bank">
+                <input type="hidden" name="tanggal_pesanan" value="<?php echo date('Y-m-d'); ?>">
+                
+                <div class="form-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <!-- Tambahkan dropdown bank -->
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="payment-method">
+                        <div class="bank-dropdown" id="bankDropdown">
+                            <div class="bank-dropdown-header" onclick="toggleDropdown()">
+                                <div class="selected-bank" id="selectedBank">
+                                    <span>Select Bank Transfer</span>
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="bank-dropdown-content">
+                                <!-- Bank options -->
+                                <div class="bank-option" onclick="selectBank('BCA', '8735109371', 'https://png.pngtree.com/png-clipart/20221224/original/pngtree-bca-bank-logo-png-image_8801637.png')">
+                                    <img src="https://png.pngtree.com/png-clipart/20221224/original/pngtree-bca-bank-logo-png-image_8801637.png" alt="BCA" class="bank-logo">
+                                    <div class="bank-info">
+                                        <div class="bank-name">BCA</div>
+                                        <div class="bank-number">8735109371</div>
+                                    </div>
+                                </div>
+                                <div class="bank-option" onclick="selectBank('BRI', '0123456789', 'https://www.freelogovectors.net/wp-content/uploads/2023/02/bri-logo-freelogovectors.net_.png')">
+                                    <img src="https://www.freelogovectors.net/wp-content/uploads/2023/02/bri-logo-freelogovectors.net_.png" alt="BRI" class="bank-logo">
+                                    <div class="bank-info">
+                                        <div class="bank-name">BRI</div>
+                                        <div class="bank-number">0123456789</div>
+                                    </div>
+                                </div>
+                                <div class="bank-option" onclick="selectBank('BNI', '1234567890', 'https://i.pinimg.com/originals/36/38/43/36384348ef9d7bfff66da6da9e975d56.png')">
+                                    <img src="https://i.pinimg.com/originals/36/38/43/36384348ef9d7bfff66da6da9e975d56.png" alt="BNI" class="bank-logo">
+                                    <div class="bank-info">
+                                        <div class="bank-name">BNI</div>
+                                        <div class="bank-number">1234567890</div>
+                                    </div>
+                                </div>
+                                <div class="bank-option" onclick="selectBank('Mandiri', '1234567890', 'https://cdn.freebiesupply.com/logos/thumbs/2x/bank-mandiri-logo.png')">
+                                    <img src="https://cdn.freebiesupply.com/logos/thumbs/2x/bank-mandiri-logo.png" alt="Mandiri" class="bank-logo">
+                                    <div class="bank-info">
+                                        <div class="bank-name">Mandiri</div>
+                                        <div class="bank-number">1234567890</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File upload -->
+                <div class="form-group">
+                    <label for="image">Bukti Pembayaran</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn-process-payment">Proses Pembayaran</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div class="container mt-5">
     <div class="d-flex justify-content-between mb-3">
         <h2>Data Produk</h2>
@@ -619,7 +990,7 @@ body, html {
     <?php if(isset($totalDataProduct)): ?>
                 <div class="mb-4 p-4 bg-gray-100 rounded">Total Data: <?php echo $totalDataProduct; ?> data
                     <?php if(!empty($search)): ?>
-                        | Hasil pencarian "<?php echo htmlspecialchars($search); ?>": <?php echo count($data); ?> data
+                        | Hasil pencarian "<?php echo htmlspecialchars($search); ?>": <?php echo count($dataProduct); ?> data
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
@@ -646,7 +1017,7 @@ body, html {
     <div class="product-grid">
         <?php foreach($dataProduct as $product): ?>
             <div class="menu-card" onclick="showPopup('<?php echo $product['id']; ?>')">
-                <img src="<?php echo htmlspecialchars($product['image']); ?>" class="menu-image" alt="<?php echo htmlspecialchars($product['nama']); ?>">
+                <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" class="menu-image" alt="<?php echo htmlspecialchars($product['nama']); ?>">
                 <div class="menu-info">
                     <h3 class="menu-title"><?php echo htmlspecialchars($product['nama']); ?></h3>
                     <p class="menu-price">Rp <?php echo number_format($product['harga'], 0, ',', '.'); ?></p>
@@ -659,7 +1030,7 @@ body, html {
                 <div class="popup-content">
                     <button class="close" onclick="hidePopup('<?php echo $product['id']; ?>')">&times;</button>
                     <div class="popup-image">
-                        <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['nama']); ?>">
+                        <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['nama']); ?>">
                     </div>
                     <h2 class="popup-title"><?php echo htmlspecialchars($product['nama']); ?></h2>
                     <p class="popup-description"><?php echo htmlspecialchars($product['deskripsi']); ?></p>
@@ -719,6 +1090,8 @@ body, html {
         </div>
     <?php endif; ?>
 </div>
+
+
 
 <footer class="footer">
         <div class="footer-content">
@@ -892,9 +1265,10 @@ function checkout() {
         showNotification('Your cart is empty!');
         return;
     }
-    
-    alert('Proceed to checkout...');
+    hideCartPopup(); 
+    showPaymentPopup(); 
 }
+
 
 
 function addToCart(product) {
@@ -913,6 +1287,182 @@ function addToCart(product) {
     showNotification('Product added to cart!'); // Panggil fungsi notifikasi
     hidePopup(product.id);
 }
+
+function showPaymentPopup() {
+    document.getElementById('payment-popup').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    renderPaymentItems();
+}
+
+function hidePaymentPopup() {
+    document.getElementById('payment-popup').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function renderPaymentItems() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const paymentItemsList = document.getElementById('payment-items-list');
+    
+    // Hitung total
+    const total = cart.reduce((sum, item) => {
+        return sum + (item.harga * item.quantity);
+    }, 0);
+    
+    // Render items
+    paymentItemsList.innerHTML = cart.map(item => `
+        <div class="payment-item">
+            <div class="payment-item-details">
+                <div class="payment-item-name">${item.nama}</div>
+                <div class="payment-item-quantity">Quantity: ${item.quantity}</div>
+            </div>
+            <div class="payment-item-price">Rp ${formatNumber(item.harga * item.quantity)}</div>
+        </div>
+    `).join('');
+    
+    // Update total dan hidden inputs
+    document.getElementById('harga').textContent = `Rp ${formatNumber(total)}`;
+    document.getElementById('total_harga_input').value = total;
+    
+    // Simpan cart data
+    document.getElementById('cart_data').value = JSON.stringify(cart);
+}
+
+function toggleDropdown() {
+    const dropdown = document.getElementById('bankDropdown');
+    dropdown.classList.toggle('active');
+}
+
+function selectBank(bankName, accountNumber, logoSrc) {
+    const selectedBank = document.getElementById('selectedBank');
+    selectedBank.innerHTML = `
+        <img src="${logoSrc}" alt="${bankName}" class="selected-bank-logo">
+        <div class="bank-info">
+            <div class="bank-name">${bankName}</div>
+            <div class="bank-number">${accountNumber}</div>
+        </div>
+    `;
+    
+    document.getElementById('kode_bank_input').value = accountNumber;
+    
+    document.getElementById('bankDropdown').classList.remove('active');
+}
+
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('bankDropdown');
+    const isClickInside = dropdown.contains(event.target);
+    
+    if (!isClickInside && dropdown.classList.contains('active')) {
+        dropdown.classList.remove('active');
+    }
+});
+
+// Update form submission
+document.getElementById('payment-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitButton = this.querySelector('button[type="submit"]');
+    if (submitButton.disabled) {
+        return;
+    }
+    
+    try {
+        // Get cart data
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            alert('Keranjang belanja kosong');
+            return;
+        }
+        
+        // Set cart data to hidden input
+        document.getElementById('cart_data').value = JSON.stringify(cart);
+        
+        // Validate other fields
+        const nama = document.getElementById('nama').value;
+        const email = document.getElementById('email').value;
+        const kodeBank = document.getElementById('kode_bank_input').value;
+        const totalHarga = document.getElementById('total_harga_input').value;
+        const image = document.getElementById('image').files[0];
+        
+        if (!nama || !email || !kodeBank || !image || !totalHarga) {
+            alert('Mohon lengkapi semua field yang diperlukan');
+            return;
+        }
+        
+        // Disable submit button
+        submitButton.disabled = true;
+        
+        // Submit form
+        const formData = new FormData(this);
+        
+        // Create temporary copy of cart data
+        const cartBackup = localStorage.getItem('cart');
+        
+        this.submit();
+        
+        // Wait for server response
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Clear cart only if submission was successful
+        if (!document.querySelector('.error-message')) {
+            localStorage.setItem('cart', JSON.stringify([]));
+            updateCartBadge();
+            hidePaymentPopup();
+            showNotification('Order successfully placed!');
+        } else {
+            localStorage.setItem('cart', cartBackup);
+            showNotification('Failed to process order. Please try again.');
+        }
+        
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        showNotification('Failed to process order. Please try again.');
+    } finally {
+        setTimeout(() => {
+            submitButton.disabled = false;
+        }, 2000);
+    }
+});
+
+// Tambahkan ini di bagian atas file setelah DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Update cart data saat halaman dimuat
+    updateCartData();
+});
+
+function updateCartData() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    document.getElementById('cart_data').value = JSON.stringify(cart);
+    
+    // Hitung total
+    const total = cart.reduce((sum, item) => sum + (item.harga * item.quantity), 0);
+    document.getElementById('total_harga_input').value = total;
+}
+
+// Update event listener form
+document.getElementById('payment-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        alert('Keranjang belanja kosong!');
+        return;
+    }
+
+    const nama = document.getElementById('nama').value;
+    const email = document.getElementById('email').value;
+    const kodeBank = document.getElementById('kode_bank_input').value;
+    const image = document.getElementById('image').files[0];
+
+    if (!nama || !email || !kodeBank || !image) {
+        alert('Mohon lengkapi semua field!');
+        return;
+    }
+
+    // Submit form
+    this.submit();
+});
+
 </script>
 </body>
 </html>

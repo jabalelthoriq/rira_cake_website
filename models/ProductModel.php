@@ -64,10 +64,25 @@ class ProductModel extends Database {
         }
     }
     public function delete($id) {
+        $query = "SELECT image FROM produk WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':id' => $id]);
+        $imagePath = $stmt->fetchColumn();
+    
+        
         $query = "DELETE FROM produk WHERE id = :id";
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([':id' => $id]);
+        if ($stmt->execute([':id' => $id])) {
+            $fullImagePath = 'uploads/' . $imagePath;
+            if ($imagePath && file_exists($fullImagePath)) {
+                unlink($fullImagePath);
+            }
+            return true;
+        }
+        return false;
     }
+    
+    
     public function update($data) {
 
             $query = "UPDATE produk SET 

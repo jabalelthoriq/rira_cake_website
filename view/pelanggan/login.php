@@ -392,6 +392,7 @@ body, html {
     font-size: 20px;
 }
 
+
 </style>
 </head> 
 <body>
@@ -430,9 +431,9 @@ body, html {
     <div class="form-container login-container">
       <form method="post" action="index.php?c=Auth&a=login">
         <h1>Login </h1>
-        <input type="text" id="nama" name="nama" placeholder="Username">
-        <input type="password" id="password" name="password" placeholder="Password">
-        <button type="submit"  name="login-button" id="login-button">Login</button>
+        <input type="text" id="nama" name="nama" placeholder="Username" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit" name="login-button" id="login-button" >Login</button>
       </form>
     </div>
 
@@ -459,19 +460,38 @@ body, html {
   </div>
   <script>
     const registerButton = document.getElementById("register");
-const loginButton = document.getElementById("login");
-const container = document.getElementById("container");
-const inputPassword = document.getElementById("password")
-const showPassword = document.getElementById("show_password")
+    const loginButton = document.getElementById("login");
+    const container = document.getElementById("container");
 
-registerButton.addEventListener("click", () => {
-    container.classList.add("right-panel-active");
-});
+    registerButton.addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+    });
 
-loginButton.addEventListener("click", () => {
-    container.classList.remove("right-panel-active");
+    loginButton.addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+       
+    });
 
-});
+    // // Check for login success or error messages
+    // <?php if (isset($_SESSION['login_success'])): ?>
+    //     Swal.fire({
+    //         title: 'Success!',
+    //         text: '<?php echo $_SESSION['login_success']; ?>',
+    //         icon: 'success',
+    //         confirmButtonText: 'OK'
+    //     });
+    //     <?php unset($_SESSION['login_success']); // Clear the session variable ?>
+    // <?php elseif (isset($_SESSION['login_error'])): ?>
+    //     Swal.fire({
+    //         title: 'Error!',
+    //         text: '<?php echo $_SESSION['login_error']; ?>',
+    //         icon: 'error',
+    //         confirmButtonText: 'OK'
+    //     });
+    //     <?php unset($_SESSION['login_error']); // Clear the session variable ?>
+    // <?php endif; ?>
+
+    
   </script>
   
 </body>

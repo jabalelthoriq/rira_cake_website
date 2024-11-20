@@ -185,15 +185,16 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Foto Menu</label>
-                        <div class="mt-1 flex items-center">
-                            <input type="file" id="image" name="image" accept="image/*" required
-                                class="block w-full text-sm text-gray-500
-                                    file:mr-4 file:py-2 file:px-4
-                                    file:rounded file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-[#5c4b4b] file:text-white
-                                    hover:file:bg-opacity-80">
+                        <div class="mt-4">
+                            <?php if (!empty($product['image'])): ?>
+                                <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="Product Image" class="product-image" />
+                            <?php else: ?>
+                                <p>No image available.</p>
+                            <?php endif; ?>
+                            <input type="hidden" name="image_lama" value="<?= htmlspecialchars($product['image']); ?>">
                         </div>
+                        <input type="file" name="image" accept="image/*"
+                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#5c4b4b] file:text-white hover:file:bg-opacity-80">
                     </div>
                     
                     <button type="submit" 
@@ -258,12 +259,12 @@
                                 <tr>
                                 
                                 <td><?php echo $no++; ?></td>   
-                                    <td><?php echo $product['nama']; ?></td>
-                                    <td><?php echo $product['kategori']; ?></td>
-                                    <td><?php echo $product['stok']; ?></td>
-                                    <td><?php echo $product['harga']; ?></td>
-                                    <td><?php echo $product['deskripsi']; ?></td>
-                                    <td><img src="uploads/<?php echo $product['image']; ?>" alt="Product Image" class="product-image"/></td>
+                                    <td><?php echo htmlspecialchars($product['nama']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['kategori']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['stok']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['harga']); ?></td>
+                                    <td><?php echo htmlspecialchars($product['deskripsi']); ?></td>
+                                    <td><img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="Product Image" class="product-image" /></td>
 
                                     <td>
                                 <button class="btn btn-warning btn-sm" onclick="openPopup('<?php echo $product['id']; ?>',
@@ -271,7 +272,8 @@
                                     '<?php echo htmlspecialchars($product['kategori'], ENT_QUOTES); ?>', 
                                     '<?php echo htmlspecialchars($product['stok'], ENT_QUOTES); ?>', 
                                     '<?php echo htmlspecialchars($product['harga'], ENT_QUOTES); ?>', 
-                                    '<?php echo htmlspecialchars($product['deskripsi'], ENT_QUOTES); ?>')">Edit Menu</button> 
+                                    '<?php echo htmlspecialchars($product['deskripsi'], ENT_QUOTES); ?>',
+                                    '<?php echo htmlspecialchars($product['image']); ?>')">Edit Menu</button> 
                                     
                                         <a href="index.php?c=Auth&a=delete2&id=<?php echo $product['id']; ?>" 
                                            class="btn btn-danger btn-sm" 
@@ -364,13 +366,14 @@
                 </div>
                 <div class="mt-4"> 
                     <label class="block text-sm font-medium text-gray-700">Foto Menu</label> 
+                    <div class="mt-4">
+                        <img id="edit-image" src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="Product Image" class="product-image" style="display: none;">
+                        <input type="hidden" name="image_lama" id="image_lama" >
+                    </div>
                     <input type="file" name="image" accept="image/*"
                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#5c4b4b] file:text-white hover:file:bg-opacity-80">
                 </div>
-                <div class="mt-4">
-    <img src="uploads/<?php echo $product['image']; ?>" alt="Product Image" >
-    <input type="hidden" name="image_lama" value="<?= $product['image'] ?>">
-</div>
+                
                 <div class="mt-6">
                     <button type="submit" style="background-color: #2E8B57;" 
                             class="text-white px-4 py-2 rounded hover:opacity-90">
@@ -382,16 +385,20 @@
     </div>
     <script> 
     
-    function openPopup(id, nama, kategori, stok, harga, deskripsi) {
-        
+    function openPopup(id, nama, kategori, stok, harga, deskripsi, image) {
         document.getElementById('edit-id').value = id;
         document.getElementById('edit-nama').value = nama;
         document.getElementById('edit-kategori').value = kategori;
         document.getElementById('edit-stok').value = stok;
         document.getElementById('edit-harga').value = harga;
         document.getElementById('edit-deskripsi').value = deskripsi;
-        
-      
+
+        // Set the image source for the edit form
+        const imageElement = document.getElementById('edit-image');
+        if (imageElement) {
+            imageElement.src = 'uploads/' + image; // Set the image source
+        }
+
         document.getElementById('popupOverlay').style.display = 'flex';
     } 
     function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } 

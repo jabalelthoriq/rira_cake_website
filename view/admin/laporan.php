@@ -44,6 +44,13 @@
             width: 16px;
             height: 16px;
         }
+
+        .image{
+            background-color: #2E8B57;
+            color: white;
+            padding: 6px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -175,7 +182,10 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
                     </div>
+
+                    
 
                     <!-- Pagination -->
                     <?php if($totalPages > 1): ?>
@@ -215,7 +225,11 @@
                 <?php endif; ?>
             </div>
         </div>
+        
     </div>
+
+
+    
     <div class="popup-overlay" id="popupOverlay"> 
         <div class="popup-content"> 
             <span class="close-btn" onclick="closePopup()">&times;</span> 
@@ -245,7 +259,10 @@
                 </div>
             </form> 
         </div> 
+        
     </div>
+
+
     <script> 
     
     function openPopup(id, nama, jumlah, deskripsi) {
@@ -268,5 +285,228 @@
             window.location.href = 'index.php?c=Auth&a=homepage';
         }
     </script>
+    
+
+    <div class="bg-white p-6 rounded-lg shadow" style="margin-left: 290px; margin-right: 30px; margin-bottom: 40px;">
+            <h2 class="text-lg font-bold mb-4">Data Pemasukan</h2>
+        
+        <?php if(isset($dataPemasukan) && !empty($dataPemasukan)): ?>
+            <div class="overflow-x-auto">
+                <table class="table table-bordered w-full">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="px-4 py-2" style="width: 5%">No</th>
+                            <th class="px-4 py-2" style="width: 15%">Nama Pelanggan</th>
+                            <th class="px-4 py-2" style="width: 15%">Total Pemasukan</th>
+                            <th class="px-4 py-2" style="width: 10%">Kode Bank</th>
+                            <th class="px-4 py-2" style="width: 10%">Tanggal</th>
+                            <th class="px-4 py-2" style="width: 15%">Bukti Transfer</th>
+                            <th class="px-4 py-2" style="width: 15%">Status</th>
+                            <th class="px-4 py-2" style="width: 15%">Aksi</th>
+                                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $no = ($page - 1) * $perPage + 1;
+                        foreach($dataPemasukan as $pemasukan): 
+                        ?>
+                        <tr>
+                            <td class="px-4 py-2 text-center"><?php echo $no++; ?></td>
+                            <td class="px-4 py-2"><?php echo htmlspecialchars($pemasukan['nama']); ?></td>
+                            <td class="px-4 py-2">Rp <?php echo number_format($pemasukan['total_harga'], 0, ',', '.'); ?></td>
+                            <td class="px-4 py-2"><?php echo htmlspecialchars($pemasukan['kode_bank']); ?></td>
+                            <td class="px-4 py-2"><?php echo date('d-m-Y', strtotime($pemasukan['tanggal_pesanan'])); ?></td>
+                            <td class="px-4 py-2 text-center">
+                                <a href="payment/<?php echo htmlspecialchars($pemasukan['image']); ?>" 
+                                   target="_blank" 
+                                   class="btn btn-sm btn-primary">
+                                    Lihat Bukti
+                                </a>
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                <button onclick="updateStatus('<?php echo $pemasukan['id']; ?>', '<?php echo $pemasukan['status'] ?? 'pending'; ?>')" 
+                                        class="btn btn-sm <?php echo ($pemasukan['status'] ?? 'pending') === 'confirmed' ? 'btn-success' : 'btn-warning'; ?>">
+                                    <?php echo ($pemasukan['status'] ?? 'pending') === 'confirmed' ? 'Sudah Dikonfirmasi' : 'Menunggu Konfirmasi'; ?>
+                                </button>
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                <button type="button" class="btn btn-info btn-sm" onclick="showOrderDetails(<?php echo $pemasukan['id']; ?>)">
+                                    Detail
+                                </button>
+                                <a href="index.php?c=Auth&a=delete4&id=<?php echo $pemasukan['id']; ?>" 
+                   class="btn btn-danger btn-sm" 
+                   onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Modal Detail Pesanan -->
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailModalLabel">Detail Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="orderDetailContent">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function updateStatus(orderId, currentStatus) {
+        if (!confirm('Apakah Anda yakin ingin mengubah status pesanan ini?')) {
+            return;
+        }
+
+        fetch('index.php?c=Auth&a=updateOrderStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id=${orderId}&status=${currentStatus}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update tampilan status
+                const button = document.querySelector(`button[onclick="updateStatus('${orderId}', '${currentStatus}')"]`);
+                const newStatus = data.newStatus;
+                const newClass = newStatus === 'confirmed' ? 'btn-success' : 'btn-warning';
+                const newText = newStatus === 'confirmed' ? 'Sudah Dikonfirmasi' : 'Menunggu Konfirmasi';
+                
+                button.className = `btn btn-sm ${newClass}`;
+                button.textContent = newText;
+                button.setAttribute('onclick', `updateStatus('${orderId}', '${newStatus}')`);
+                
+                alert('Status berhasil diperbarui');
+                location.reload(); // Refresh halaman untuk memperbarui data
+            } else {
+                alert(data.message || 'Gagal mengubah status');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengubah status');
+        });
+    }
+
+    function showOrderDetails(orderId) {
+        fetch(`index.php?c=Auth&a=getOrderDetails&id=${orderId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const pesanan = data.pesanan;
+                    const details = data.detail;
+                    
+                    let detailHtml = `
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Informasi Pesanan</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td width="40%">Nama</td>
+                                        <td>: ${pesanan.nama}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>: ${pesanan.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal</td>
+                                        <td>: ${new Date(pesanan.tanggal_pesanan).toLocaleDateString('id-ID')}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kode Bank</td>
+                                        <td>: ${pesanan.kode_bank}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Status Pesanan</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td width="40%">Status</td>
+                                        <td>: <span class="badge ${pesanan.status === 'confirmed' ? 'bg-success' : 'bg-warning'}">
+                                            ${pesanan.status === 'confirmed' ? 'Sudah Dikonfirmasi' : 'Menunggu Konfirmasi'}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>: Rp ${new Intl.NumberFormat('id-ID').format(pesanan.total_harga)}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <h6 class="fw-bold">Detail Produk</h6>
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-center" width="5%">No</th>
+                                        <th>Produk</th>
+                                        <th class="text-center" width="15%">Jumlah</th>
+                                        <th class="text-end" width="20%">Harga</th>
+                                        <th class="text-end" width="20%">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${details.map((item, index) => `
+                                        <tr>
+                                            <td class="text-center">${index + 1}</td>
+                                            <td>${item.nama_produk}</td>
+                                            <td class="text-center">${item.quantity}</td>
+                                            <td class="text-end">Rp ${new Intl.NumberFormat('id-ID').format(item.harga_produk)}</td>
+                                            <td class="text-end">Rp ${new Intl.NumberFormat('id-ID').format(item.harga_produk * item.quantity)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="4" class="text-end fw-bold">Total:</td>
+                                        <td class="text-end fw-bold">Rp ${new Intl.NumberFormat('id-ID').format(pesanan.total_harga)}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        ${pesanan.image ? `
+                            <div class="mt-3">
+                                <h6 class="fw-bold">Bukti Pembayaran</h6>
+                                <img src="payment/${pesanan.image}" class="img-fluid rounded" style="max-height: 300px">
+                            </div>
+                        ` : ''}
+                    `;
+                    
+                    document.getElementById('orderDetailContent').innerHTML = detailHtml;
+                    // Tampilkan modal menggunakan Bootstrap
+                    const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+                    modal.show();
+                } else {
+                    alert(data.message || 'Terjadi kesalahan saat mengambil detail pesanan');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengambil detail pesanan');
+            });
+    }
+    </script>
+
+    <!-- Pastikan Bootstrap JS sudah dimuat -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

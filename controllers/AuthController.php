@@ -4,12 +4,15 @@ require_once 'models/pengguna.php';
 require_once 'models/pengeluaran.php';
 require_once 'models/DashboardModel.php';
 
+
 class AuthController
 {
     private $model;
     private $baseUrl;
     private $productModel;
     private $pengeluaranModel;
+    private $transaksiModel;
+    
     
 
 
@@ -20,6 +23,7 @@ class AuthController
         $this->productModel = new ProductModel();
         $this->model = new pengguna();
         $this->pengeluaranModel = new pengeluaran();
+        $this->transaksiModel = new TransaksiModel();
         $this->baseUrl = BASE_URL;
         //  
     }
@@ -50,13 +54,22 @@ class AuthController
     // admin
     public function dashboardpage()
     {
-        $dashboardModel = new DashboardModel();
+        try {
+            $dashboardModel = new DashboardModel();
+            
+            $incomeData = $dashboardModel->getIncomeData();
+            $expenseData = $dashboardModel->getExpenseData();
+            // $employees = $dashboardModel->getEmployees();
 
-        $incomeData = $dashboardModel->getIncomeData();
-        $expenseData = $dashboardModel->getExpenseData();
-        $employees = $dashboardModel->getEmployees();
+            // Debug
+            error_log('Income Data: ' . print_r($incomeData, true));
+            error_log('Expense Data: ' . print_r($expenseData, true));
 
-        require_once 'view/admin/dashboard.php';
+            require_once 'view/admin/dashboard.php';
+        } catch (Exception $e) {
+            error_log('Error in dashboardpage: ' . $e->getMessage());
+            // Handle error appropriately
+        }
     }
     
 
@@ -102,8 +115,12 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
+                // Set success notification
+                $_SESSION['login_in'] = "Login berhasil!";
+
                 // Redirect based on role
                 $this->redirectBasedOnRole();
+                
             } else {
                 $_SESSION['login_error'] = "Username atau password salah";
                 header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
@@ -256,6 +273,15 @@ public function delete3() {
         echo "Hapus data gagal!";
     }
 }
+public function delete4() {
+    
+    $id = $_GET['id'];
+    if($this->transaksiModel->delete($id)) {
+        header('Location: index.php?c=Auth&a=laporanpage');
+    } else {
+        echo "Hapus data gagal!";
+    }
+}
 
 public function productpage() {
     if(!isset($_SESSION)) {
@@ -339,37 +365,51 @@ public function tambahmenu() {
 
 public function update() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
-        // Proses jika ada upload foto baru
-        if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-            $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
-            $targetDir = 'uploads/';
-            $targetFile = $targetDir . $newFileName;
-            
-            if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0777, true);
-            }
-            
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-                if(!empty($_POST['image_lama']) && file_exists($_POST['image_lama'])) {
-                    unlink($_POST['image_lama']);
-                }
-                $image = $targetFile;
-            }
-        }
-
+        // Initialize the data array
         $data = [
             'id' => $_POST['id'],
             'nama' => $_POST['nama'],
             'kategori' => $_POST['kategori'],
             'stok' => $_POST['stok'],
             'harga' => $_POST['harga'],
-            'deskripsi' => $_POST['deskripsi']
-            
-          
+            'deskripsi' => $_POST['deskripsi'],
         ];
-        
+
+        // Check if a new image is uploaded
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $newFileName = time() . '_' . uniqid() . '.' . $fileExtension;
+            $targetDir = 'uploads/';
+            $targetFile = $targetDir . $newFileName;
+
+            // Create the directory if it doesn't exist
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Move the uploaded file
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                // Delete the old image if it exists
+                if (!empty($_POST['image_lama'])) {
+                    $oldImagePath = $targetDir . $_POST['image_lama'];
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+                // Set the new image path
+                $data['image'] = $newFileName; // Store only the filename
+            } else {
+                // Handle upload error
+                $_SESSION['menu_error'] = "Gagal mengunggah gambar.";
+                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=edit&id=" . $_POST['id']);
+                exit();
+            }
+        } else {
+            // If no new image is uploaded, keep the old image
+            $data['image'] = $_POST['image_lama'];
+        }
+
+        // Update the database
         if ($this->productModel->update($data)) {
             header('Location: index.php?c=Auth&a=tambahmenupage');
             exit;
@@ -414,7 +454,7 @@ public function tambahpengeluaran() {
     }
 }
 
-public function laporanpage    () {
+public function laporanpage() {
     if(!isset($_SESSION['logged_in'])) {
         header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
         exit();
@@ -424,9 +464,14 @@ public function laporanpage    () {
     $perPage = 10; // jumlah data per halaman
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     
-    // Get data from model
+    // Get data pengeluaran
     $dataPengeluaran = $this->pengeluaranModel->getAllData($page, $perPage, $search);
     $totalDataPengeluaran = $this->pengeluaranModel->getTotalData($search);
+    
+    // Get data pemasukan dari pesanan
+    $dataPemasukan = $this->transaksiModel->getAllPemasukan($page, $perPage, $search);
+    $totalDataPemasukan = $this->transaksiModel->getTotalPemasukan($search);
+    
     $totalPages = ceil($totalDataPengeluaran / $perPage);
     require_once 'view/admin/laporan.php';
 }
@@ -449,6 +494,156 @@ public function updatepengeluaran() {
             header('Location: index.php?c=Auth&a=edit&id=' . $_POST['id']);
             exit;
         }
+    }
+}
+
+public function tambahpesanan() {
+    if (!isset($_SESSION['logged_in'])) {
+        $_SESSION['error'] = "Silakan login terlebih dahulu";
+        header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        try {
+            // Debug log
+            error_log("Received POST data: " . print_r($_POST, true));
+            error_log("Received FILES data: " . print_r($_FILES, true));
+
+            // Validasi data
+            if (empty($_POST['nama']) || empty($_POST['email']) || 
+                empty($_POST['total_harga']) || empty($_POST['kode_bank']) || 
+                empty($_POST['cart_data'])) {
+                throw new Exception("Semua field harus diisi");
+            }
+
+            // Upload file
+            $fileName = $this->handleFileUpload($_FILES['image']);
+
+            // Prepare data
+            $data = [
+                'nama' => htmlspecialchars($_POST['nama']),
+                'email' => htmlspecialchars($_POST['email']),
+                'total_harga' => (int)$_POST['total_harga'],
+                'kode_bank' => htmlspecialchars($_POST['kode_bank']),
+                'tanggal_pesanan' => date('Y-m-d'),
+                'image' => $fileName,
+                'id_user' => $_SESSION['id_user'] ?? null,
+                'cart_items' => $_POST['cart_data']
+            ];
+
+            // Simpan ke database
+            if ($this->transaksiModel->tambahpesanan($data)) {
+                $_SESSION['success'] = "Pesanan berhasil ditambahkan!";
+                echo "<script>
+                    localStorage.setItem('cart', JSON.stringify([]));
+                    window.location.href = '{$this->baseUrl}/index.php?c=Auth&a=productpage';
+                </script>";
+                exit();
+            }
+
+        } catch (Exception $e) {
+            error_log("Error in tambahpesanan: " . $e->getMessage());
+            $_SESSION['error'] = $e->getMessage();
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=productpage");
+            exit();
+        }
+    }
+}
+
+private function handleFileUpload($file) {
+    if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
+        throw new Exception("Bukti pembayaran harus diunggah");
+    }
+
+    $uploadDir = 'payment/';
+    if (!is_dir($uploadDir)) {
+        if (!mkdir($uploadDir, 0777, true)) {
+            throw new Exception("Gagal membuat direktori upload");
+        }
+    }
+
+    // Validasi tipe file
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!in_array($file['type'], $allowedTypes)) {
+        throw new Exception("Tipe file tidak diizinkan. Gunakan JPG, JPEG, atau PNG");
+    }
+
+    // Validasi ukuran file (max 5MB)
+    $maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if ($file['size'] > $maxSize) {
+        throw new Exception("Ukuran file terlalu besar. Maksimal 5MB");
+    }
+
+    // Generate nama file unik
+    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $fileName = uniqid() . '.' . $fileExtension;
+    $uploadFile = $uploadDir . $fileName;
+
+    // Pindahkan file
+    if (!move_uploaded_file($file['tmp_name'], $uploadFile)) {
+        throw new Exception("Gagal mengunggah bukti pembayaran");
+    }
+
+    return $fileName;
+}
+
+public function getOrderDetails() {
+    try {
+        if (!isset($_GET['id'])) {
+            throw new Exception('ID pesanan tidak ditemukan');
+        }
+
+        $orderId = $_GET['id'];
+        
+        // Ambil data pesanan dan detail dalam satu array
+        $pesanan = $this->transaksiModel->getPesananById($orderId);
+        $detailPesanan = $this->transaksiModel->getPesananDetailById($orderId);
+
+        if (!$pesanan) {
+            throw new Exception('Data pesanan tidak ditemukan');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'pesanan' => $pesanan,
+            'detail' => $detailPesanan
+        ]);
+        
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
+public function updateOrderStatus() {
+    try {
+        if (!isset($_POST['id'])) {
+            throw new Exception('ID pesanan tidak ditemukan');
+        }
+
+        $id = $_POST['id'];
+        $newStatus = $_POST['status'] === 'confirmed' ? 'pending' : 'confirmed';
+
+        $result = $this->transaksiModel->updateStatus($id, $newStatus);
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'newStatus' => $newStatus,
+            'message' => 'Status berhasil diperbarui'
+        ]);
+
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
     }
 }
 
