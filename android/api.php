@@ -18,12 +18,12 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 // Perform the action based on the 'action' parameter
 switch ($action) {
-//     case 'login':
-//         // loginUser($conn);
-//         break;
-//     case 'register':
-//         registerUser($conn);
-//         break;
+    case 'login':
+        loginUser($conn);
+        break;
+    case 'register':
+        registerUser($conn);
+        break;
     case 'get_produk':
         getProduk($conn);
         break;
@@ -39,81 +39,172 @@ switch ($action) {
         break;
 }
 
-// Login function
-// function loginUser($conn) {
-//     $data = json_decode(file_get_contents("php://input"));
 
-//     if (!isset($data->username) || !isset($data->password)) {
-//         echo json_encode(['status' => 'error', 'message' => 'Username and password are required']);
-//         return;
-//     }
+function loginUser($conn) {
+    // Set header to return JSON response
+    header('Content-Type: application/json');
+    
+    // Check connection
+    if ($conn->connect_error) {
+        http_response_code(500);
+        echo json_encode(["error" => "Koneksi ke database gagal: " . $conn->connect_error]);
+        exit;
+    }
+    
+    // Inisialisasi respon
+    $response = array();
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Ambil data dari POST
+        $nama = isset($_POST['nama']) ? trim($_POST['nama']) : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        
+        // Validasi input
+        if (empty($nama) || empty($password)) {
+            $response['success'] = false;
+            $response['message'] = "Username dan password tidak boleh kosong!";
+        } else {
+            // Query untuk mengambil data user berdasarkan username saja
+            $query = "SELECT * FROM pengguna WHERE nama = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("s", $nama);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                $user = $result->fetch_assoc();
+                // Verifikasi password yang di-hash
+                if (password_verify($password, $user['password'])) {
+                    $response['success'] = true;
+                    $response['message'] = "Login berhasil!";
+                    $response['user'] = array(
+                        'id_user' => $user['id_user'],
+                        'nama' => $user['nama'],
+                    );
+                } else {
+                    $response['success'] = false;
+                    $response['message'] = "Username atau password salah!";
+                }
+            } else {
+                $response['success'] = false;
+                $response['message'] = "Username atau password salah!";
+            }
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = "Metode request tidak valid!";
+    }
+    
+    // Tampilkan respon dalam format JSON
+    echo json_encode($response);
+}
 
-//     $username = $data->username;
-//     $password = $data->password;
 
-//     $stmt = $conn->prepare("SELECT customer_id, password FROM customers WHERE username = ?");
-//     $stmt->bind_param("s", $username);
-//     $stmt->execute();
-//     $stmt->store_result();
 
-//     if ($stmt->num_rows == 0) {
-//         echo json_encode(['status' => 'error', 'message' => 'Invalid username or password']);
-//         return;
-//     }
+function registerUser($conn) {
+    header('Content-Type: application/json');
+    
+    // Check if it's a POST request
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Invalid request method. Only POST is allowed.'
+        ]);
+        return;
+    }
 
-//     $stmt->bind_result($id, $hashed_password);
-//     $stmt->fetch();
+    // Get POST data
+    $nama = isset($_POST['nama']) ? trim($_POST['nama']) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+    $telepon = isset($_POST['telepon']) ? trim($_POST['telepon']) : '';
+    $alamat = isset($_POST['alamat']) ? trim($_POST['alamat']) : '';
 
-//     if (password_verify($password, $hashed_password)) {
-//         echo json_encode(['status' => 'success', 'message' => 'Login successful', 'user_id' => $id]);
-//     } else {
-//         echo json_encode(['status' => 'error', 'message' => 'Invalid username or password']);
-//     }
+    // Validate input
+    if (empty($nama) || empty($email) || empty($password) || empty($telepon) || empty($alamat)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Semua field harus diisi!'
+        ]);
+        return;
+    }
 
-//     $stmt->close();
-// }
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Format email tidak valid!'
+        ]);
+        return;
+    }
 
-// Register function
-// function registerUser($conn) {
-//     $data = json_decode(file_get_contents("php://input"));
+    try {
+        // Check if email or username already exists
+        $stmt = $conn->prepare("SELECT id_user FROM pengguna WHERE nama = ? OR email = ?");
+        if (!$stmt) {
+            throw new Exception("Prepare statement error: " . $conn->error);
+        }
 
-//     if (!isset($data->fullname) || !isset($data->email) || !isset($data->username) || !isset($data->password)) {
-//         echo json_encode(['status' => 'error', 'message' => 'Fullname, email, username, and password are required']);
-//         return;
-//     }
+        $stmt->bind_param("ss", $nama, $email);
+        if (!$stmt->execute()) {
+            throw new Exception("Execute error: " . $stmt->error);
+        }
 
-//     $fullname = $data->fullname;
-//     $email = $data->email;
-//     $username = $data->username;
-//     $password = $data->password;
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Email atau username sudah terdaftar!'
+            ]);
+            $stmt->close();
+            return;
+        }
+        $stmt->close();
 
-//     $stmt = $conn->prepare("SELECT customer_id FROM customers WHERE username = ? OR email = ?");
-//     $stmt->bind_param("ss", $username, $email);
-//     $stmt->execute();
-//     $stmt->store_result();
+        // Hash password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-//     if ($stmt->num_rows > 0) {
-//         echo json_encode(['status' => 'error', 'message' => 'Username or Email already in use']);
-//         return;
-//     }
+        // Insert new user
+        $stmt = $conn->prepare("INSERT INTO pengguna (nama, email, password, telepon, alamat) VALUES (?, ?, ?, ?, ?)");
+        if (!$stmt) {
+            throw new Exception("Prepare statement error: " . $conn->error);
+        }
 
-//     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param("sssss", $nama, $email, $hashed_password, $telepon, $alamat);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Execute error: " . $stmt->error);
+        }
 
-//     $stmt = $conn->prepare("INSERT INTO customers (fullname, email, username, password) VALUES (?, ?, ?, ?)");
-//     $stmt->bind_param("ssss", $fullname, $email, $username, $hashed_password);
+        // Get the new user's ID
+        $new_user_id = $stmt->insert_id;
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Registrasi berhasil!',
+            'user' => [
+                'id_user' => $new_user_id,
+                'nama' => $nama,
+                'email' => $email,
+                'telepon' => $telepon,
+                'alamat' => $alamat
+            ]
+        ]);
 
-//     if ($stmt->execute()) {
-//         echo json_encode(['status' => 'success', 'message' => 'Registration successful']);
-//     } else {
-//         echo json_encode(['status' => 'error', 'message' => 'Registration error']);
-//     }
+        $stmt->close();
 
-//     $stmt->close();
-// }
+    } catch (Exception $e) {
+        error_log("Registration error: " . $e->getMessage());
+        echo json_encode([
+            'success' => false,
+            'message' => 'Terjadi kesalahan saat registrasi. Silakan coba lagi.'
+        ]);
+    }
+}
 
 
 function getProduk($conn) {
-    $sql = "SELECT id, nama, harga,  image FROM produk"; // Replace with your table/column names
+    $sql = "SELECT id, nama, harga, kategori, image FROM produk"; // Replace with your table/column names
     $result = $conn->query($sql);
 
     // Array to hold items data
@@ -126,6 +217,7 @@ function getProduk($conn) {
                 'id' => $row['id'],
                 'nama' => $row['nama'],
                 'harga' => $row['harga'],
+                'kategori' => $row['kategori'],
                 'image' => base64_encode($row['image']), // Encode BLOB as Base64
             );
             array_push($items, $item);
@@ -140,31 +232,33 @@ function getProduk($conn) {
 }
 
 function favProduk($conn) {
-    $sql = "SELECT id, nama, harga, deskripsi, image FROM produk ORDER BY stok ASC LIMIT 4"; // Replace with your table/column names
+    $sql = "SELECT id, nama, harga, deskripsi, image FROM produk ORDER BY stok ASC LIMIT 4";
     $result = $conn->query($sql);
-
-    // Array to hold items data
+    
     $items = array();
-
+    
     if ($result->num_rows > 0) {
-        // Fetch all items from the database
         while ($row = $result->fetch_assoc()) {
+            // Pastikan image tidak null
+            $imageBase64 = null;
+            if ($row['image']) {
+                // Konversi BLOB ke base64 dengan format yang benar
+                $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($row['image']);
+            }
+            
             $item = array(
                 'id' => $row['id'],
                 'nama' => $row['nama'],
                 'harga' => $row['harga'],
                 'deskripsi' => $row['deskripsi'],
-                'image' => base64_encode($row['image']), // Encode BLOB as Base64
+                'image' => $imageBase64 ?? '' // Kirim string kosong jika null
             );
             array_push($items, $item);
         }
-        
-        // Return the items data as JSON
-        echo json_encode($items);
-    } else {
-        // No items found
-        echo json_encode([]);
     }
+    
+    header('Content-Type: application/json');
+    echo json_encode($items);
 }
 
 function transaksi($conn) {

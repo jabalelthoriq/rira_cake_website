@@ -4,8 +4,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'rira_cake');
-define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/rira_cake');
-
+define('BASE_URL', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
 // Koneksi database
 class Database {
     protected $db;

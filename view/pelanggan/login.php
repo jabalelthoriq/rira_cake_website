@@ -408,7 +408,6 @@ body, html {
    <div class="icons">
     <a href="index.php?c=Auth&a=index" class="fas fa-user">
       </a>
-    <i class="fas fa-shopping-basket"></i>
    </div>
   </div>
 <div class="body1">
@@ -427,7 +426,7 @@ body, html {
     </div>
 
     <div class="form-container login-container">
-      <form method="post" action="index.php?c=Auth&a=login">
+      <form method="post" action="<?php echo BASE_URL; ?>/index.php?c=Auth&a=login">
         <h1>Login </h1>
         <input type="text" id="nama" name="nama" placeholder="Username" required>
         <input type="password" id="password" name="password" placeholder="Password" required>
@@ -470,24 +469,21 @@ body, html {
        
     });
 
-    // // Check for login success or error messages
-    // <?php if (isset($_SESSION['login_success'])): ?>
-    //     Swal.fire({
-    //         title: 'Success!',
-    //         text: '<?php echo $_SESSION['login_success']; ?>',
-    //         icon: 'success',
-    //         confirmButtonText: 'OK'
-    //     });
-    //     <?php unset($_SESSION['login_success']); // Clear the session variable ?>
-    // <?php elseif (isset($_SESSION['login_error'])): ?>
-    //     Swal.fire({
-    //         title: 'Error!',
-    //         text: '<?php echo $_SESSION['login_error']; ?>',
-    //         icon: 'error',
-    //         confirmButtonText: 'OK'
-    //     });
-    //     <?php unset($_SESSION['login_error']); // Clear the session variable ?>
-    // <?php endif; ?>
+   
+    // Check for SweetAlert notifications
+    <?php if (isset($_SESSION['sweetalert'])): ?>
+        Swal.fire({
+            icon: '<?php echo $_SESSION['sweetalert']['type']; ?>',
+            title: '<?php echo $_SESSION['sweetalert']['title']; ?>',
+            text: '<?php echo $_SESSION['sweetalert']['text']; ?>',
+            confirmButtonText: 'OK'
+        });
+        <?php 
+        // Clear the sweetalert session after displaying
+        unset($_SESSION['sweetalert']); 
+        ?>
+    <?php endif; ?>
+
 
     
   </script>

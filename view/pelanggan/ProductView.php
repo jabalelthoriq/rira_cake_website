@@ -6,6 +6,11 @@
     <title>Daftar Produk - Rira Cake</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
     <style>
 
 body, html {
@@ -18,7 +23,8 @@ body, html {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-    padding: 20px;
+    padding: 15px;
+ 
     
 }
 
@@ -69,6 +75,7 @@ body, html {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.3s ease;
+            background-color: #F8EDE3;
             
         }
 
@@ -101,7 +108,7 @@ body, html {
         }
 
         .menu-price {
-            color: #e44d26;
+            color: #246B47;
             font-weight: bold;
         }
 
@@ -156,14 +163,26 @@ body, html {
   
         .popup-image {
             width: 100%;
-            height: 250px;
-            background: #ddd;
-            margin-bottom: 15px;
-            display: flex;
-            border-radius: 4px;
+            height: 300px;
+            position: relative;
             overflow: hidden;
-    
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
 
+        .popup-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .popup-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .popup-image.zoomed img {
+            transform: scale(1.5);
         }
 
         .popup-title {
@@ -840,6 +859,278 @@ body, html {
 .bank-dropdown.active .bank-dropdown-header i {
     transform: rotate(180deg);
 }
+
+/* Additional styles for better user experience */
+.popup-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.popup-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.popup-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2E8B57;
+    margin-bottom: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-order {
+    background-color: #2E8B57;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-order:hover {
+    background-color: #246B47;
+}
+/* Updated Search Bar Styles */
+.search-container {
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    background: transparent;
+}
+
+.search-container .fa-search {
+    color: #666;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+/* Category Filter Styles */
+.category-container {
+    display: flex;
+    justify-content: start;
+    gap: 30px;
+    padding-left: 250px;
+    padding-top: 10px;
+    flex-wrap: wrap;
+   
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F8EDE3;
+    border-radius: 15px;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+    text-decoration: none;
+    color: #4b2e2e;
+}
+
+.category-item:hover,
+.category-item.active {
+    background: #4b2e2e;
+    color: #F8EDE3;
+    transform: translateY(-5px);
+}
+
+.category-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.category-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        margin: 20px;
+        width: auto;
+    }
+    
+    .category-container {
+        gap: 10px;
+    }
+    
+    .category-item {
+        padding: 10px 20px;
+        min-width: 80px;
+    }
+}
+
+/* Add these styles to your existing CSS */
+.stats-container {
+    justify-self: center;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 300px;
+    background-image: url('view/aset/gambar/order.jpg');
+}
+
+.stats-card {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    color: white;
+}
+
+.stats-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stats-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffd700; /* Golden yellow color */
+}
+
+.stats-label {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+        gap: 10px;
+        
+    }
+    
+    .stats-card {
+        padding: 10px;
+    }
+    
+    .stats-number {
+        font-size: 20px;
+    }
+    
+    .stats-label {
+        font-size: 12px;
+    }
+}
+
+
+.carousel-container {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #F8EDE3;
+    text-align: center;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+  }
+
+  #slide1 {
+    background-image: url('view/aset/gambar/order1.jpg');
+  }
+
+  #slide2 {
+    background-image: url('view/aset/gambar/order2.jpg');
+  }
+
+  #slide3 {
+    background-image: url('view/aset/gambar/order3.jpg');
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+
+  .dot.active {
+    background-color: white;
+  }
+
+  
+  
+  
+  .carousel-slide.active .slide-title,
+  .carousel-slide.active .slide-description,
+  .carousel-slide.active .slide-button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
+  .carousel-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    z-index: 0;
+  }
+
+  
+  .slide-content {
+    position: relative;
+    z-index: 1;
+  }
         
     </style>
 </head>
@@ -979,44 +1270,82 @@ body, html {
     </div>
 </div>
 
-
-
-
-<div class="container mt-5">
-    <div class="d-flex justify-content-between mb-3">
-        <h2>Data Produk</h2>
+<div class="carousel-container">
+    <div class="carousel-slide active" id="slide1">
+    </div>
+    <div class="carousel-slide" id="slide2">
+    </div>
+    <div class="carousel-slide" id="slide3">
     </div>
 
-    <?php if(isset($totalDataProduct)): ?>
-                <div class="mb-4 p-4 bg-gray-100 rounded">Total Data: <?php echo $totalDataProduct; ?> data
-                    <?php if(!empty($search)): ?>
-                        | Hasil pencarian "<?php echo htmlspecialchars($search); ?>": <?php echo count($dataProduct); ?> data
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
+    <div class="carousel-dots">
+      <div class="dot active" onclick="setSlide(0)"></div>
+      <div class="dot" onclick="setSlide(1)"></div>
+      <div class="dot" onclick="setSlide(2)"></div>
+    </div>
+  </div>
 
-    <!-- Form Pencarian -->
-    <div class="row mb-3">
+<!-- Form Pencarian -->
+<div class="search-container" data-aos="fade-up">
+    <i class="fas fa-search"></i>
         <div class="col-md-6">
             <form action="index.php" method="GET" class="d-flex">
                 <input type="hidden" name="c" value="Auth">
                 <input type="hidden" name="a" value="productpage">
-                <input type="text" name="search" class="form-control me-2" 
-                       placeholder="Cari berdasarkan nama..." 
+                <input type="text" name="search"  
+                placeholder="Search for your favorite cake..." 
                        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                <button type="submit" class="btn btn-primary">Cari</button>
+                
                 <?php if(isset($_GET['search']) && !empty($_GET['search'])): ?>
-                    <a href="index.php?c=Auth&a=productpage" class="btn btn-secondary ms-2">Reset</a>
+                    
                 <?php endif; ?>
             </form>
         </div>
         
     </div>
+
+    <div class="category-container" data-aos="fade-up">
+    <a href="index.php?c=Auth&a=productpage" class="category-item <?php echo !isset($_GET['category']) ? 'active' : ''; ?>">
+        <i class="fas fa-th category-icon"></i>
+        <span class="category-name">All</span>
+    </a>
+    <a href="index.php?c=Auth&a=productpage&category=cupcake" class="category-item <?php echo isset($_GET['category']) && $_GET['category'] == 'cupcake' ? 'active' : ''; ?>">
+        <i class="fas fa-birthday-cake category-icon"></i>
+        <span class="category-name">Cupcake</span>
+    </a>
+    <a href="index.php?c=Auth&a=productpage&category=puding" class="category-item <?php echo isset($_GET['category']) && $_GET['category'] == 'puding' ? 'active' : ''; ?>">
+        <i class="fas fa-ice-cream category-icon"></i>
+        <span class="category-name">Puding</span>
+    </a>
+    <a href="index.php?c=Auth&a=productpage&category=cookies" class="category-item <?php echo isset($_GET['category']) && $_GET['category'] == 'cookies' ? 'active' : ''; ?>">
+        <i class="fas fa-cookie category-icon"></i>
+        <span class="category-name">Cookies</span>
+    </a>
+    <a href="index.php?c=Auth&a=productpage&category=kue kering" class="category-item <?php echo isset($_GET['category']) && $_GET['category'] == 'kue kering' ? 'active' : ''; ?>">
+        <i class="fas fa-cookie-bite category-icon"></i>
+        <span class="category-name">Kue Kering</span>
+    </a>
+</div>
+
+<div class="container mt-5" >
+    
+
+    
+
     
     <?php if(isset($dataProduct) && !empty($dataProduct)): ?>
     <div class="product-grid">
-        <?php foreach($dataProduct as $product): ?>
-            <div class="menu-card" onclick="showPopup('<?php echo $product['id']; ?>')">
+   
+        <?php 
+        foreach($dataProduct as $product):
+              ?>
+            
+            <div class="menu-card"  
+            data-aos="fade-up"
+                 data-aos-delay="<?php echo $delay; ?>"
+                 data-aos-duration="800"
+                 data-aos-offset="100"
+             onclick="showPopup('<?php echo $product['id']; ?>')">
                 <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" class="menu-image" alt="<?php echo htmlspecialchars($product['nama']); ?>">
                 <div class="menu-info">
                     <h3 class="menu-title"><?php echo htmlspecialchars($product['nama']); ?></h3>
@@ -1029,8 +1358,9 @@ body, html {
             <div class="popup-overlay" id="popup-<?php echo $product['id']; ?>">
                 <div class="popup-content">
                     <button class="close" onclick="hidePopup('<?php echo $product['id']; ?>')">&times;</button>
-                    <div class="popup-image">
-                        <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['nama']); ?>">
+                    <div class="popup-image" onclick="toggleZoom(this)">
+                        <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" 
+                             alt="<?php echo htmlspecialchars($product['nama']); ?>">
                     </div>
                     <h2 class="popup-title"><?php echo htmlspecialchars($product['nama']); ?></h2>
                     <p class="popup-description"><?php echo htmlspecialchars($product['deskripsi']); ?></p>
@@ -1129,6 +1459,37 @@ body, html {
         </div>
     </footer>
 
+    <?php
+// Tampilkan SweetAlert jika ada session sweetalert
+if (isset($_SESSION['sweetalert'])) {
+    $sweetalert = $_SESSION['sweetalert'];
+    unset($_SESSION['sweetalert']); // Hapus session setelah digunakan
+?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Reset cart di localStorage jika diperlukan
+        <?php if (isset($_SESSION['reset_cart']) && $_SESSION['reset_cart'] === true): ?>
+            localStorage.removeItem('cart');
+            sessionStorage.removeItem('cart');
+            <?php unset($_SESSION['reset_cart']); ?>
+        <?php endif; ?>
+
+        Swal.fire({
+            title: '<?= $sweetalert['title'] ?>',
+            text: '<?= $sweetalert['text'] ?>',
+            icon: '<?= $sweetalert['type'] ?>',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '<?= $sweetalert['redirect'] ?>';
+            }
+        });
+    });
+</script>
+<?php
+}
+?>
     
 
 <script >
@@ -1463,6 +1824,91 @@ document.getElementById('payment-form').addEventListener('submit', function(e) {
     this.submit();
 });
 
+AOS.init({
+        duration: 800,           // Animation duration
+        easing: 'ease-out-cubic', // Smooth easing function
+        once: false,            // Allow animations to repeat
+        mirror: false,          // Don't animate out
+        offset: 50,             // Trigger offset
+        delay: 0,               // Base delay (individual delays set per element)
+        anchorPlacement: 'top-bottom',
+        disable: 'mobile',      // Disable on mobile if needed
+    });
+
+function toggleZoom(element) {
+    element.classList.toggle('zoomed');
+}
+
+// Optional: Close zoom when clicking outside the image
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.popup-image')) {
+        document.querySelectorAll('.popup-image.zoomed').forEach(function(element) {
+            element.classList.remove('zoomed');
+        });
+    }
+});
+
+
+// Add this to your existing script section
+document.querySelector('.search-container input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const searchValue = this.value.trim();
+        const currentUrl = new URL(window.location.href);
+        
+        if (searchValue) {
+            currentUrl.searchParams.set('search', searchValue);
+        } else {
+            currentUrl.searchParams.delete('search');
+        }
+        
+        // Preserve category if it exists
+        const category = currentUrl.searchParams.get('category');
+        if (category) {
+            currentUrl.searchParams.set('category', category);
+        }
+        
+        window.location.href = currentUrl.toString();
+    }
+});
+
+// Add active class to current category
+document.addEventListener('DOMContentLoaded', function() {
+    const currentCategory = new URLSearchParams(window.location.search).get('category');
+    const categoryItems = document.querySelectorAll('.category-item');
+    
+    categoryItems.forEach(item => {
+        const itemCategory = item.href.split('category=')[1];
+        if (!currentCategory && !itemCategory) {
+            item.classList.add('active');
+        } else if (currentCategory === itemCategory) {
+            item.classList.add('active');
+        }
+    });
+});
+
+let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function setSlide(index) {
+      currentSlide = index;
+      showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 4000);
 </script>
 </body>
 </html>

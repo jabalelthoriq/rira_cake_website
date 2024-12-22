@@ -4,6 +4,9 @@
   <title>Rira Cake Cafe & Bakery</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="nav.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
   <style>
 
@@ -497,132 +500,7 @@ section h2.sec-title {
   }
   
 
-  .carousel-container {
-    width: 100%;
-    height: 400px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .carousel-slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-  }
-
-  .carousel-slide.active {
-    opacity: 1;
-  }
-
-  #slide1 {
-    background-image: url('aset/gambar/kukis4.jpg');
-  }
-
-  #slide2 {
-    background-image: url('aset/gambar/kukis2.jpg');
-  }
-
-  #slide3 {
-    background-image: url('aset/gambar/kukis3.jpg');
-  }
-
-  .carousel-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-  }
-
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-  }
-
-  .dot.active {
-    background-color: white;
-  }
-
   
-  .slide-title {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease;
-  }
-
-  .slide-description {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-    max-width: 600px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease 0.2s;
-  }
-
-  
-  .slide-button {
-    padding: 12px 30px;
-    font-size: 1.1em;
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease 0.4s;
-  }
-
-  .slide-button:hover {
-    background: #6c3b16;
-    color: #F8EDE3;
-    transform: translateY(20px) scale(1.1);
-  }
-
-  
-  .carousel-slide.active .slide-title,
-  .carousel-slide.active .slide-description,
-  .carousel-slide.active .slide-button {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .slide-title, .slide-description {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .carousel-slide::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 0;
-  }
-
-  
-  .slide-content {
-    position: relative;
-    z-index: 1;
-  }
 /* nav css */
 
   
@@ -820,11 +698,12 @@ section h2.sec-title {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: all 0.3s ease;
+            background-color: #F8EDE3;
             
         }
 
         .menu-card:hover {
-          background-color: #6c3b16;
+          background-color: #4b2e2e;
           transform: translateY(-20px) translateX(10px); 
           box-shadow: 0 8px 16px rgba(0,0,0,0.5);
           color: #F8EDE3;
@@ -852,87 +731,125 @@ section h2.sec-title {
         }
 
         .menu-price {
-            color: #e44d26;
+            color: #246B47;
             font-weight: bold;
         }
 
-        /* Popup  */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-           
-        }
+        
+        /* Popup styling */
+.popup-overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-        .popup-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            transform: scale(0.7);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
+.popup-content2 {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-height: 90vh;
+    overflow-y: auto;
+}
 
-        .popup-overlay.show {
-            display: flex;
-            background: rgba(0,0,0,0.5);
-        }
+/* Ensure popup stays centered */
+.popup-overlay2.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .popup-overlay.show .popup-content {
-            transform: scale(1);
-            opacity: 1;
-        }
+.popup-overlay2.show .popup-content2 {
+    transform: scale(1);
+    opacity: 1;
+}
 
-        .close {
+/* Close button positioning */
+.close2 {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    z-index: 1;
+    padding: 5px;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
 
-          position: relative;
-            background:none ;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
+.close2:hover {
+    color: #000;
+    transform: scale(1.1);
+}
 
-  
-        .popup-image {
-            width: 100%;
-            height: 250px;
-            background: #ddd;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+/* Image container */
+.popup-image2 {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-        .popup-title {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+.popup-image2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
-        .popup-description {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
+/* Content styling */
+.popup-title2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
 
-        .popup-price {
-            font-size: 20px;
-            color: #e44d26;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+.popup-description2 {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.popup-price2 {
+    font-size: 22px;
+    color: #246B47;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .popup-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .popup-image2 {
+        height: 200px;
+    }
+    
+    .popup-title2 {
+        font-size: 20px;
+    }
+}
 
         
         .action-buttons {
@@ -1121,10 +1038,21 @@ section h2.sec-title {
       border-top: 1px solid #fff;
       padding-top: 10px;
     }
+    .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 80px;
+    padding: 80px;
+    padding-top: 20px;
+    margin-left: 100px;
+   
+    
+}
   </style>
 </head>
 
 <body>
+  
 <div class="navbar">
   <div>
    <a href="index.php?c=Auth&a=homepage">
@@ -1139,7 +1067,6 @@ section h2.sec-title {
    <div class="icons">
     <a href="index.php?c=Auth&a=index" class="fas fa-user">
       </a>
-    <i class="fas fa-shopping-basket"></i>
    </div>
   </div>
 
@@ -1188,12 +1115,12 @@ section h2.sec-title {
   </div> -->
 
   <section id="cup"><br><br><br>
-    <h2 class="sec-title">What Is Rira Cake?</h2>
+    <h2 class="sec-title" data-aos="fade-up">What Is Rira Cake?</h2>
     <div class="wrap">
       <div class="left">
-        <div class="item-text">
+        <div class="item-text" data-aos="fade-up">
           <div class="icon">
-            <img src="aset/gambar/panah1.png" />
+            
           </div>
           <h3>Freshly Baked Daily</h3>
           <p>
@@ -1201,9 +1128,9 @@ section h2.sec-title {
             Taste the difference freshness makes in every bite.
           </p>
         </div>
-        <div class="item-text">
+        <div class="item-text" data-aos="fade-up">
           <div class="icon">
-            <img src="./assets/Made-Icon-2.png" />
+           
           </div>
           <h3>Artisan Craftsmanship</h3>
           <p>
@@ -1212,13 +1139,13 @@ section h2.sec-title {
           </p>
         </div>
       </div>
-      <div>
+      <div data-aos="fade-up">
         <img src="view/aset/gambar/cookies-removebg.png" />
       </div>
       <div class="right">
-        <div class="item-text">
+        <div class="item-text" data-aos="fade-up">
           <div class="icon">
-            <img src="./assets/Made-Icon-3.png" />
+            
           </div>
           <h3>Locally Sourced Ingredients</h3>
           <p>
@@ -1226,9 +1153,9 @@ section h2.sec-title {
             Savor the quality that comes from local farms.
           </p>
         </div>
-        <div class="item-text">
+        <div class="item-text" data-aos="fade-up">
           <div class="icon">
-            <img src="./assets/Made-Icon-4.png" />
+           
           </div>
           <h3>Cozy and Welcoming Atmosphere</h3>
           <p>
@@ -1238,174 +1165,47 @@ section h2.sec-title {
         </div>
       </div>
     </div>
-    <ol>
+    <ol data-aos="fade-up">
       <li>
-        <a class="button button--pan" href="aboutus.php"><span>Read full story</span></a>
+        <a class="button button--pan" href="index.php?c=Auth&a=aboutuspage"><span>Read full story</span></a>
       </li>
     </ol>
   </section><br><br><br><br><br><br>
 
 
-  <section>
-    <h2 class="sec-title">Favorite Menu</h2>
-    <div class="container">
-      <!-- Menu Card 1 -->
-      <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Chocolate Cake</h3>
-          <p class="menu-price">Rp 25.000</p>
-        </div>
-      </div>
+<section class="favorite-menu" data-aos="fade-up">
+<h2 class="sec-title">Favorite Menu</h2>
+    <div class="product-grid">
+        <?php if (!empty($favoriteMenuItems)): ?>
+            <?php foreach ($favoriteMenuItems as $item): ?>
+                <div class="menu-card" onclick="showPopup('<?php echo $item['id']; ?>')">
+                    <img src="uploads/<?php echo htmlspecialchars($item['image']); ?>" class="menu-image" alt="<?php echo htmlspecialchars($item['nama']); ?>">
+                    <div class="menu-info">
+                        <h3 class="menu-title"><?php echo htmlspecialchars($item['nama']); ?></h3>
+                        <p class="menu-price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                        <p class="menu-title">Jumlah stok: <?php echo number_format($item['stok']); ?></p>
+                    </div>
+                </div>
 
-      <!-- Menu Card 2 -->
-      <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Cherry Cake</h3>
-          <p class="menu-price">Rp 30.000</p>
-        </div>
-      </div>
-
-      <!-- Menu Card 3 -->
-      <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Ayam Bakar</h3>
-          <p class="menu-price">Rp 35.000</p>
-        </div>
-      </div>
-
-      <!-- menu card 4 -->
-      <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Ayam Bakar</h3>
-          <p class="menu-price">Rp 35.000</p>
-        </div>
-      </div>
-
-      <!-- Menu Card 1 -->
-      <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Chocolate Cake</h3>
-          <p class="menu-price">Rp 25.000</p>
-        </div>
-      </div>
-
-      <!-- Menu Card 2 -->
-      <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Cherry Cake</h3>
-          <p class="menu-price">Rp 30.000</p>
-        </div>
-      </div>
-
-      <!-- Menu Card 3 -->
-      <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Ayam Bakar</h3>
-          <p class="menu-price">Rp 35.000</p>
-        </div>
-      </div>
-
-      <!-- menu card 4 -->
-      <div class="menu-card" onclick="showPopup('menu3')">
-        <img src="view/aset/gambar/menu3.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Ayam Bakar</h3>
-          <p class="menu-price">Rp 35.000</p>
-        </div>
-      </div>
-      <!-- Menu Card 1 -->
-      <div class="menu-card" onclick="showPopup('menu1')">
-        <img src="view/aset/gambar/menu1.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Chocolate Cake</h3>
-          <p class="menu-price">Rp 25.000</p>
-        </div>
-      </div>
-
-      <!-- Menu Card 2 -->
-      <div class="menu-card" onclick="showPopup('menu2')">
-        <img src="view/aset/gambar/menu2.jpg" class="menu-image"></>
-        <div class="menu-info">
-          <h3 class="menu-title">Cherry Cake</h3>
-          <p class="menu-price">Rp 30.000</p>
-        </div>
-      </div>
-
-
-
-
+                <!-- Popup for each favorite menu item -->
+                <div class="popup-overlay2" id="popup-<?php echo $item['id']; ?>">
+                    <div class="popup-content2">
+                        <button class="close2" onclick="hidePopup('<?php echo $item['id']; ?>')">&times;</button>
+                        <div class="popup-image2">
+                            <img src="uploads/<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['nama']); ?>">
+                        </div>
+                        <h2 class="popup-title2"><?php echo htmlspecialchars($item['nama']); ?></h2>
+                        <p class="popup-description2"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
+                        <p class="popup-price2">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Tidak ada menu favorit yang tersedia.</p>
+        <?php endif; ?>
     </div>
-    </div>
+</section>
 
-
-
-    <!-- Popup Menu 1 -->
-    <div class="popup-overlay" id="popup-menu1">
-      <div class="popup-content">
-        <button class="close" onclick="hidePopup('menu1')">&times;</button>
-        <div class="popup-image"></div>
-        <h2 class="popup-title">Chocolate Cake</h2>
-        <p class="popup-description">
-          Chocolate cake is crafted using the finest cocoa, butter, and fresh eggs, ensuring a moist and rich texture.
-          The cake's layers are carefully baked and then generously slathered with smooth, decadent chocolate ganache.
-        </p>
-        <p class="popup-price">Rp 25.000</p>
-        <div class="action-buttons">
-          <a class="btn btn-order">Order Now</a>
-          <button class="btn btn-wishlist">♡</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Popup Menu 2 -->
-    <div class="popup-overlay" id="popup-menu2">
-      <div class="popup-content">
-        <button class="close" onclick="hidePopup('menu2')">&times;</button>
-        <div class="popup-image"></div>
-        <h2 class="popup-title">Cherry Cake</h2>
-        <p class="popup-description">
-          Cherry chocolate cake combines the finest cocoa with juicy, plump cherries for a rich and fruity delight. Each
-          layer is baked to perfection and topped with a smooth cherry-infused chocolate ganache.
-        </p>
-        <p class="popup-price">Rp 30.000</p>
-        <div class="action-buttons">
-          <button class="btn btn-order">Order Now</button>
-          <button class="btn btn-wishlist">♡</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Popup Menu 3 -->
-    <div class="popup-overlay" id="popup-menu3">
-      <div class="popup-content">
-        <button class="close" onclick="hidePopup('menu3')">&times;</button>
-        <div class="popup-image"></div>
-        <h2 class="popup-title">Ayam Bakar</h2>
-        <p class="popup-description">
-          Ayam bakar dengan bumbu traditional Indonesia.
-          Disajikan dengan nasi, lalap, dan sambal.
-        </p>
-        <p class="popup-price">Rp 35.000</p>
-        <div class="action-buttons">
-          <button class="btn btn-order">Order now</button>
-          <button class="btn btn-wishlist">♡</button>
-        </div>
-      </div>
-    </div><br><br><br>
-
-    <ol>
-      <li>
-		<a class="button button--pan"  href="order.php"><span> Explore menu </span></a>
-	    </li>
-        </ol><br><br><br>
-    </section>
 
 
   <footer class="footer">
@@ -1483,6 +1283,25 @@ section h2.sec-title {
         event.target.classList.remove('show');
       }
     }
+
+    <?php if (isset($_SESSION['sweetalert'])): ?>
+        Swal.fire({
+            icon: '<?php echo $_SESSION['sweetalert']['type']; ?>',
+            title: '<?php echo $_SESSION['sweetalert']['title']; ?>',
+            text: '<?php echo $_SESSION['sweetalert']['text']; ?>',
+            confirmButtonText: 'OK'
+        });
+        <?php 
+        // Clear the sweetalert session after displaying
+        unset($_SESSION['sweetalert']); 
+        ?>
+    <?php endif; ?>
+
+   
+  AOS.init({
+    duration: 1000, /* Durasi animasi */
+    once: true, /* Animasi hanya muncul sekali */
+  });
 
   </script>
 </body>

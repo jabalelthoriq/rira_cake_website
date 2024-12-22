@@ -8,6 +8,7 @@
     <title>Customer - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .header-container {
     display: flex;
@@ -132,11 +133,7 @@
                         <td><?php echo $user['telepon']; ?></td>
                         <td><?php echo $user['alamat']; ?></td>
                         <td>
-                            <!-- <a href="index.php?c=Auth&a=edit&id=<?php echo $user['id_user']; ?>" 
-                               class="btn btn-warning btn-sm">Edit</a> -->
-                            <a href="index.php?c=Auth&a=delete&id=<?php echo $user['id_user']; ?>" 
-                               class="btn btn-danger btn-sm" 
-                               onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                               <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $user['id_user']; ?>)">Delete</a>
                                <a href="index.php?c=Auth&a=downloadPDF&id=<?php echo $user['id_user']; ?>" 
        class="btn btn-info btn-sm">
        <i class="fas fa-file-pdf"></i>Cetak PDF
@@ -187,12 +184,41 @@
     </div>
     <script>
         function handleLogout() {
-            
+    Swal.fire({
+        title: 'Logout Confirmation',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
             localStorage.removeItem('token');
             sessionStorage.clear();
-
             window.location.href = 'index.php?c=Auth&a=homepage';
         }
+    });
+}
+
+function confirmDelete(userId) {
+    Swal.fire({
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete this customer?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,Delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'index.php?c=Auth&a=delete&id=' + userId;
+        }
+    });
+}
+
     </script>
 </body>
 </html>

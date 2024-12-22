@@ -90,5 +90,43 @@ class pengeluaran extends Database {
             ':id' => $data['id']
         ]);
     }
+
+    public function getMonthlyExpense($startDate, $endDate) {
+        $query = "SELECT COALESCE(SUM(jumlah), 0) as total 
+                  FROM pengeluaran 
+                  WHERE DATE(created_at) BETWEEN :start AND :end";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':start' => $startDate, ':end' => $endDate]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (float)$result['total'];
+    }
+
+    public function getMonthlyExpenseData() {
+        $query = "SELECT DATE(tanggal_pengeluaran) as tanggal, SUM(jumlah) as total 
+                  FROM pengeluaran 
+                  WHERE MONTH(tanggal_pengeluaran) = MONTH(CURRENT_DATE()) 
+                  AND YEAR(tanggal_pengeluaran) = YEAR(CURRENT_DATE())
+                  GROUP BY DATE(tanggal_pengeluaran)
+                  ORDER BY tanggal_pengeluaran";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPengeluaranByDateRange($startDate, $endDate) {
+        $query = "SELECT * FROM pengeluaran 
+                  WHERE tanggal_pengeluaran BETWEEN :start_date AND :end_date 
+                  ORDER BY tanggal_pengeluaran DESC";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([
+            ':start_date' => $startDate,
+            ':end_date' => $endDate
+        ]);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

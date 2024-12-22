@@ -227,4 +227,34 @@ class TransaksiModel extends Database {
         $stmt = $this->db->prepare($query);
         return $stmt->execute([':id' => $id]);
     }
+
+    public function getMonthlyOrderCount($startDate, $endDate) {
+        $query = "SELECT COUNT(*) as total FROM pesanan WHERE tanggal_pesanan BETWEEN :start AND :end";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':start' => $startDate, ':end' => $endDate]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
+
+    public function getMonthlyOrderCountByStatus($startDate, $endDate, $status) {
+        $query = "SELECT COUNT(*) as total FROM pesanan WHERE tanggal_pesanan BETWEEN :start AND :end AND status = :status";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':start' => $startDate, ':end' => $endDate, ':status' => $status]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
+
+    public function getMonthlyIncomeData() {
+        $query = "SELECT DATE(tanggal_pesanan) as tanggal, SUM(total_harga) as total 
+                  FROM pesanan 
+                  WHERE MONTH(tanggal_pesanan) = MONTH(CURRENT_DATE()) 
+                  AND YEAR(tanggal_pesanan) = YEAR(CURRENT_DATE())
+                  AND status = 'confirmed'
+                  GROUP BY DATE(tanggal_pesanan)
+                  ORDER BY tanggal_pesanan";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

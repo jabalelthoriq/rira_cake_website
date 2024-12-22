@@ -6,10 +6,11 @@
     <title>Tambah Menu - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; } 
-        .popup-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; } 
-        .close-btn { float: right; cursor: pointer; font-size: 20px; } 
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: flex-start; z-index: 1000; padding: 20px; overflow-y: auto; } 
+        .popup-content { background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 600px; margin: 20px auto; max-height: 90vh; overflow-y: auto; position: relative; } 
+        .close-btn { position: sticky; top: 0; right: 0; padding: 10px; cursor: pointer; font-size: 24px; float: right; z-index: 1001; } 
 
         .header-container {
     display: flex;
@@ -114,6 +115,51 @@
             color: #666;
         }
         .product-image { max-width: 200px; max-height: 200px; }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        select:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        select option {
+            padding: 0.5rem;
+        }
+
+        /* Smooth scrollbar styling */
+        .popup-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .popup-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .popup-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .popup-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Image preview styling */
+        #preview-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -161,8 +207,14 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Kategori</label>
-                        <input type="text" id="kategori" name="kategori" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <select name="kategori" required 
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="" disabled selected>Pilih Kategori</option>
+                            <option value="Puding">Puding</option>
+                            <option value="Cupcake">Cupcake</option>
+                            <option value="Cookies">Cookies</option>
+                            <option value="Kue Kering">Kue Kering</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Stok</label>
@@ -200,7 +252,7 @@
                     <button type="submit" 
                         style="background-color: #2E8B57;" 
                         class="text-white px-4 py-2 rounded hover:opacity-90"
-                        onclick="showNotification('success')">
+                        onclick="return confirmAddMenu(event)">
                         Simpan Menu
                     </button>
                     <div class="notification-container" id="notificationContainer"></div>
@@ -275,13 +327,9 @@
                                     '<?php echo htmlspecialchars($product['deskripsi'], ENT_QUOTES); ?>',
                                     '<?php echo htmlspecialchars($product['image']); ?>')">Edit Menu</button> 
                                     
-                                        <a href="index.php?c=Auth&a=delete2&id=<?php echo $product['id']; ?>" 
-                                           class="btn btn-danger btn-sm" 
-                                           onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                                           <!-- <a href="index.php?c=Auth&a=downloadPDF&id=<?php echo $user['id']; ?>" 
-                                           class="btn btn-info btn-sm">
-                                           <i class="fas fa-file-pdf"></i>Cetak PDF
-                                        </a> -->
+                                        
+                                           <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $product['id']; ?>)">Delete</a>
+                                          
                                     </td>
                                 </tr>
                                 
@@ -346,8 +394,14 @@
                 </div>
                 <div class="mt-4"> 
                     <label class="block text-sm font-medium text-gray-700">Kategori</label> 
-                    <input type="text" name="kategori" id="edit-kategori" required 
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <select name="kategori" id="edit-kategori" required 
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="" disabled>Pilih Kategori</option>
+                        <option value="Puding">Puding</option>
+                        <option value="Cupcake">Cupcake</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Kue Kering">Kue Kering</option>
+                    </select>
                 </div>
                 <div class="mt-4"> 
                     <label class="block text-sm font-medium text-gray-700">Stok</label> 
@@ -366,17 +420,18 @@
                 </div>
                 <div class="mt-4"> 
                     <label class="block text-sm font-medium text-gray-700">Foto Menu</label> 
-                    <div class="mt-4">
-                        <img id="edit-image" src="uploads/<?php echo htmlspecialchars($product['image']); ?>" alt="Product Image" class="product-image" style="display: none;">
-                        <input type="hidden" name="image_lama" id="image_lama" >
+                    <div class="mt-2">
+                        <img id="preview-image" src="" alt="Preview" class="mb-2 max-w-[200px] hidden">
+                        <input type="hidden" name="image_lama" id="edit-image-lama">
                     </div>
-                    <input type="file" name="image" accept="image/*"
+                    <input type="file" name="image" accept="image/*" id="edit-image"
                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#5c4b4b] file:text-white hover:file:bg-opacity-80">
                 </div>
                 
                 <div class="mt-6">
                     <button type="submit" style="background-color: #2E8B57;" 
-                            class="text-white px-4 py-2 rounded hover:opacity-90">
+                            class="text-white px-4 py-2 rounded hover:opacity-90"
+                            onclick="return confirmEditMenu(event)">
                         Simpan Perubahan
                     </button>
                 </div>
@@ -392,11 +447,15 @@
         document.getElementById('edit-stok').value = stok;
         document.getElementById('edit-harga').value = harga;
         document.getElementById('edit-deskripsi').value = deskripsi;
+        document.getElementById('edit-image-lama').value = image;
 
-        // Set the image source for the edit form
-        const imageElement = document.getElementById('edit-image');
-        if (imageElement) {
-            imageElement.src = 'uploads/' + image; // Set the image source
+        // Show image preview
+        const previewImage = document.getElementById('preview-image');
+        if (image) {
+            previewImage.src = 'uploads/' + image;
+            previewImage.classList.remove('hidden');
+        } else {
+            previewImage.classList.add('hidden');
         }
 
         document.getElementById('popupOverlay').style.display = 'flex';
@@ -447,12 +506,137 @@
         }
 
         function handleLogout() {
-            
+    Swal.fire({
+        title: 'Logout Confirmation',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
             localStorage.removeItem('token');
             sessionStorage.clear();
-
             window.location.href = 'index.php?c=Auth&a=homepage';
-        } 
+        }
+    });
+}
+
+function confirmDelete(productId) {
+    Swal.fire({
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete this product?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,Delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'index.php?c=Auth&a=delete2&id=' + productId;
+        }
+    });
+}
+
+// Add preview for new image upload
+document.getElementById('edit-image').addEventListener('change', function(e) {
+    const previewImage = document.getElementById('preview-image');
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewImage.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+function confirmAddMenu(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menambah menu ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2E8B57',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Tambahkan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            Swal.fire({
+                title: 'Memproses...',
+                text: 'Sedang menambahkan menu baru',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            // Submit the form
+            event.target.closest('form').submit();
+        }
+    });
+    return false;
+}
+
+function confirmEditMenu(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menyimpan perubahan menu ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2E8B57',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Simpan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            Swal.fire({
+                title: 'Memproses...',
+                text: 'Sedang menyimpan perubahan',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            // Submit the form
+            event.target.closest('form').submit();
+        }
+    });
+    return false;
+}
+
+// Success notification
+<?php if(isset($_SESSION['success'])): ?>
+    Swal.fire({
+        title: 'Berhasil!',
+        text: '<?php echo $_SESSION['success']; ?>',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+// Error notification
+<?php if(isset($_SESSION['error'])): ?>
+    Swal.fire({
+        title: 'Error!',
+        text: '<?php echo $_SESSION['error']; ?>',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+    });
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
     </script>
 </body>
 </html>

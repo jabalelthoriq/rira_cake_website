@@ -6,11 +6,7 @@
   <style>
     
     /* nav css */
-
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins");
-
-
 
 body, html {
   margin: 0;
@@ -723,45 +719,6 @@ section h2.sec-title {
       border-radius: 0px;
       box-shadow: 0 15px 15px rgba(0,0,0,0.1);
     }
-
-    .testimonials {
-      padding: 50px 20px;
-      background-color: #FFE4E1;
-      margin-top: 30;
-    }
-
-    .testimonials h2 {
-      text-align: center;
-      color: #D2691E;
-      font-size: 2.5em;
-      margin-bottom: 30px;
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .testimonial-card {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .testimonial-text {
-      font-style: italic;
-      margin-bottom: 20px;
-      color: #666;
-    }
-
-    .testimonial-author {
-      color: #FF69B4;
-      font-weight: bold;
-    }
     .whatsapp-link {
       background-color: #25D366;
     }
@@ -860,11 +817,11 @@ section h2.sec-title {
     .-h .-t {
       font-size: 30px;
       font-weight:bold ;
-      margin-left: 300px;
+      margin-left: 100px;
     }
     .-h p {
       font-size: 20px;
-      margin-left: 300px;
+      margin-left: 100px;
     }
     .con2{
       box-shadow: 0 16px 18px rgba(0,0,0,0.4);
@@ -882,7 +839,59 @@ section h2.sec-title {
       height: 380px;
       margin: auto;
     }
-    
+    .team-introduction {
+  text-align: center;
+  padding: 50px;
+  background: inherit;
+  font-family: 'Arial', sans-serif;
+  color:black; 
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.team-member, .team-leader {
+  text-align: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.team-member:hover, .team-leader:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+.team-leader {
+  grid-column: span 1; 
+  padding: 30px;
+}
+.team-member img, .team-leader img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px;
+  transition: transform 0.3s;
+  display: block;
+}
+.team-member img:hover, .team-leader img:hover {
+  transform: scale(1.1);
+}
+h2 {
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+h3 {
+  margin: 10px 0 5px;
+  font-size: 1.2rem;
+}
+p {
+  font-size: 0.9rem;
+}
 
     .footer {
     background-color: #4b2e2e;
@@ -992,102 +1001,143 @@ section h2.sec-title {
     <div class="icons">
     <a href="index.php?c=Auth&a=index" class="fas fa-user">
     </a>
-      <i class="fas fa-shopping-basket"></i>
+      
     </div>
   </div>
 
   <div class="k">
     <img alt="Bakery Image" src="view/aset/gambar/fresh-baked-gourmet-desserts-sweet-indulgence-generated-by-ai 1 (1).png" />
     <div class="text">
-      <div class="contact-title" >Rira Cake.</div>
+      <div class="contact-title" >Rira Cake</div>
       <p>Where the sweetness of homemade delicacies meets artisanal craftsmanship, offering a delectable and heartwarming cake experience for every occasion.</p>
     </div>
   </div>
   <div id="about" class="about-us">
-    <h2>Our Sweet Story</h2>
+  <h2 data-aos="fade-up">Our Sweet Story</h2>
   
     
-    <div class="h" >
+    <div class="h" data-aos="fade-up"> 
         <div class="f" >
-        <div class="t" >The Birth of a Dream</div>
-        <p>In 2003, Rira Cake was born out of a small but passionate dream in the heart of Kaliwates. Rira, the visionary behind the bakery, had spent years mastering her recipes. Her goal was simple: to create cakes that not only delighted taste buds but also told a story. She started with a modest space and the finest ingredients she could find. 
-          Word quickly spread about the unique flavors and impeccable quality of Rira's creations. Local residents flocked to the bakery, eager to taste the magic for themselves. Rira Cake soon became a beloved community staple.</p>
+        <div class="t" >The Beginning: A Hobby Turned Into a Business (2010)</div>
+        <p>Rira Cake and Pudding Surabaya was first established in 2010. Starting from the founder's love for the world of baking, this hobby was initially only intended to make simple snacks and children's snack supplies to school.
+These creations made with love turned out to be not only liked by the family, but also attracted the attention of friends and neighbors.
+Encouragement from the surrounding environment who appreciated the taste and appearance of the product encouraged us to start making baking a small business that continues to grow.
+Over time, what started as a hobby has now become the seed of a business founded with passion, creativity,
+and dedication to presenting quality products to customers.</p>
         </div>
-          <div class="con" >
-          <img alt="history" src="view/aset/gambar/menu1.jpg" />
+          <div class="con" data-aos="fade-up" >
+          <img alt="history" src="view/aset/gambar/owner.jpg" />
         </div>
     </div>
 
     
-    <div class="-h" >
-    <div class="con2" >
+    <div class="-h" data-aos="fade-up">
+    <div class="con2" data-aos="fade-up">
           <img alt="history" src="view/aset/gambar/menu1.jpg" />
         </div>
         <div class="f" >
-        <div class="-t" >Rising to Fame</div>
-        <p>As Rira Cake gained popularity, it wasn’t long before its reputation extended beyond Kaliwates. People from neighboring towns began making special trips just to experience the famed cakes. Rira constantly innovated, adding new and exciting flavors inspired by global tastes. The bakery expanded its menu, yet each item retained the signature touch of love and dedication. Festivals and special occasions saw a surge in orders, with Rira Cake becoming a preferred choice. The team grew, bringing in more talented bakers who shared Rira's passion. Despite the growth, the essence of Rira Cake remained unchanged: a commitment to quality and community.</p>
+        <div class="-t" >Journey to Grow with Loyal Customers</div>
+        <p>Customer support is the main pillar of Rira Cake and Pudding's journey. With quality taste that is always maintained and product innovation that is continuously developed, this business continues to grow.
+Our first customers were our closest friends and relatives, who then became loyal promoters who brought the name Rira Cake to wider circles.
+Every cake and pudding that we produce is made with selected ingredients and hygienic processes to maintain customer trust.
+Their positive response motivates us to continue learning and innovating, so that our products can be enjoyed by more and more people.</p>
         </div>
       </div>
           
       </div>
 
-      <div class="h" >
+      <div class="h" data-aos="fade-up">
         <div class="f" >
-        <div class="t" >A Legacy of Sweetness</div>
-        <p>Today, Rira Cake stands as a testament to what passion and hard work can achieve. The small bakery has blossomed into a local legend, with its cakes now part of many cherished moments. Rira's story has inspired many, proving that dreams can indeed come true. The bakery continues to evolve, embracing new trends while honoring its traditions. Every cake, from design to flavor, reflects the journey and dedication of Rira and her team. Customers, old and new, find joy in every bite, knowing they're part of a legacy. Rira Cake is more than a bakery—it's a sweet journey through time.</p>
+        <div class="t" >Milestone: MUI Halal Certification (April 2024)</div>
+        <p>April 2024 is a very valuable moment for Rira Cake and Pudding Surabaya.
+We have officially obtained halal certification from the Indonesian Ulema Council (MUI), an acknowledgment of our commitment
+in providing safe, quality products that comply with halal principles.
+This certification is not only a source of pride for us, but also a form of responsibility to our customers,
+especially those who prioritize the halal aspect in the products they consume. With this achievement, we hope
+to continue to grow and bring happiness to our customers through products that are not only delicious but also trustworthy.</p>
         </div>
-          <div class="con" >
-          <img alt="history" src="view/aset/gambar/menu1.jpg" />
+          <div class="con"data-aos="fade-up" >
+          <img alt="history" src="view/aset/gambar/mui.jpg" />
         </div>
     </div>
     
 
     <div class="features">
-      <div class="feature-card">
+      <div class="feature-card" data-aos="fade-up">
         <div class="feature-icon">🎂</div>
         <h3>Custom Cakes</h3>
         <p>Personalized cakes made specially for your unique celebrations and special moments.</p>
       </div>
       
-      <div class="feature-card">
+      <div class="feature-card" data-aos="fade-up">
         <div class="feature-icon">✨</div>
         <h3>Premium Quality</h3>
         <p>We use only the finest ingredients to ensure every bite is pure perfection.</p>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">🚚</div>
-        <h3>Fresh Delivery</h3>
-        <p>Same-day delivery service to ensure your cakes arrive fresh and beautiful.</p>
-      </div>
+      <div class="feature-card" data-aos="fade-up">
+      <div class="feature-icon">🍰</div>
+      <h3>Freshly Made</h3>
+      <p>Every cake is baked fresh daily to guarantee the best taste and quality for you.</p>
+    </div>
     </div>
   </div>
   </div>
-  <section class="testimonials">
-    <h2>What Our Customers Say</h2>
-    <div class="testimonial-grid">
-      <div class="testimonial-card">
-        <p class="testimonial-text">"The birthday cake was absolutely perfect! Everyone loved it and asked where I got it from."</p>
-        <p class="testimonial-author">- Sarah K.</p>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"Best red velvet cake I've ever had! Will definitely order again."</p>
-        <p class="testimonial-author">- Michael R.</p>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-text">"The customization options are amazing, and the taste is even better!"</p>
-        <p class="testimonial-author">- Lisa M.</p>
-      </div>
+  <section class="team-introduction">
+  <h2>Meet Our Website Development Team</h2>
+  <div class="team-grid">
+    <!-- Anggota 1 -->
+    <div class="team-member" data-aos="fade-right" data-aos-delay="100">
+      <img src="view/aset/gambar/adit.jpg" alt="Aditya Fajar Maulana">
+      <h3>Aditya Fajar Maulana</h3>
+      <p>Team Members</p>
     </div>
-  </section>
 
+    <!-- Anggota 2 -->
+    <div class="team-member"data-aos="fade-fight" data-aos-delay="400">
+      <img src="view/aset/gambar/bagas.jpg" alt="Bagas Suyendra">
+      <h3>Bagas Suyendra</h3>
+      <p>Team Members</p>
+    </div>
 
+    <!-- Ketua (Tengah) -->
+    <div class="team-leader" data-aos="fade-up" data-aos-delay="600">
+      <img src="view/aset/gambar/jabal.jpg" alt="Jabal El Thoriq">
+      <h3>Jabal El Thoriq</h3>
+      <p><strong>Team Leader</strong></p>
+    </div>
+
+    <!-- Anggota 3 -->
+    <div class="team-member" data-aos="fade-left" data-aos-delay="100">
+      <img src="view/aset/gambar/anis.jpg" alt="Annisa Ikrimatus Soleha">
+      <h3>Annisa Ikrimatus Soleha</h3>
+      <p>Team Members</p>
+    </div>
+
+    <!-- Anggota 4 -->
+    <div class="team-member"data-aos="fade-left" data-aos-delay="400">
+      <img src="view/aset/gambar/soyaa.jpg" alt="Syarifatus Suroyya">
+      <h3>Syarifatus Suroyya</h3>
+      <p>Team Members</p>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000, /* Durasi animasi */
+    once: true, /* Animasi hanya muncul sekali */
+  });
+</script>
+
+</section>
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
         <h3>Opening Hours</h3>
-        <p>Monday - Friday: 8AM - 8PM</p>
-        <p>Saturday - Sunday: 9AM - 6PM</p>
+        <p>Monday - Friday: 10:00 AM - 3:00 PM</p>
+        <p>Saturday - Sunday: Closed</p>
       </div>
       <div class="footer-section">
         <h3>Quick Links</h3>
@@ -1099,13 +1149,15 @@ section h2.sec-title {
       <div class="footer-section">
         <h3>Contact Us</h3>
         <div class="contact-us">
-          <a class="contact-icon whatsapp-link" href="https://wa.me/+6282145483984" target="_blank">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-          <a class="contact-icon instagram-link" href="https://www.instagram.com/annisaakrs_/profilecard/?igsh=MWhla3h0YTB0ZTNkYw==" target="_blank">
+        <a class="contact-icon whatsapp-link" 
+   href="https://wa.me/6285731243034?text=Salam%20kenal%20owner%20Rira%20Cake,%20Saya%20ingin%20memesan%20kue%20apakah%20bisa%20?" 
+   target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+          <a class="contact-icon instagram-link" href="https://www.instagram.com/rira_cakeandpudingsurabaya?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
-          <a class="contact-icon email-link" href="mailto:annisaikrimatus@gmail.com">
+          <a class="contact-icon email-link" href="mailto:silviaahmad25@gmail.com">
             <i class="fas fa-envelope"></i>
           </a>
         </div>

@@ -6,6 +6,7 @@
     <title>Laporan Pengeluaran - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; } 
         .popup-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; } 
@@ -110,7 +111,8 @@
     
     <button type="submit" 
     style="background-color: #2E8B57;" 
-    class="text-white px-4 py-2 rounded hover:opacity-90">
+    class="text-white px-4 py-2 rounded hover:opacity-90"
+    onclick="return confirmAdd(event)">
         Tambah Pengeluaran
     </button>
 </form>
@@ -174,9 +176,7 @@
                                     '<?php echo htmlspecialchars($pengeluaran['nama'], ENT_QUOTES); ?>', 
                                     '<?php echo htmlspecialchars($pengeluaran['jumlah'], ENT_QUOTES); ?>', 
                                     '<?php echo htmlspecialchars(addslashes($pengeluaran['deskripsi'])); ?>')">Edit Menu</button> 
-                <a href="index.php?c=Auth&a=delete3&id=<?php echo $pengeluaran['id']; ?>" 
-                   class="btn btn-danger btn-sm" 
-                   onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                   <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete1(<?php echo $pengeluaran['id']; ?>)">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -253,7 +253,8 @@
                 </div>
                 <div class="mt-6">
                     <button type="submit" style="background-color: #2E8B57;" 
-                            class="text-white px-4 py-2 rounded hover:opacity-90">
+                            class="text-white px-4 py-2 rounded hover:opacity-90"
+                            onclick="return confirmEdit(event)">
                         Simpan Perubahan
                     </button>
                 </div>
@@ -278,12 +279,23 @@
     function closePopup() { document.getElementById('popupOverlay').style.display = 'none'; } 
 
     function handleLogout() {
-            
+    Swal.fire({
+        title: 'Logout Confirmation',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
             localStorage.removeItem('token');
             sessionStorage.clear();
-
             window.location.href = 'index.php?c=Auth&a=homepage';
         }
+    });
+}
     </script>
     
 
@@ -334,17 +346,51 @@
                                 <button type="button" class="btn btn-info btn-sm" onclick="showOrderDetails(<?php echo $pemasukan['id']; ?>)">
                                     Detail
                                 </button>
-                                <a href="index.php?c=Auth&a=delete4&id=<?php echo $pemasukan['id']; ?>" 
-                   class="btn btn-danger btn-sm" 
-                   onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                   <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete2(<?php echo $pemasukan['id']; ?>)">Delete</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-            </div>
+                <!-- Pagination -->
+                <?php if($totalPages > 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <!-- Tombol Previous -->
+                            <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=laporanpage&page=<?php echo ($page-1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Previous
+                                </a>
+                            </li>
+                            
+                            <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                                    <a class="page-link" 
+                                       href="index.php?c=Auth&a=laporanpage&page=<?php echo $i; ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Tombol Next -->
+                            <li class="page-item <?php echo ($page >= $totalPages) ? 'disabled' : ''; ?>">
+                                <a class="page-link" 
+                                   href="index.php?c=Auth&a=laporanpage&page=<?php echo ($page+1); ?><?php echo !empty($search) ? '&search='.$search : ''; ?>">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <div class="alert alert-warning text-center">
+                        <?php echo !empty($search) ? 'Tidak ada hasil pencarian untuk "'.htmlspecialchars($search).'"' : 'Tidak ada data'; ?>
+                    </div>
         <?php endif; ?>
     </div>
+
+    
 
     <!-- Modal Detail Pesanan -->
     <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
@@ -366,39 +412,71 @@
 
     <script>
     function updateStatus(orderId, currentStatus) {
-        if (!confirm('Apakah Anda yakin ingin mengubah status pesanan ini?')) {
-            return;
-        }
+        const newStatus = currentStatus === 'confirmed' ? 'pending' : 'confirmed';
+        const confirmText = currentStatus === 'confirmed' ? 
+            'Apakah Anda yakin ingin membatalkan konfirmasi pesanan ini?' : 
+            'Apakah Anda yakin ingin mengkonfirmasi pesanan ini?';
+        const successText = currentStatus === 'confirmed' ? 
+            'Konfirmasi pesanan berhasil dibatalkan!' : 
+            'Pesanan berhasil dikonfirmasi!';
 
-        fetch('index.php?c=Auth&a=updateOrderStatus', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `id=${orderId}&status=${currentStatus}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Update tampilan status
-                const button = document.querySelector(`button[onclick="updateStatus('${orderId}', '${currentStatus}')"]`);
-                const newStatus = data.newStatus;
-                const newClass = newStatus === 'confirmed' ? 'btn-success' : 'btn-warning';
-                const newText = newStatus === 'confirmed' ? 'Sudah Dikonfirmasi' : 'Menunggu Konfirmasi';
-                
-                button.className = `btn btn-sm ${newClass}`;
-                button.textContent = newText;
-                button.setAttribute('onclick', `updateStatus('${orderId}', '${newStatus}')`);
-                
-                alert('Status berhasil diperbarui');
-                location.reload(); // Refresh halaman untuk memperbarui data
-            } else {
-                alert(data.message || 'Gagal mengubah status');
+        Swal.fire({
+            title: 'Konfirmasi Status',
+            text: confirmText,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2E8B57',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Lanjutkan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Memproses...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Send AJAX request
+                fetch('index.php?c=Auth&a=updateOrderStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${orderId}&status=${currentStatus}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: successText,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload(); // Refresh halaman
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message || 'Terjadi kesalahan saat mengubah status',
+                            icon: 'error'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan pada server',
+                        icon: 'error'
+                    });
+                    console.error('Error:', error);
+                });
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat mengubah status');
         });
     }
 
@@ -504,6 +582,121 @@
                 alert('Terjadi kesalahan saat mengambil detail pesanan');
             });
     }
+
+    function confirmDelete1(pengeluaranId) {
+    Swal.fire({
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete this extends?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,Delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'index.php?c=Auth&a=delete3&id=' + pengeluaranId;
+        }
+    });
+}
+
+function confirmDelete2(pemasukanId) {
+    Swal.fire({
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete this income?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes,Delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'index.php?c=Auth&a=delete4&id=' + pemasukanId;
+        }
+    });
+}
+
+function confirmAdd(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menambah data pengeluaran ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2E8B57',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Tambahkan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            Swal.fire({
+                title: 'Memproses...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            // Submit the form
+            event.target.closest('form').submit();
+        }
+    });
+    return false;
+}
+
+function confirmEdit(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menyimpan perubahan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2E8B57',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Simpan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            Swal.fire({
+                title: 'Memproses...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            // Submit the form
+            event.target.closest('form').submit();
+        }
+    });
+    return false;
+}
+
+// Add success notification after form submission
+<?php if(isset($_SESSION['success'])): ?>
+    Swal.fire({
+        title: 'Berhasil!',
+        text: '<?php echo $_SESSION['success']; ?>',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+    });
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+// Add error notification after form submission
+<?php if(isset($_SESSION['error'])): ?>
+    Swal.fire({
+        title: 'Error!',
+        text: '<?php echo $_SESSION['error']; ?>',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+    });
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
     </script>
 
     <!-- Pastikan Bootstrap JS sudah dimuat -->

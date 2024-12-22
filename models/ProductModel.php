@@ -1,43 +1,65 @@
-
 <?php
 class ProductModel extends Database {
     private $table = 'produk';
 
-    public function getAllProduct($page = 1, $perPage = 5, $search = '') {
+    public function getAllProduct($page = 1, $perPage = 16, $search = '', $category = '') {
         $offset = ($page - 1) * $perPage;
-        $query = "SELECT id, nama, kategori, stok, harga, deskripsi, image FROM produk";
+        
+        $query = "SELECT id, nama, kategori, stok, harga, deskripsi, image FROM produk WHERE 1=1";
+        $params = [];
+        
         if(!empty($search)) {
-            $query .= " WHERE nama LIKE :search";
+            $query .= " AND nama LIKE :search";
+            $params[':search'] = "%$search%";
         }
-        $query .= " LIMIT :offset, :perPage";
+        
+        if(!empty($category)) {
+            $query .= " AND kategori = :category";
+            $params[':category'] = $category;
+        }
+        
+        $query .= " ORDER BY id DESC LIMIT :offset, :perPage";
         
         $stmt = $this->db->prepare($query);
         
-        if(!empty($search)) {
-            $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+        // Bind all parameters
+        foreach($params as $key => $value) {
+            $stmt->bindValue($key, $value, PDO::PARAM_STR);
         }
+        
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindValue(':perPage', $perPage, PDO::PARAM_INT);
         
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalProduct ($search = '') {
-        $query = "SELECT COUNT(*) as total FROM produk";
+    public function getTotalProduct($search = '', $category = '') {
+        $query = "SELECT COUNT(*) as total FROM produk WHERE 1=1";
+        $params = [];
+        
         if(!empty($search)) {
-            $query .= " WHERE nama LIKE :search";
+            $query .= " AND nama LIKE :search";
+            $params[':search'] = "%$search%";
+        }
+        
+        if(!empty($category)) {
+            $query .= " AND kategori = :category";
+            $params[':category'] = $category;
         }
         
         $stmt = $this->db->prepare($query);
-        if(!empty($search)) {
-            $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+        
+        // Bind all parameters
+        foreach($params as $key => $value) {
+            $stmt->bindValue($key, $value, PDO::PARAM_STR);
         }
         
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
     }
+
 
 
     public function tambahmenu($data) {
@@ -104,6 +126,15 @@ class ProductModel extends Database {
                 ':image' => $data['image'],
                 ':id' => $data['id']
             ]);
+        }
+        public function getFavoriteMenuItems() {
+            $query = "SELECT id, nama, kategori, stok, harga, deskripsi, image 
+                      FROM produk  
+                      ORDER BY stok ASC LIMIT 4"; 
+        
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 

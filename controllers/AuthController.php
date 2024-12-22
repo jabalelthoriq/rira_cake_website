@@ -3,8 +3,6 @@ require_once 'models/PDF_Generator.php';
 require_once 'models/pengguna.php';
 require_once 'models/pengeluaran.php';
 require_once 'models/DashboardModel.php';
-
-
 class AuthController
 {
     private $model;
@@ -35,6 +33,7 @@ class AuthController
     }
     public function homepage()
     {
+        $favoriteMenuItems = $this->productModel->getFavoriteMenuItems();
         require_once 'view/pelanggan/home.php';
     }
     public function aboutuspage()
@@ -52,60 +51,78 @@ class AuthController
 
 
     // admin
-    public function dashboardpage()
-    {
-        try {
-            $dashboardModel = new DashboardModel();
-            
-            $incomeData = $dashboardModel->getIncomeData();
-            $expenseData = $dashboardModel->getExpenseData();
-            // $employees = $dashboardModel->getEmployees();
+    public function dashboardpage() {
+        // Get current month's date range
+        $startDate = date('Y-m-01');
+        $endDate = date('Y-m-t');
 
-            // Debug
-            error_log('Income Data: ' . print_r($incomeData, true));
-            error_log('Expense Data: ' . print_r($expenseData, true));
+        // Get orders statistics
+        $totalOrders = $this->transaksiModel->getMonthlyOrderCount($startDate, $endDate);
+        $pendingOrders = $this->transaksiModel->getMonthlyOrderCountByStatus($startDate, $endDate, 'pending');
+        $confirmedOrders = $this->transaksiModel->getMonthlyOrderCountByStatus($startDate, $endDate, 'confirmed');
 
-            require_once 'view/admin/dashboard.php';
-        } catch (Exception $e) {
-            error_log('Error in dashboardpage: ' . $e->getMessage());
-            // Handle error appropriately
-        }
+        // Get daily data for charts
+        $expenseData = $this->pengeluaranModel->getMonthlyExpenseData();
+        $incomeData = $this->transaksiModel->getMonthlyIncomeData();
+
+        // Format data for charts
+        $expenseDates = array_column($expenseData, 'tanggal');
+        $expenseAmounts = array_column($expenseData, 'total');
+        
+        $incomeDates = array_column($incomeData, 'tanggal');
+        $incomeAmounts = array_column($incomeData, 'total');
+
+        // Load the dashboard view
+        require_once 'view/admin/dashboard.php';
     }
     
 
 
 
     public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = [
-                'nama' => $_POST['nama'],
-                'email' => $_POST['email'],
-                'telepon' => $_POST['telepon'],
-                'alamat' => $_POST['alamat'],
-                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = [
+            'nama' => $_POST['nama'],
+            'email' => $_POST['email'],
+            'telepon' => $_POST['telepon'],
+            'alamat' => $_POST['alamat'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+        ];
+
+        if ($this->model->register($data)) {
+            // Set SweetAlert registration success notification
+            $_SESSION['sweetalert'] = [
+                'type' => 'success',
+                'title' => 'Registrasi Successful ;)',
+                'text' => 'Your account has been created. Please login.'
             ];
-
-            if ($this->model->register($data)) {
-                $_SESSION['register_success'] = "Pendaftaran berhasil! Silakan login.";
-                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=index");
-                exit();
-            } else {
-                $_SESSION['register_error'] = "Gagal mendaftar. Silakan coba lagi.";
-                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=register");
-                exit();
-            }
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=index");
+            exit();
+        } else {
+            // Set SweetAlert registration error notification
+            $_SESSION['sweetalert'] = [
+                'type' => 'error',
+                'title' => 'Registrasi Failed :(',
+                'text' => 'Failed to register. Please try again.'
+            ];
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=index");
+            exit();
         }
-        require_once 'view/register.php';
     }
+    require_once 'view/register.php';
+}
 
-    public function login()
-    {
+public function login() {
+    try {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nama = filter_input(INPUT_POST, 'nama', FILTER_SANITIZE_STRING);
             $password = $_POST['password'];
 
-            // Remove role from POST since we'll get it from database
+            if (empty($nama) || empty($password)) {
+                throw new Exception('Username and password are required');
+            }
+
             $user = $this->model->login($nama, $password);
 
             if ($user) {
@@ -115,40 +132,159 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
-                // Set success notification
-                $_SESSION['login_in'] = "Login berhasil!";
+                // Set SweetAlert login success notification
+                $_SESSION['sweetalert'] = [
+                    'type' => 'success',
+                    'title' => 'Login Successful ;)',
+                    'text' => 'WELCOME, ' . $user['nama'] . '!'
+                ];
 
                 // Redirect based on role
                 $this->redirectBasedOnRole();
-                
+
             } else {
-                $_SESSION['login_error'] = "Username atau password salah";
-                header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
-                exit();
+                throw new Exception('Invalid username or password');
             }
         }
+    } catch (PDOException $e) {
+        // Handle database-related errors
+        $_SESSION['sweetalert'] = [
+            'type' => 'error',
+            'title' => 'Database Error :(',
+            'text' => 'An error occurred while processing your request'
+        ];
+        // Log the actual error for debugging
+        error_log($e->getMessage());
+        $this->redirectToLogin();
+    } catch (Exception $e) {
+        // Handle general errors
+        $_SESSION['sweetalert'] = [
+            'type' => 'error',
+            'title' => 'Login Failed :(',
+            'text' => $e->getMessage()
+        ];
+        $this->redirectToLogin();
     }
+}
 
-    private function redirectBasedOnRole()
-    {
-        if (!isset($_SESSION['logged_in']) || !isset($_SESSION['role'])) {
-            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=index");
-            exit();
+private function redirectToLogin() {
+    header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=index');
+    exit();
+}
+
+private function redirectBasedOnRole() 
+{
+    try {
+        // Validasi session
+        if (!isset($_SESSION)) {
+            session_start();
         }
 
+        // Validasi login dan role dengan pesan error yang spesifik
+        if (!isset($_SESSION['logged_in'])) {
+            throw new Exception('Silakan login terlebih dahulu');
+        }
+
+        if (!isset($_SESSION['role'])) {
+            throw new Exception('Role pengguna tidak valid');
+        }
+
+        // Validasi nilai role
+        $allowedRoles = ['admin', 'pelanggan'];
+        if (!in_array($_SESSION['role'], $allowedRoles)) {
+            throw new Exception('Role pengguna tidak dikenali');
+        }
+
+        // Store base URL in variable
+        $redirectUrl = $this->baseUrl . '/index.php?c=Auth&a=';
+
+        // Tentukan halaman tujuan berdasarkan role
+        $targetPage = '';
         switch ($_SESSION['role']) {
             case 'admin':
-                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=dashboardpage");
+                $targetPage = 'dashboardpage';
                 break;
             case 'pelanggan':
-                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=homepage");
+                $targetPage = 'homepage';
                 break;
             default:
-                session_destroy();
-                header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=homepage");
+                // Seharusnya tidak pernah terjadi karena sudah divalidasi di atas
+                throw new Exception('Role tidak valid');
+        }
+
+        // Cek apakah headers sudah terkirim
+        if (headers_sent($filename, $linenum)) {
+            // Jika headers sudah terkirim, gunakan JavaScript
+            echo "<script>
+                    // Tampilkan SweetAlert untuk error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: 'Mengalihkan ke halaman yang sesuai...',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(function() {
+                        window.location.href = '" . $redirectUrl . $targetPage . "';
+                    });
+                </script>";
+        } else {
+            // Set session untuk SweetAlert sukses
+            $_SESSION['sweetalert'] = [
+                'type' => 'success',
+                'title' => 'Login Berhasil',
+                'text' => 'Selamat datang, ' . ($_SESSION['nama'] ?? 'Pengguna')
+            ];
+            
+            // Redirect menggunakan header
+            header("Location: " . $redirectUrl . $targetPage);
+        }
+        
+        exit();
+
+    } catch (Exception $e) {
+        // Log error untuk debugging
+        error_log('Redirect Error: ' . $e->getMessage() . ' pada ' . date('Y-m-d H:i:s'));
+
+        // Set session untuk SweetAlert error
+        $_SESSION['sweetalert'] = [
+            'type' => 'error',
+            'title' => 'Terjadi Kesalahan',
+            'text' => $e->getMessage()
+        ];
+
+        // Redirect ke halaman login
+        if (headers_sent($filename, $linenum)) {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: '" . $e->getMessage() . "',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(function() {
+                        window.location.href = '" . $this->baseUrl . "/index.php?c=Auth&a=index';
+                    });
+                </script>";
+        } else {
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=index");
         }
         exit();
     }
+}
+
+// Tambahkan fungsi helper untuk validasi session
+private function validateSession() 
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    
+    if (!isset($_SESSION['logged_in']) || !isset($_SESSION['role'])) {
+        return false;
+    }
+    
+    return true;
+}
 
 
 
@@ -242,10 +378,7 @@ class AuthController
 
     public function delete()
     {
-        if (!isset($_SESSION['user'])) {
-            header('Location: index.php?c=Auth&a=index');
-            return;
-        }
+        
 
         $id = $_GET['id'];
         if ($this->model->delete($id)) {
@@ -254,6 +387,8 @@ class AuthController
             echo "Hapus data gagal!";
         }
     }
+
+    
 
 public function delete2() {
     
@@ -290,12 +425,13 @@ public function productpage() {
     
     // Set default values
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $perPage = 16; // jumlah data per halaman
+    $perPage = 16; 
     $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $category = isset($_GET['category']) ? $_GET['category'] : '';
     
     // Get data from model
-    $dataProduct = $this->productModel->getAllProduct($page, $perPage, $search);
-    $totalDataProduct = $this->productModel->getTotalProduct($search);
+    $dataProduct = $this->productModel->getAllProduct($page, $perPage, $search, $category);
+    $totalDataProduct = $this->productModel->getTotalProduct($search, $category);
     $totalPages = ceil($totalDataProduct / $perPage);
     
     // Include these variables in the view
@@ -443,13 +579,13 @@ public function tambahpengeluaran() {
 
         // Simpan ke database
         if ($this->pengeluaranModel->tambahpengeluaran($data)) {
-            $_SESSION['success'] = "Pengeluaran berhasil ditambahkan!";
+            $_SESSION['success'] = "Data pengeluaran berhasil ditambahkan!";
             header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=laporanpage");
-            exit();
+            exit;
         } else {
-            $_SESSION['input_error'] = "Gagal menambahkan pengeluaran. Silakan coba lagi.";
+            $_SESSION['error'] = "Gagal menambahkan data pengeluaran!";
             header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=laporanpage");
-            exit();
+            exit;
         }
     }
 }
@@ -488,10 +624,12 @@ public function updatepengeluaran() {
         ];
         
         if ($this->pengeluaranModel->updatepengeluaran($data)) {
-            header('Location: index.php?c=Auth&a=laporanpage');
+            $_SESSION['success'] = "Data pengeluaran berhasil diperbarui!";
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=laporanpage");
             exit;
         } else {
-            header('Location: index.php?c=Auth&a=edit&id=' . $_POST['id']);
+            $_SESSION['error'] = "Gagal memperbarui data pengeluaran!";
+            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=laporanpage");
             exit;
         }
     }
@@ -506,10 +644,6 @@ public function tambahpesanan() {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
-            // Debug log
-            error_log("Received POST data: " . print_r($_POST, true));
-            error_log("Received FILES data: " . print_r($_FILES, true));
-
             // Validasi data
             if (empty($_POST['nama']) || empty($_POST['email']) || 
                 empty($_POST['total_harga']) || empty($_POST['kode_bank']) || 
@@ -534,18 +668,33 @@ public function tambahpesanan() {
 
             // Simpan ke database
             if ($this->transaksiModel->tambahpesanan($data)) {
-                $_SESSION['success'] = "Pesanan berhasil ditambahkan!";
-                echo "<script>
-                    localStorage.setItem('cart', JSON.stringify([]));
-                    window.location.href = '{$this->baseUrl}/index.php?c=Auth&a=productpage';
-                </script>";
+                // Set session flash untuk SweetAlert
+                $_SESSION['sweetalert'] = [
+                    'type' => 'success',
+                    'title' => 'Order Successful ;)',
+                    'text' => 'Thank you for your order. We are processing your order.',
+                    'redirect' => $this->baseUrl . '/index.php?c=Auth&a=productpage'
+                ];
+
+                // Tambahkan script untuk reset cart di client-side
+                $_SESSION['reset_cart'] = true;
+
+                // Redirect ke halaman produk
+                header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=productpage');
                 exit();
             }
 
         } catch (Exception $e) {
-            error_log("Error in tambahpesanan: " . $e->getMessage());
-            $_SESSION['error'] = $e->getMessage();
-            header("Location: " . $this->baseUrl . "/index.php?c=Auth&a=productpage");
+            // Set session flash untuk SweetAlert error
+            $_SESSION['sweetalert'] = [
+                'type' => 'error',
+                'title' => 'Error!',
+                'text' => $e->getMessage(),
+                'redirect' => $this->baseUrl . '/index.php?c=Auth&a=productpage'
+            ];
+
+            // Redirect ke halaman produk
+            header('Location: ' . $this->baseUrl . '/index.php?c=Auth&a=productpage');
             exit();
         }
     }
